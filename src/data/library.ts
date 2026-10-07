@@ -1,5 +1,7 @@
 import type { Chapter, Lesson, SubjectId } from '@/lib/types';
 import { DIE_KIND_CHAPTER } from './content/dieKind';
+import { BUSINESS_CHAPTER_1 } from './content/businessChapter1';
+import { ENGLISH_POETRY_CHAPTER } from './content/englishPoetry';
 
 /**
  * Library content.
@@ -14,7 +16,7 @@ import { DIE_KIND_CHAPTER } from './content/dieKind';
  * exactly as Afrikaans does.
  */
 
-export const CHAPTERS: Chapter[] = [DIE_KIND_CHAPTER];
+export const CHAPTERS: Chapter[] = [DIE_KIND_CHAPTER, BUSINESS_CHAPTER_1, ENGLISH_POETRY_CHAPTER];
 
 export function chaptersFor(subjectId: SubjectId): Chapter[] {
   return CHAPTERS.filter((c) => c.subjectId === subjectId).sort((a, b) => a.term - b.term);
