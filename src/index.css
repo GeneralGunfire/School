@@ -1,0 +1,645 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;0,14..32,800;1,14..32,400&display=swap');
+@import 'tailwindcss';
+
+/* ─────────────────────────────────────────────────────────────────────────
+   Scholar — design system.
+
+   Monochrome base (black / white / a neutral grey ramp) with one deep blue
+   accent. Visual interest comes from *depth and gradient*, not from hue:
+   every surface is a real gradient, every raised element has a lit top edge
+   and a layered shadow, and the app ground is a gradient mesh rather than a
+   flat fill.
+   ───────────────────────────────────────────────────────────────────────── */
+
+@theme {
+  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+
+  --color-accent: #2563eb;
+  --color-accent-soft: #1d4ed8;
+  --color-accent-strong: #1e3a8a;
+  --color-accent-wash: #eff4ff;
+  --color-accent-ring: rgba(37, 99, 235, 0.3);
+  --color-accent-foreground: #ffffff;
+
+  --color-ink: #0a0a0a;
+  --color-ink-2: #383838;
+  --color-muted: #6b6b6b;
+  --color-muted-2: #9b9b9b;
+  --color-hairline: #e5e5e5;
+  --color-hairline-strong: #c9c9c9;
+  --color-paper: #ffffff;
+  --color-paper-raise: #f3f3f3;
+  --color-canvas: #e8e8e8;
+
+  --color-positive: #15803d;
+  --color-positive-wash: #f0fdf4;
+  --color-caution: #a16207;
+  --color-caution-wash: #fefce8;
+  --color-critical: #b91c1c;
+  --color-critical-wash: #fef2f2;
+
+  --color-subject-history: #4a6b5a;
+  --color-subject-english: #2f5f8f;
+  --color-subject-afrikaans: #7a4d82;
+  --color-subject-algebra: #2f5296;
+  --color-subject-geometry: #60479b;
+  --color-subject-apmath: #414a7a;
+  --color-subject-egd: #2f6b66;
+  --color-subject-business: #7d6342;
+  --color-subject-lo: #2f6f80;
+  --color-subject-religion: #7a5570;
+  --color-subject-physci: #2f6480;
+  --color-subject-chemistry: #4f4594;
+
+  --radius-card: 14px;
+  --ease-out-expo: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ── Light ─────────────────────────────────────────────────────────────── */
+:root {
+  color-scheme: light;
+
+  --color-accent: #2563eb;
+  --color-accent-soft: #1d4ed8;
+  --color-accent-strong: #1e3a8a;
+  --color-accent-wash: #eff4ff;
+  --color-accent-ring: rgba(37, 99, 235, 0.3);
+  --color-accent-foreground: #ffffff;
+
+  --color-ink: #0a0a0a;
+  --color-ink-2: #383838;
+  --color-muted: #6b6b6b;
+  --color-muted-2: #9b9b9b;
+  --color-hairline: #e5e5e5;
+  --color-hairline-strong: #c9c9c9;
+  --color-paper: #ffffff;
+  --color-paper-raise: #f3f3f3;
+  --color-canvas: #e8e8e8;
+
+  --color-positive: #15803d;
+  --color-positive-wash: #f0fdf4;
+  --color-caution: #a16207;
+  --color-caution-wash: #fefce8;
+  --color-critical: #b91c1c;
+  --color-critical-wash: #fef2f2;
+
+  /* ── Surfaces ──
+     Each is a visible gradient, not a near-flat one. The 6% top-to-bottom
+     travel is what makes a card read as a lit plane. */
+  --surface: linear-gradient(168deg, #ffffff 0%, #ffffff 42%, #f4f4f4 100%);
+  --surface-raise: linear-gradient(168deg, #fbfbfb 0%, #f1f1f1 100%);
+  --surface-sunken: linear-gradient(168deg, #ededed 0%, #f6f6f6 100%);
+  --surface-header: linear-gradient(180deg, #ffffff 0%, #f2f2f2 100%);
+  --surface-inset-top: rgba(255, 255, 255, 1);
+
+  --shadow-contact: rgba(10, 10, 10, 0.045);
+  --shadow-mid: rgba(10, 10, 10, 0.07);
+  --shadow-ambient: rgba(10, 10, 10, 0.1);
+  --edge: rgba(10, 10, 10, 0.08);
+
+  /* Solid button — a restrained near-black. The previous gradient ran from
+     #3a3a3a to pure black, which read as a plastic pill; this travels less
+     and sits closer to the ink colour used everywhere else. */
+  --btn-solid: linear-gradient(176deg, #262626 0%, #141414 100%);
+  --btn-solid-hover: linear-gradient(176deg, #333333 0%, #1c1c1c 100%);
+  --btn-solid-border: rgba(10, 10, 10, 0.9);
+  --btn-solid-fg: #ffffff;
+  --btn-solid-inset: rgba(255, 255, 255, 0.14);
+
+  /* ── Headline gradient + swoop ──
+     A blue ramp: deep navy → royal → bright sky. Three stops so the fill
+     travels visibly across a word instead of reading as one flat tint. */
+  --grad-a: #16306e;
+  --grad-b: #2563eb;
+  --grad-c: #38a8e8;
+  --swoop-stroke: #3b82f6;
+
+  /* Named gradients, all in the blue family — used on tiles and bars. */
+  --grad-deep: linear-gradient(142deg, #1e3a8a 0%, #2563eb 100%);
+  --grad-royal: linear-gradient(142deg, #2563eb 0%, #3b82f6 100%);
+  --grad-sky: linear-gradient(142deg, #0284c7 0%, #38bdf8 100%);
+  --grad-steel: linear-gradient(142deg, #334155 0%, #475569 100%);
+  --grad-teal: linear-gradient(142deg, #0e7490 0%, #0891b2 100%);
+
+  /* Wallpaper — blue blooms at varying depth. */
+  --wall-base: linear-gradient(170deg, #eef1f6 0%, #e7eaf1 46%, #dde1ea 100%);
+  --wall-bloom-1: rgba(37, 99, 235, 0.14);
+  --wall-bloom-2: rgba(30, 58, 138, 0.09);
+  --wall-bloom-3: rgba(56, 189, 248, 0.1);
+  --wall-bloom-4: rgba(8, 145, 178, 0.08);
+  --wall-dot: rgba(15, 23, 42, 0.06);
+  --wall-grid: rgba(15, 23, 42, 0.026);
+}
+
+/* ── Dark ──────────────────────────────────────────────────────────────── */
+:root[data-theme='dark'] {
+  color-scheme: dark;
+
+  --color-accent: #5b8def;
+  --color-accent-soft: #83a9f4;
+  --color-accent-strong: #b0c8f8;
+  --color-accent-wash: rgba(91, 141, 239, 0.14);
+  --color-accent-ring: rgba(91, 141, 239, 0.4);
+  --color-accent-foreground: #07080c;
+
+  /* Slightly blue-leaning neutrals: a pure grey charcoal reads as dead,
+     and the blue accent has nothing to sit against. */
+  --color-ink: #f4f6f9;
+  --color-ink-2: #cdd3dc;
+  --color-muted: #99a1ae;
+  --color-muted-2: #6d7584;
+  --color-hairline: #2b303a;
+  --color-hairline-strong: #3d434f;
+  --color-paper: #171a21;
+  --color-paper-raise: #1f232c;
+  --color-canvas: #0b0d12;
+
+  --color-positive: #4ade80;
+  --color-positive-wash: rgba(74, 222, 128, 0.12);
+  --color-caution: #e0b445;
+  --color-caution-wash: rgba(224, 180, 69, 0.12);
+  --color-critical: #ef6b63;
+  --color-critical-wash: rgba(239, 107, 99, 0.12);
+
+  /* Surfaces sit a clear step above the canvas (#0b0d12) so a card reads as
+     a lifted plane rather than a slightly different black. */
+  --surface: linear-gradient(168deg, #232833 0%, #1c2029 52%, #171a22 100%);
+  --surface-raise: linear-gradient(168deg, #2c313d 0%, #232730 100%);
+  --surface-sunken: linear-gradient(168deg, #13161c 0%, #1a1e26 100%);
+  --surface-header: linear-gradient(180deg, #272c37 0%, #1d212a 100%);
+  --surface-inset-top: rgba(255, 255, 255, 0.08);
+
+  --shadow-contact: rgba(0, 0, 0, 0.5);
+  --shadow-mid: rgba(0, 0, 0, 0.6);
+  --shadow-ambient: rgba(0, 0, 0, 0.75);
+  /* A visible border does the separating work that shadow can't do on a
+     near-black ground. */
+  --edge: rgba(255, 255, 255, 0.1);
+
+  /* Blue, not white. A white pill on a dark ground reads as a hole punched
+     in the page; the accent keeps the high-emphasis action legible without
+     blowing out. */
+  --btn-solid: linear-gradient(176deg, #3b82f6 0%, #2563eb 100%);
+  --btn-solid-hover: linear-gradient(176deg, #60a5fa 0%, #3b82f6 100%);
+  --btn-solid-border: rgba(96, 165, 250, 0.55);
+  --btn-solid-fg: #ffffff;
+  --btn-solid-inset: rgba(255, 255, 255, 0.26);
+
+  /* Headline gradient lifts in dark mode — the light values sit near the
+     surface luminance and the fill disappears. */
+  --grad-a: #7aa7f5;
+  --grad-b: #8fc4fb;
+  --grad-c: #b6e3fd;
+  --swoop-stroke: #60a5fa;
+
+  --grad-deep: linear-gradient(142deg, #3b82f6 0%, #60a5fa 100%);
+  --grad-royal: linear-gradient(142deg, #60a5fa 0%, #93c5fd 100%);
+  --grad-sky: linear-gradient(142deg, #38bdf8 0%, #7dd3fc 100%);
+  --grad-steel: linear-gradient(142deg, #64748b 0%, #94a3b8 100%);
+  --grad-teal: linear-gradient(142deg, #06b6d4 0%, #22d3ee 100%);
+
+  --wall-base: linear-gradient(170deg, #0f1319 0%, #090c11 48%, #05070a 100%);
+  --wall-bloom-1: rgba(59, 130, 246, 0.22);
+  --wall-bloom-2: rgba(30, 64, 175, 0.16);
+  --wall-bloom-3: rgba(56, 189, 248, 0.14);
+  --wall-bloom-4: rgba(8, 145, 178, 0.12);
+  --wall-dot: rgba(190, 215, 255, 0.06);
+  --wall-grid: rgba(190, 215, 255, 0.026);
+
+  /* Subject hues lift in dark mode — the light values sit at the same
+     luminance as the charcoal surfaces and vanish. */
+  --color-subject-history: #7fb79c;
+  --color-subject-english: #79aedd;
+  --color-subject-afrikaans: #c08fcb;
+  --color-subject-algebra: #7ba1e0;
+  --color-subject-geometry: #a994e3;
+  --color-subject-apmath: #9099cf;
+  --color-subject-egd: #6fb8b1;
+  --color-subject-business: #c6a87c;
+  --color-subject-lo: #71b4c8;
+  --color-subject-religion: #c195b6;
+  --color-subject-physci: #73adcd;
+  --color-subject-chemistry: #9b8fe0;
+}
+
+@layer base {
+  * {
+    border-color: var(--color-hairline);
+  }
+
+  /* ── Fluid scale ──
+     Every size in the app is expressed in rem, so moving the root size
+     scales the whole interface together — type, spacing, icons, radii.
+     16px up to 1440px, then ramping to 18px by 2560px, so a large monitor
+     gets a proportionally larger app instead of the same small UI floating
+     in more whitespace. */
+  html {
+    font-size: 16px;
+  }
+  @media (min-width: 1440px) {
+    html {
+      font-size: clamp(16px, 0.5vw + 8.8px, 18px);
+    }
+  }
+  @media (min-width: 2200px) {
+    html {
+      font-size: 19px;
+    }
+  }
+
+  body {
+    margin: 0;
+    background: var(--color-canvas);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-synthesis-weight: none;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background: var(--color-ink);
+    color: var(--color-paper);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+    border-radius: 8px;
+  }
+
+  input,
+  textarea,
+  select,
+  button {
+    font: inherit;
+    color: inherit;
+  }
+
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-hairline-strong) transparent;
+  }
+  *::-webkit-scrollbar {
+    width: 11px;
+    height: 11px;
+  }
+  *::-webkit-scrollbar-thumb {
+    background: var(--color-hairline-strong);
+    border: 3px solid transparent;
+    background-clip: content-box;
+    border-radius: 999px;
+  }
+  *::-webkit-scrollbar-thumb:hover {
+    background: var(--color-muted-2);
+    background-clip: content-box;
+  }
+}
+
+@layer components {
+  /* ── Wallpaper ─────────────────────────────────────────────────────── */
+  .app-wallpaper {
+    position: relative;
+    isolation: isolate;
+  }
+  .app-wallpaper::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: -2;
+    pointer-events: none;
+    background:
+      radial-gradient(58rem 42rem at 2% -12%, var(--wall-bloom-1), transparent 52%),
+      radial-gradient(46rem 36rem at 100% -4%, var(--wall-bloom-3), transparent 54%),
+      radial-gradient(52rem 38rem at 88% 58%, var(--wall-bloom-4), transparent 54%),
+      radial-gradient(50rem 38rem at 36% 114%, var(--wall-bloom-2), transparent 52%),
+      var(--wall-base);
+  }
+  .app-wallpaper::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background-image:
+      radial-gradient(var(--wall-dot) 1px, transparent 1px),
+      linear-gradient(to right, var(--wall-grid) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--wall-grid) 1px, transparent 1px);
+    background-size:
+      24px 24px,
+      132px 132px,
+      132px 132px;
+  }
+
+  /* ── Card ────────────────────────────────────────────────────────────
+     Four shadow layers plus a lit top edge and a hairline border. This is
+     what separates a surface from a rectangle. ── */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--edge);
+    border-radius: var(--radius-card);
+    position: relative;
+    isolation: isolate;
+    box-shadow:
+      inset 0 1px 0 var(--surface-inset-top),
+      0 1px 2px var(--shadow-contact),
+      0 6px 14px -8px var(--shadow-mid),
+      0 16px 32px -20px var(--shadow-ambient);
+  }
+
+  /* A highlight sweep across the very top of each card — the detail that
+     makes a surface look manufactured rather than drawn. */
+  .card::before {
+    content: '';
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 1px;
+    border-radius: var(--radius-card) var(--radius-card) 0 0;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      var(--surface-inset-top) 18%,
+      var(--surface-inset-top) 82%,
+      transparent 100%
+    );
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .card-interactive {
+    cursor: pointer;
+    /* Only transform and box-shadow animate; both are compositor-friendly.
+       120ms is about the threshold where a hover reads as responsive rather
+       than as something easing into place. */
+    transition:
+      transform 0.12s var(--ease-out-expo),
+      box-shadow 0.12s var(--ease-out-expo),
+      border-color 0.1s ease;
+  }
+  .card-interactive:hover {
+    transform: translateY(-1.5px);
+    border-color: color-mix(in srgb, var(--color-ink) 13%, transparent);
+    box-shadow:
+      inset 0 1px 0 var(--surface-inset-top),
+      0 1px 2px var(--shadow-contact),
+      0 10px 22px -10px var(--shadow-mid),
+      0 24px 44px -24px var(--shadow-ambient);
+  }
+  .card-interactive:active {
+    transform: translateY(0);
+    transition-duration: 0.05s;
+  }
+
+  /* Sunken well — for insets like the note list and timetable gutters. */
+  .well {
+    background: var(--surface-sunken);
+    border: 1px solid var(--edge);
+    border-radius: 12px;
+    box-shadow: inset 0 2px 5px -2px var(--shadow-contact);
+  }
+
+  .surface-header {
+    background: var(--surface-header);
+  }
+  .surface-raise {
+    background: var(--surface-raise);
+  }
+
+  /* ── Type ────────────────────────────────────────────────────────── */
+  .display {
+    font-weight: 680;
+    letter-spacing: -0.035em;
+    line-height: 1.03;
+  }
+
+  /* Headline gradient with real travel — ink through to a mid grey. */
+  .display-gradient {
+    background: linear-gradient(
+      150deg,
+      var(--color-ink) 0%,
+      var(--color-ink) 32%,
+      color-mix(in srgb, var(--color-ink) 42%, var(--color-muted)) 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* ── Swoop ───────────────────────────────────────────────────────────
+     The hand-drawn underline from Prospect: a gradient-filled word with an
+     amber SVG stroke swooping beneath it. Applied to one word inside a
+     heading, never the whole line. ── */
+  .swoop {
+    position: relative;
+    display: inline-block;
+    white-space: nowrap;
+  }
+  .swoop > .swoop-text {
+    background: linear-gradient(
+      100deg,
+      var(--grad-a) 0%,
+      var(--grad-b) 52%,
+      var(--grad-c) 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .swoop > svg {
+    position: absolute;
+    left: 0;
+    bottom: -0.2em;
+    width: 100%;
+    height: 0.36em;
+    overflow: visible;
+    pointer-events: none;
+    color: var(--swoop-stroke);
+  }
+
+  /* Small label rule, for section headings. */
+  .label-rule {
+    display: inline-block;
+    width: 18px;
+    height: 2px;
+    border-radius: 1px;
+    background: linear-gradient(90deg, var(--color-ink), transparent);
+  }
+
+  .prose-measure {
+    max-width: 68ch;
+  }
+
+  /* ── Accent bar ──────────────────────────────────────────────────────
+     Vertical gradient rule used as a left marker on live rows. ── */
+  .accent-bar {
+    background: linear-gradient(
+      180deg,
+      transparent 0%,
+      var(--color-accent) 18%,
+      var(--color-accent) 82%,
+      transparent 100%
+    );
+  }
+
+  /* ── Gradient tile ───────────────────────────────────────────────────
+     A saturated icon holder. One per card at most — these carry the colour
+     in an otherwise monochrome interface. ── */
+  .grad-tile {
+    position: relative;
+    display: grid;
+    place-items: center;
+    border-radius: 0.7rem;
+    color: #fff;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.3),
+      0 1px 2px var(--shadow-contact),
+      0 4px 10px -4px var(--shadow-mid);
+  }
+  .grad-tile::after {
+    content: '';
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 1px;
+    border-radius: inherit;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.45), transparent);
+  }
+
+  /* ── Hero band ───────────────────────────────────────────────────────
+     A wide tinted strip behind a page heading. Gives each page a sense of
+     place without a full-bleed image. ── */
+  .hero-band {
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--radius-card);
+    border: 1px solid var(--edge);
+    background:
+      radial-gradient(28rem 14rem at 8% -40%, var(--wall-bloom-1), transparent 62%),
+      radial-gradient(24rem 12rem at 92% 140%, var(--wall-bloom-3), transparent 60%),
+      var(--surface-raise);
+    box-shadow: inset 0 1px 0 var(--surface-inset-top);
+  }
+
+  /* ── Corner notch ────────────────────────────────────────────────────
+     A small diagonal gradient mark in a card's top-right. Pure decoration,
+     but it stops large empty cards reading as unfinished boxes. ── */
+  .notch {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 4.5rem;
+    height: 4.5rem;
+    border-top-right-radius: inherit;
+    pointer-events: none;
+    opacity: 0.5;
+    background: radial-gradient(
+      circle at 100% 0,
+      color-mix(in srgb, var(--color-accent) 22%, transparent),
+      transparent 70%
+    );
+  }
+
+  /* ── Stat ring ───────────────────────────────────────────────────────
+     Conic progress ring, used where a bar would be too wide. ── */
+  .stat-ring {
+    border-radius: 999px;
+    background: conic-gradient(
+      var(--color-ink) calc(var(--pct) * 1%),
+      color-mix(in srgb, var(--color-ink) 10%, transparent) 0
+    );
+    mask: radial-gradient(farthest-side, transparent calc(100% - 4px), #000 calc(100% - 3px));
+    -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 4px), #000 calc(100% - 3px));
+  }
+
+  /* Dotted leader — joins a label to a value across a row. */
+  .leader {
+    flex: 1;
+    height: 1px;
+    background-image: linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--color-ink) 22%, transparent) 1px,
+      transparent 1px
+    );
+    background-size: 5px 1px;
+    background-repeat: repeat-x;
+    background-position: left center;
+  }
+
+  /* ── CSS stagger ─────────────────────────────────────────────────────
+     Replaces Framer Motion's variant stagger on long lists. A JS-driven
+     stagger means one animation instance and one subscription per row —
+     on a 40-row timetable that is 40 React re-render loops a frame. This
+     is one keyframe on the compositor, and the delay comes from an index
+     custom property, so a list of any length costs the same.
+
+     Cap the index at 14 in the caller; past that the delay is capped here
+     anyway, so late rows arrive together instead of trickling. ── */
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translate3d(0, 5px, 0);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  .rise {
+    animation: rise 0.22s var(--ease-out-expo) both;
+    animation-delay: calc(min(var(--i, 0) * 18ms, 260ms));
+  }
+  /* Fade-only variant for dense grids where movement would read as noise. */
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  .fade-in {
+    animation: fade-in 0.18s var(--ease-out-expo) both;
+    animation-delay: calc(min(var(--i, 0) * 12ms, 200ms));
+  }
+
+  @keyframes sheen {
+    0% {
+      background-position: -200% 0;
+    }
+    100% {
+      background-position: 200% 0;
+    }
+  }
+  .shimmer {
+    background: linear-gradient(
+      90deg,
+      var(--color-paper-raise) 25%,
+      color-mix(in srgb, var(--color-paper-raise) 55%, var(--color-paper)) 50%,
+      var(--color-paper-raise) 75%
+    );
+    background-size: 200% 100%;
+    animation: sheen 1.6s ease-in-out infinite;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  .text-pretty {
+    text-wrap: pretty;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .card-interactive:hover {
+    transform: none;
+  }
+}
