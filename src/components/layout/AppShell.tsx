@@ -296,7 +296,7 @@ export function AppShell() {
                 page's exit animation to finish before the next one mounts,
                 which is what made page changes feel laggy. The new page now
                 mounts immediately and fades up on its own. */}
-            <div ref={scrollRef} className="min-h-0 flex-1 overflow-y-auto overscroll-contain">
+            <div ref={scrollRef} className="scroll-smooth-local min-h-0 flex-1 overflow-y-auto overscroll-contain">
               <motion.main
                 key={location.pathname}
                 initial={{ opacity: 0, y: 3 }}

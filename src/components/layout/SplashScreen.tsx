@@ -3,36 +3,19 @@ import * as React from 'react';
 import { Logo } from '@/components/ui/Logo';
 
 /**
- * A short, one-time startup animation — the "studio ident" beat before the
- * app proper appears. Logo draws in, holds for a breath, then the whole
- * screen wipes away to reveal the real UI underneath (already mounted and
- * rendering behind it, so there is no extra load time, just a cosmetic
- * delay).
+ * A short startup animation — the "studio ident" beat before the app proper
+ * appears. Logo draws in, holds for a breath, then the whole screen wipes
+ * away to reveal the real UI underneath (already mounted and rendering
+ * behind it, so there is no extra load time, just a cosmetic delay).
  *
- * Plays once per browser/app session via sessionStorage, not on every
- * reload loop during development and not on every route change — this is a
- * startup flourish, not a page transition.
+ * Plays every time the app is launched fresh (a new tab/window or the
+ * desktop app opening) — `App` mounts exactly once per launch, so no extra
+ * gating is needed, and a gate keyed on sessionStorage would just make the
+ * animation silently stop appearing the moment a webview reuses one.
  */
-const SEEN_KEY = 'scholar:splashSeen';
-
 export function useSplashVisible() {
-  const [visible, setVisible] = React.useState(() => {
-    try {
-      return sessionStorage.getItem(SEEN_KEY) !== '1';
-    } catch {
-      return true;
-    }
-  });
-
-  const dismiss = React.useCallback(() => {
-    try {
-      sessionStorage.setItem(SEEN_KEY, '1');
-    } catch {
-      /* private browsing — just skip persisting, it replays next launch */
-    }
-    setVisible(false);
-  }, []);
-
+  const [visible, setVisible] = React.useState(true);
+  const dismiss = React.useCallback(() => setVisible(false), []);
   return { visible, dismiss };
 }
 

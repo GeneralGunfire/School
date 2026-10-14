@@ -19,10 +19,14 @@ export function Logo({ size = 96, className }: { size?: number; className?: stri
       aria-label="Scholar"
     >
       <defs>
+        {/* Literal hex, not `var(--grad-a)`: some WebViews (older WebView2/
+            Edge in particular) don't resolve CSS custom properties inside
+            SVG presentation attributes like `stop-color`, and silently fall
+            back to black instead of the fallback value. */}
         <linearGradient id="logo-grad" x1="12" y1="8" x2="84" y2="88" gradientUnits="userSpaceOnUse">
-          <stop offset="0%" stopColor="var(--grad-a, #16306e)" />
-          <stop offset="55%" stopColor="var(--grad-b, #2563eb)" />
-          <stop offset="100%" stopColor="var(--grad-c, #38a8e8)" />
+          <stop offset="0%" stopColor="#16306e" />
+          <stop offset="55%" stopColor="#2563eb" />
+          <stop offset="100%" stopColor="#38a8e8" />
         </linearGradient>
         <linearGradient id="logo-page" x1="0" y1="0" x2="0" y2="1">
           <stop offset="0%" stopColor="white" stopOpacity="0.95" />
@@ -48,8 +52,8 @@ export function Logo({ size = 96, className }: { size?: number; className?: stri
       <path d="M48 35v45" stroke="white" strokeOpacity="0.55" strokeWidth="2" strokeLinecap="round" />
 
       {/* Three page-lines on each side, echoing the sidebar Mark's rule motif. */}
-      <path d="M28 40h12M28 47h14M28 54h11" stroke="var(--grad-b, #2563eb)" strokeOpacity="0.55" strokeWidth="2.4" strokeLinecap="round" />
-      <path d="M56 40h12M54 47h14M57 54h11" stroke="var(--grad-b, #2563eb)" strokeOpacity="0.55" strokeWidth="2.4" strokeLinecap="round" />
+      <path d="M28 40h12M28 47h14M28 54h11" stroke="#2563eb" strokeOpacity="0.55" strokeWidth="2.4" strokeLinecap="round" />
+      <path d="M56 40h12M54 47h14M57 54h11" stroke="#2563eb" strokeOpacity="0.55" strokeWidth="2.4" strokeLinecap="round" />
     </svg>
   );
 }

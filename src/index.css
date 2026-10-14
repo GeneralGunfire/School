@@ -281,18 +281,18 @@
     scrollbar-color: var(--color-hairline-strong) transparent;
   }
 
-  /* Smooth, momentum-based scrolling everywhere, and native momentum on
-     iOS/touch devices where it isn't on by default. */
-  html,
-  body {
-    scroll-behavior: smooth;
+  /* Native touch momentum everywhere scrolling happens, and contained
+     overscroll so a nested panel doesn't drag the whole page with it.
+     `scroll-behavior: smooth` is deliberately NOT global: it would also
+     catch programmatic `scrollTo` calls (route changes resetting to top),
+     turning an instant reset into a visible animated scroll. It's applied
+     narrowly instead, only to the in-page "jump to heading" contents nav. */
+  * {
     -webkit-overflow-scrolling: touch;
   }
   .overflow-y-auto,
   .overflow-x-auto,
   .overflow-auto {
-    scroll-behavior: smooth;
-    -webkit-overflow-scrolling: touch;
     overscroll-behavior: contain;
   }
   *::-webkit-scrollbar {
@@ -641,6 +641,10 @@
   }
   .text-pretty {
     text-wrap: pretty;
+  }
+  /* Opt-in smooth scroll for in-page "jump to section" navigation only. */
+  .scroll-smooth-local {
+    scroll-behavior: smooth;
   }
 }
 

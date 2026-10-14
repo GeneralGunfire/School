@@ -1,6 +1,6 @@
 import {
   BookOpen, Check, ChevronLeft, ChevronRight, Clock, List, Lock,
-  Volume2, VolumeX, Headphones, Pause, Play, Footprints, ArrowRight, Bot, Copy,
+  Volume2, VolumeX, Headphones, Pause, Play, Footprints, ArrowRight, Bot, Copy, Sparkles,
 } from 'lucide-react';
 import { useNavigate, useParams } from 'react-router-dom';
 import * as React from 'react';
@@ -14,7 +14,7 @@ import { chaptersFor, getChapter, getLesson, hasContent } from '@/data/library';
 import { useStore } from '@/store/AppStore';
 import { cn } from '@/lib/utils';
 import { useListen, type ListenMode } from '@/lib/tts';
-import { CreateAcronymButton } from '@/components/acronym/AcronymBuilder';
+import { SelectionCapture, type SelectionCaptureHandle } from '@/components/acronym/SelectionCapture';
 import { getChapterPaper } from '@/data/library';
 import type { MasteryLevel, SubjectId, Lesson } from '@/lib/types';
 import {
@@ -365,6 +365,7 @@ function LessonReader({ lessonId }: { lessonId: string }) {
 
   const mastery = progress[lesson.id]?.mastery ?? 'not-started';
   const wide = mode === 'split' || mode === 'hover';
+  const selectionRef = React.useRef<SelectionCaptureHandle>(null);
 
   return (
     <div className="mx-auto flex w-full justify-center gap-12">
@@ -399,10 +400,19 @@ function LessonReader({ lessonId }: { lessonId: string }) {
           {!isMathSubject && (
             <ListenControls listen={listen} />
           )}
-          <CreateAcronymButton subjectId={lesson.subjectId} paper={getChapterPaper(lesson.chapterId)} className="ml-auto" />
+          <button
+            onClick={() => selectionRef.current?.openBlank()}
+            title="Select any sentence in this lesson to add it straight in, or click to start blank"
+            className="ml-auto flex items-center gap-1.5 rounded-xl border border-accent/40 bg-accent-wash px-3 py-1.5 text-[12.5px] font-medium text-accent-strong transition-all duration-150 hover:border-accent/60"
+          >
+            <Sparkles className="size-3.5" aria-hidden />
+            Create an acronym
+          </button>
         </div>
 
-        <TranslatableLesson lesson={lesson} mode={translatable ? mode : 'off'} visibleBlocks={visibleBlocks} isMath={isMathSubject} />
+        <SelectionCapture ref={selectionRef} subjectId={lesson.subjectId} paper={getChapterPaper(lesson.chapterId)}>
+          <TranslatableLesson lesson={lesson} mode={translatable ? mode : 'off'} visibleBlocks={visibleBlocks} isMath={isMathSubject} />
+        </SelectionCapture>
 
         {/* Step mode controls */}
         {stepMode && (
