@@ -1,8 +1,9 @@
 import { AnimatePresence, motion } from 'motion/react';
-import { Bell, CalendarDays, ChevronRight, Clock, ListChecks, Moon, Radio, Sun } from 'lucide-react';
+import { Bell, CalendarDays, ChevronRight, Clock, ListChecks, Menu, Moon, Radio, Sun } from 'lucide-react';
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import * as React from 'react';
-import { Sidebar } from './Sidebar';
+import { MobileSidebar, Sidebar } from './Sidebar';
+import { TitleBar } from './TitleBar';
 import { IconTile, Panel } from '@/components/ui/primitives';
 
 import { useTheme } from '@/store/ThemeProvider';
@@ -16,6 +17,7 @@ const TITLES: Record<string, string> = {
   calendar: 'Calendar',
   subjects: 'Subjects',
   notes: 'Notes',
+  acronyms: 'Acronyms & key notes',
   settings: 'Settings',
 };
 
@@ -199,7 +201,13 @@ function NotificationBell() {
   );
 }
 
-function Header({ extra }: { extra: { label: string; to?: string }[] }) {
+function Header({
+  extra,
+  onMenu,
+}: {
+  extra: { label: string; to?: string }[];
+  onMenu: () => void;
+}) {
   const { pathname } = useLocation();
   const root = pathname.split('/')[1] ?? '';
   const title = TITLES[root] ?? 'Scholar';
@@ -209,8 +217,15 @@ function Header({ extra }: { extra: { label: string; to?: string }[] }) {
       className="surface-header sticky top-0 z-30 shrink-0 border-b"
       style={{ borderColor: 'var(--edge)', boxShadow: '0 1px 3px -1px var(--shadow-contact)' }}
     >
-      <div className="flex h-15 items-center justify-between gap-4 px-5">
-        <nav aria-label="Breadcrumb" className="flex min-w-0 items-center gap-1 text-[13px]">
+      <div className="flex h-14 items-center justify-between gap-2 px-3 sm:h-15 sm:gap-4 sm:px-5">
+        <button
+          onClick={onMenu}
+          aria-label="Open menu"
+          className={HEADER_BTN + ' lg:hidden'}
+        >
+          <Menu className="size-4 text-muted" aria-hidden />
+        </button>
+        <nav aria-label="Breadcrumb" className="flex min-w-0 flex-1 items-center gap-1 overflow-x-auto text-[13px]">
           <Link
             to={root === '' ? '/' : `/${root}`}
             className={cn(
@@ -244,8 +259,8 @@ function Header({ extra }: { extra: { label: string; to?: string }[] }) {
           })}
         </nav>
 
-        <div className="flex shrink-0 items-center gap-2">
-          <span className="mr-1 text-[12.5px] text-muted-2">{formatLongDate(new Date())}</span>
+        <div className="flex shrink-0 items-center gap-1.5 sm:gap-2">
+          <span className="mr-1 hidden text-[12.5px] text-muted-2 md:inline">{formatLongDate(new Date())}</span>
           <NotificationBell />
           <ThemeButton />
         </div>
@@ -257,26 +272,31 @@ function Header({ extra }: { extra: { label: string; to?: string }[] }) {
 export function AppShell() {
   const location = useLocation();
   const [crumbs, setCrumbs] = React.useState<{ label: string; to?: string }[]>([]);
+  const [menuOpen, setMenuOpen] = React.useState(false);
   const scrollRef = React.useRef<HTMLDivElement>(null);
   const ctx = React.useMemo(() => ({ setCrumbs }), []);
 
   React.useEffect(() => {
     scrollRef.current?.scrollTo({ top: 0 });
+    setMenuOpen(false);
   }, [location.pathname]);
 
   return (
     <CrumbCtx.Provider value={ctx}>
-      <div className="app-wallpaper flex h-screen overflow-hidden">
+      <div className="app-wallpaper flex h-screen flex-col overflow-hidden">
+        <TitleBar />
+        <div className="flex min-h-0 flex-1">
         <Sidebar />
-        <div className="flex min-w-0 flex-1 flex-col p-3">
+        <MobileSidebar open={menuOpen} onClose={() => setMenuOpen(false)} />
+        <div className="flex min-w-0 flex-1 flex-col p-1.5 sm:p-3">
           <div className="card flex min-h-0 flex-1 flex-col overflow-hidden">
-            <Header extra={crumbs} />
+            <Header extra={crumbs} onMenu={() => setMenuOpen(true)} />
             {/* No AnimatePresence here on purpose.
                 `mode="wait"` makes every navigation wait for the outgoing
                 page's exit animation to finish before the next one mounts,
                 which is what made page changes feel laggy. The new page now
                 mounts immediately and fades up on its own. */}
-            <div ref={scrollRef} className="min-h-0 flex-1 overflow-y-auto">
+            <div ref={scrollRef} className="min-h-0 flex-1 overflow-y-auto overscroll-contain">
               <motion.main
                 key={location.pathname}
                 initial={{ opacity: 0, y: 3 }}
@@ -288,6 +308,7 @@ export function AppShell() {
             </div>
           </div>
         </div>
+      </div>
       </div>
     </CrumbCtx.Provider>
   );

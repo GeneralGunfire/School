@@ -1,0 +1,142 @@
+import type { Lesson, LessonBlock } from '../../lib/types';
+import { r, h2, note, qs, lesson as make, ANSWERS_NOTE } from './geomKit';
+
+/**
+ * Unit 6 end matter: Revision 13 questions 5–11 (book pp. 188–189; photos …911), the acceptable
+ * reasons for Euclidean geometry (pp. 197–200) and the information sheet (p. 201); photos …913 – …915.
+ */
+
+const lesson = (id: string, title: string, minutes: number, blocks: Parameters<typeof make>[4]) =>
+  make('geom-revision', id, title, minutes, blocks);
+
+const table = (rows: [string, string][]): Omit<LessonBlock, 'id'> => ({
+  type: 'definitions',
+  rows: rows.map(([term, meaning]) => ({ term, meaning })),
+});
+
+export const REVISION_G = lesson('geom-rev-g-final-cont', 'F. Final Exemplar (continued)', 30, [
+  h2('Revision 13 (continued)'),
+  ANSWERS_NOTE,
+  note(r`Question 9.2 and 9.3 refer to a figure whose angle labels ($B_1$, $B_2$) are too small to read reliably, so only 9.1 is answered.`),
+  qs([
+    { n: '5.1', marks: 4, context: r`$O$ is the centre of the circle, $OD=7$ cm, $AD=DB=24$ cm, $OD\perp AB$ at $D$.`, q: r`The diameter of the circle.`, a: r`$OA^2=OD^2+AD^2=49+576=625\Rightarrow r=25$, so the diameter is $50$ cm.` },
+    { n: '5.2', marks: 1, context: r`Same figure ($C$ is where line $OD$ meets the circle).`, q: r`$CD$`, a: r`$CD=OC-OD=25-7=18$ cm.` },
+    { n: '5.3', marks: 4, context: r`Same figure.`, q: r`The area of triangle $ACD$.`, a: r`$\text{Area}=\tfrac12\cdot AD\cdot CD=\tfrac12\cdot24\cdot18=216\text{ cm}^2$.` },
+    { n: '6.1', marks: 2, context: r`$O$ is the centre, $AB\parallel OC$ and $A\hat CO=13^\circ$.`, q: r`Angle $BAC$ (with reasons).`, a: r`$B\hat AC=A\hat CO=13^\circ$ (alt $\angle$s; $AB\parallel OC$).` },
+    { n: '6.2', marks: 3, context: r`Same figure.`, q: r`Angle $ABO$ (with reasons).`, a: r`$B\hat OC=2\cdot13^\circ=26^\circ$ ($\angle$ at centre $=2\angle$ at circumference). $A\hat BO=B\hat OC=26^\circ$ (alt $\angle$s; $AB\parallel OC$).` },
+    { n: '7.1.1', marks: 3, context: r`$\sin\alpha=\dfrac59$ for $90^\circ<\alpha<270^\circ$ (second quadrant).`, q: r`$\sec\alpha$`, a: r`$y=5$, $r=9$, $x=-\sqrt{56}=-2\sqrt{14}$. $\sec\alpha=\dfrac rx=-\dfrac{9}{2\sqrt{14}}=-\dfrac{9\sqrt{14}}{28}$.` },
+    { n: '7.1.2', marks: 3, context: r`Same.`, q: r`$\tan\alpha\cdot\sec\alpha$`, a: r`$\tan\alpha=\dfrac{5}{-2\sqrt{14}}$: $\dfrac{5}{-2\sqrt{14}}\cdot\dfrac{9}{-2\sqrt{14}}=\dfrac{45}{56}$.` },
+    { n: '7.2.1', marks: 3, q: r`$\dfrac{\sin(270^\circ-x)}{\cos(-x)}$ ($0<x<90^\circ$)`, a: r`$\dfrac{-\cos x}{\cos x}=-1$.` },
+    { n: '7.2.2', marks: 3, q: r`$\dfrac{\sin240^\circ\times\sin(-30^\circ)}{\cos(-150^\circ)\times\cos0^\circ}$`, a: r`$\dfrac{\left(-\frac{\sqrt3}2\right)\left(-\frac12\right)}{\left(-\frac{\sqrt3}2\right)(1)}=-\dfrac12$.` },
+    { n: '7.2.3', marks: 5, q: r`Prove $\dfrac1{1-\sin x}-\dfrac1{1+\sin x}=\dfrac{2\tan x}{\cos x}$.`, a: r`LHS $=\dfrac{(1+\sin x)-(1-\sin x)}{1-\sin^2x}=\dfrac{2\sin x}{\cos^2x}=\dfrac{2\tan x}{\cos x}=$ RHS.` },
+    { n: '8.1', marks: 6, context: r`$f(x)=2\sin2x$ and $g(x)=1-\cos x$, $x\in[-90^\circ;180^\circ]$.`, q: r`Showing all intercepts, sketch both graphs on the same axes.`, a: r`$f$: zeros at $-90^\circ,0^\circ,90^\circ,180^\circ$; maximum $2$ at $45^\circ$, minimum $-2$ at $-45^\circ$ and $135^\circ$. $g$: $y$-intercept $0$; minimum $0$ at $0^\circ$; $g(90^\circ)=1$, $g(180^\circ)=2$, $g(-90^\circ)=1$.` },
+    { n: '8.2', marks: 2, context: r`Same functions.`, q: r`Write the period of $f$ and the range of $g$.`, a: r`Period of $f$: $180^\circ$. Range of $g$: $y\in[0;\,2]$.` },
+    { n: '9.1', marks: 3, context: r`$AC=10$, $AD=11$, $DB=12$, $DC=13$ (all in cm).`, q: r`The magnitude of angle $A$ (in $\triangle ACD$).`, a: r`Cosine rule: $\cos A=\dfrac{10^2+11^2-13^2}{2\cdot10\cdot11}=\dfrac{52}{220}\Rightarrow A=76{,}3^\circ$.` },
+    { n: '10.1', marks: 3, context: r`Race times (min), 13 runners: $19,21,16,22,27,20,25,34,19,22,13,30,22$.`, q: r`The mean time.`, a: r`$\bar x=\dfrac{290}{13}=22{,}31$ min.` },
+    { n: '10.2', marks: 4, context: r`Same data.`, q: r`The standard deviation.`, a: r`$\sigma=\sqrt{\dfrac{\sum(x-\bar x)^2}{13}}=5{,}41$ min.` },
+    { n: '10.3', marks: 4, context: r`Same data.`, q: r`The range and IQR.`, a: r`Sorted: $13,16,19,19,20,21,22,22,22,25,27,30,34$. Range $=34-13=21$. $Q_1=\dfrac{19+19}2=19$, $Q_3=\dfrac{25+27}2=26$, $\text{IQR}=7$.` },
+    { n: '11.1', marks: 3, context: r`Marks and learners: $31$–$40$: $2$; $41$–$50$: $5$; $51$–$60$: ?; $61$–$70$: ?; $71$–$80$: ?; $81$–$90$: $7$. Cumulative frequency given: $16$ (at $51$–$60$), $30$, $43$.`, q: r`Complete the table.`, a: r`Cumulative $2,\,7,\,16,\,30,\,43,\,50$. Learners $2,\,5,\,9,\,14,\,13,\,7$.` },
+    { n: '11.2', marks: 3, context: r`Same data.`, q: r`Draw an ogive.`, a: r`Plot the cumulative frequencies at the upper class boundaries: $(40{,}5;2),(50{,}5;7),(60{,}5;16),(70{,}5;30),(80{,}5;43),(90{,}5;50)$, starting from $(30{,}5;0)$.` },
+    { n: '11.3', marks: 5, context: r`The lowest learner got $33$ and the highest $90$.`, q: r`Draw a box and whisker diagram.`, a: r`From the ogive: $Q_1$ (the $12{,}5^{\text{th}}$) $\approx57$, median (the $25^{\text{th}}$) $\approx67$, $Q_3$ (the $37{,}5^{\text{th}}$) $\approx76$. Five numbers: $33,\,57,\,67,\,76,\,90$.` },
+    { n: '11.4', marks: 3, context: r`Same data.`, q: r`Comment on the spread of data.`, a: r`The left part of the box ($57$ to $67$) is longer than the right ($67$ to $76$) and the left whisker is longer than the right: the data is slightly skewed to the left (negatively skewed); most learners scored in the upper half.` },
+  ]),
+]);
+
+export const REFERENCE_SHEETS = lesson('geom-ref-reasons', 'Acceptable Reasons and Information Sheet', 25, [
+  h2('Acceptable reasons: Lines'),
+  table([
+    ['The adjacent angles on a straight line are supplementary.', '∠s on a str line'],
+    ['If adjacent angles are supplementary, the outer arms of these angles form a straight line.', 'adj ∠s supp'],
+    ['The adjacent angles in a revolution add up to 360°.', '∠s round a pt OR ∠s in a rev'],
+    ['Vertically opposite angles are equal.', 'vert opp ∠s ='],
+    ['If AB ∥ CD, then the alternate angles are equal.', 'alt ∠s; AB ∥ CD'],
+    ['If AB ∥ CD, then the corresponding angles are equal.', 'corresp ∠s; AB ∥ CD'],
+    ['If AB ∥ CD, then the co-interior angles are supplementary.', 'co-int ∠s; AB ∥ CD'],
+    ['If the alternate angles between two lines are equal, then the lines are parallel.', 'alt ∠s ='],
+    ['If the corresponding angles between two lines are equal, then the lines are parallel.', 'corresp ∠s ='],
+    ['If the co-interior angles between two lines are supplementary, then the lines are parallel.', 'coint ∠s supp'],
+  ]),
+  h2('Acceptable reasons: Triangles'),
+  table([
+    ['The interior angles of a triangle add up to 180°.', '∠ sum in Δ OR sum of ∠s in Δ OR Int ∠s Δ'],
+    ['The exterior angle of a triangle is equal to the sum of the interior opposite angles.', 'ext ∠ of Δ'],
+    ['The angles opposite the equal sides in an isosceles triangle are equal.', '∠s opp equal sides'],
+    ['The sides opposite the equal angles in an isosceles triangle are equal.', 'sides opp equal ∠s'],
+    ['In a right-angled triangle, the square of the hypotenuse is equal to the sum of the squares of the other two sides.', 'Pythagoras OR Theorem of Pythagoras'],
+    ['If the square of the longest side in a triangle is equal to the sum of the squares of the other two sides then the triangle is right-angled.', 'Converse Pythagoras'],
+    ['If three sides of one triangle are respectively equal to three sides of another triangle, the triangles are congruent.', 'SSS'],
+    ['If two sides and an included angle of one triangle are respectively equal to two sides and an included angle of another triangle, the triangles are congruent.', 'SAS OR S∠S'],
+    ['If two angles and one side of one triangle are respectively equal to two angles and the corresponding side in another triangle, the triangles are congruent.', 'AAS OR ∠∠S'],
+    ['If in two right-angled triangles, the hypotenuse and one side of one triangle are respectively equal to the hypotenuse and one side of the other, the triangles are congruent.', 'RHS OR 90° HS'],
+    ['The line segment joining the midpoints of two sides of a triangle is parallel to the third side and equal to half the length of the third side.', 'Midpt Theorem'],
+    ['The line drawn from the midpoint of one side of a triangle, parallel to another side, bisects the third side.', 'line through midpt ∥ to 2nd side'],
+    ['A line drawn parallel to one side of a triangle divides the other two sides proportionally.', 'line ∥ one side of Δ OR prop theorem; name ∥ lines'],
+    ['If a line divides two sides of a triangle in the same proportion, then the line is parallel to the third side.', 'line divides two sides of Δ in prop'],
+    ['If two triangles are equiangular, then the corresponding sides are in proportion (and consequently the triangles are similar).', '||| Δs OR equiangular Δs'],
+    ['If the corresponding sides of two triangles are proportional, then the triangles are equiangular (and consequently similar).', 'Sides of Δ in prop'],
+    ['If triangles (or parallelograms) are on the same base (or on bases of equal length) and between the same parallel lines, then they have equal areas.', 'same base; same height OR equal bases; equal height'],
+  ]),
+  h2('Acceptable reasons: Circles'),
+  table([
+    ['The tangent to a circle is perpendicular to the radius/diameter at the point of contact.', 'tan ⊥ radius; tan ⊥ diameter'],
+    ['If a line is drawn perpendicular to a radius/diameter at the point where it meets the circle, then the line is a tangent to the circle.', 'line ⊥ radius OR converse tan ⊥ radius OR converse tan ⊥ diameter'],
+    ['The line drawn from the centre of a circle to the midpoint of a chord is perpendicular to the chord.', 'line from centre to midpt of chord'],
+    ['The line drawn from the centre of a circle perpendicular to a chord bisects the chord.', 'line from centre ⊥ to chord'],
+    ['The perpendicular bisector of a chord passes through the centre of the circle.', 'perp bisector of chord'],
+    ['The angle subtended by an arc at the centre of a circle is double the size of the angle subtended by the same arc at the circle (on the same side of the chord as the centre).', '∠ at centre = 2 · ∠ at circumference'],
+    ['The angle subtended by the diameter at the circumference of the circle is 90°.', '∠s in semi circle OR diameter subtends right angle OR ∠ in ½ ⊙'],
+    ['If the angle subtended by a chord at the circumference of the circle is 90°, then the chord is a diameter.', 'chord subtends 90° OR converse ∠s in semi circle'],
+    ['Angles subtended by a chord of the circle, on the same side of the chord, are equal.', '∠s in the same seg'],
+    ['If a line segment joining two points subtends equal angles at two points on the same side of the line segment, then the four points are concyclic.', 'line subtends equal ∠s OR converse ∠s in the same seg'],
+    ['Equal chords subtend equal angles at the circumference of the circle.', 'equal chords; equal ∠s'],
+    ['Equal chords subtend equal angles at the centre of the circle.', 'equal chords; equal ∠s'],
+    ['Equal chords in equal circles subtend equal angles at the circumference of the circles.', 'equal circles; equal chords; equal ∠s'],
+    ['Equal chords in equal circles subtend equal angles at the centre of the circles.', 'equal circles; equal chords; equal ∠s'],
+    ['The opposite angles of a cyclic quadrilateral are supplementary.', 'opp ∠s of cyclic quad'],
+    ['If the opposite angles of a quadrilateral are supplementary then the quadrilateral is cyclic.', 'opp ∠s quad supp OR converse opp ∠s of cyclic quad'],
+    ['The exterior angle of a cyclic quadrilateral is equal to the interior opposite angle.', 'ext ∠ of cyclic quad'],
+    ['If the exterior angle of a quadrilateral is equal to the interior opposite angle of the quadrilateral, then the quadrilateral is cyclic.', 'ext ∠ = int opp ∠ OR converse ext ∠ of cyclic quad'],
+    ['Two tangents drawn to a circle from the same point outside the circle are equal in length.', 'Tans from common pt OR Tans from same pt'],
+    ['The angle between the tangent to a circle and the chord drawn from the point of contact is equal to the angle in the alternate segment.', 'tan chord theorem'],
+    ['If a line is drawn through the end-point of a chord, making with the chord an angle equal to an angle in the alternate segment, then the line is a tangent to the circle.', 'converse tan chord theorem OR ∠ between line and chord'],
+  ]),
+  h2('Acceptable reasons: Quadrilaterals'),
+  table([
+    ['The interior angles of a quadrilateral add up to 360°.', 'sum of ∠s in quad'],
+    ['The opposite sides of a parallelogram are parallel.', 'opp sides of ∥m'],
+    ['If the opposite sides of a quadrilateral are parallel, then the quadrilateral is a parallelogram.', 'opp sides of quad are ∥'],
+    ['The opposite sides of a parallelogram are equal in length.', 'opp sides of ∥m'],
+    ['If the opposite sides of a quadrilateral are equal, then the quadrilateral is a parallelogram.', 'opp sides of quad are = OR converse opp sides of a parm'],
+    ['The opposite angles of a parallelogram are equal.', 'opp ∠s of ∥m'],
+    ['If the opposite angles of a quadrilateral are equal, then the quadrilateral is a parallelogram.', 'opp ∠s of quad are = OR converse opp angles of a parm'],
+    ['The diagonals of a parallelogram bisect each other.', 'diag of ∥m'],
+    ['If the diagonals of a quadrilateral bisect each other, then the quadrilateral is a parallelogram.', 'diags of quad bisect each other OR converse diags of a parm'],
+    ['If one pair of opposite sides of a quadrilateral are equal and parallel, then the quadrilateral is a parallelogram.', 'pair of opp sides = and ∥'],
+    ['The diagonals of a parallelogram bisect its area.', 'diag bisect area of ∥m'],
+    ['The diagonals of a rhombus bisect at right angles.', 'diags of rhombus'],
+    ['The diagonals of a rhombus bisect the interior angles.', 'diags of rhombus'],
+    ['All four sides of a rhombus are equal in length.', 'sides of rhombus'],
+    ['All four sides of a square are equal in length.', 'sides of square'],
+    ['The diagonals of a rectangle are equal in length.', 'diags of rect'],
+    ['The diagonals of a kite intersect at right angles.', 'diags of kite'],
+    ['A diagonal of a kite bisects the other diagonal.', 'diag of kite'],
+    ['A diagonal of a kite bisects the opposite angles.', 'diag of kite'],
+  ]),
+  note(r`The book’s reasons table prints “The interior angles of a triangle are supplementary”; the correct statement is that they add up to $180^\circ$, which is how it is given here.`),
+
+  h2('Information sheet: Mathematics'),
+  { type: 'math', label: 'Quadratic formula', text: r`x=\dfrac{-b\pm\sqrt{b^2-4ac}}{2a}` },
+  { type: 'math', label: 'Finance', text: r`A=P(1+ni)\quad A=P(1-ni)\quad A=P(1-i)^n\quad A=P(1+i)^n` },
+  { type: 'math', label: 'Finance (annuities)', text: r`F=\dfrac{x\left[(1+i)^n-1\right]}{i}\qquad P=\dfrac{x\left[1-(1+i)^{-n}\right]}{i}` },
+  { type: 'math', label: 'Sequences and series', text: r`T_n=a+(n-1)d\quad S_n=\dfrac n2\left(2a+(n-1)d\right)\quad T_n=ar^{n-1}\quad S_n=\dfrac{a(r^n-1)}{r-1};\,r\ne1\quad S_\infty=\dfrac a{1-r};\,-1<r<1` },
+  { type: 'math', label: 'Calculus', text: r`f'(x)=\lim_{h\to0}\dfrac{f(x+h)-f(x)}{h}` },
+  { type: 'math', label: 'Analytical geometry', text: r`d=\sqrt{(x_2-x_1)^2+(y_2-y_1)^2}\qquad M\left(\dfrac{x_1+x_2}2;\dfrac{y_1+y_2}2\right)\qquad y=mx+c\qquad y-y_1=m(x-x_1)\qquad m=\dfrac{y_2-y_1}{x_2-x_1}\qquad m=\tan\theta\qquad(x-a)^2+(y-b)^2=r^2` },
+  { type: 'math', label: 'Trigonometry: triangle rules', text: r`\dfrac a{\sin A}=\dfrac b{\sin B}=\dfrac c{\sin C}\qquad a^2=b^2+c^2-2bc\cos A\qquad\text{area }\triangle ABC=\tfrac12ab\sin C` },
+  { type: 'math', label: 'Compound and double angles', text: r`\sin(\alpha\pm\beta)=\sin\alpha\cos\beta\pm\cos\alpha\sin\beta\qquad\cos(\alpha\pm\beta)=\cos\alpha\cos\beta\mp\sin\alpha\sin\beta` },
+  { type: 'math', text: r`\cos2\alpha=\cos^2\alpha-\sin^2\alpha=1-2\sin^2\alpha=2\cos^2\alpha-1\qquad\sin2\alpha=2\sin\alpha\cos\alpha` },
+  { type: 'math', label: 'Statistics and probability', text: r`\bar x=\dfrac{\sum x}n\qquad\sigma^2=\dfrac{\sum_{i=1}^n(x_i-\bar x)^2}n\qquad P(A)=\dfrac{n(A)}{n(S)}\qquad P(A\text{ or }B)=P(A)+P(B)-P(A\text{ and }B)` },
+  { type: 'math', label: 'Regression line', text: r`\hat y=a+bx\qquad b=\dfrac{\sum(x-\bar x)(y-\bar y)}{\sum(x-\bar x)^2}` },
+  note(r`The Euclidean-geometry and answer-key pages (…912–…915) were read in full. The printed answer key for Statistics Task 3 (p.196) gives a mean of $78{,}2$ and an SD of $13{,}28$ for question 1, and Task 1 question 4.1 gives a maximum of $92$; those differ from the answers in this app (read from the raw data in the photos), so check them against your book. Similar small differences exist for Analytical Geometry Task 5 questions 1 and 4 and Task 6 questions 3.2 and 4, where the book’s key reads $y=-2x-2$, $y=-2x-4$, $m=-1$ and $y=2x-2$: the printed questions in the photos are hard to read, so use the book’s key for those.`),
+]);
+
+export const GEOM_REVISION_E_LESSONS: Lesson[] = [REVISION_G, REFERENCE_SHEETS];

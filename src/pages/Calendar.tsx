@@ -484,7 +484,6 @@ export default function Calendar() {
   return (
     <Page width="wide">
       <PageTitle
-        eyebrow="Study planner"
         title="Study calendar"
         highlight="calendar"
         subtitle="Click any day to plan study blocks and write a reflection."

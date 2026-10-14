@@ -10,7 +10,6 @@ import { useStore } from '@/store/AppStore';
 import {
   addDays,
   cn,
-  formatLongDate,
   formatShortDate,
   formatTime,
   fromDayKey,
@@ -311,7 +310,6 @@ export default function Dashboard() {
   return (
     <Page>
       <PageTitle
-        eyebrow={formatLongDate(new Date())}
         title={`${greeting()}.`}
         highlight={greeting().split(" ")[1]}
         subtitle={

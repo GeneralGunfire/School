@@ -121,14 +121,14 @@
   --grad-steel: linear-gradient(142deg, #334155 0%, #475569 100%);
   --grad-teal: linear-gradient(142deg, #0e7490 0%, #0891b2 100%);
 
-  /* Wallpaper — blue blooms at varying depth. */
-  --wall-base: linear-gradient(170deg, #eef1f6 0%, #e7eaf1 46%, #dde1ea 100%);
-  --wall-bloom-1: rgba(37, 99, 235, 0.14);
-  --wall-bloom-2: rgba(30, 58, 138, 0.09);
-  --wall-bloom-3: rgba(56, 189, 248, 0.1);
-  --wall-bloom-4: rgba(8, 145, 178, 0.08);
-  --wall-dot: rgba(15, 23, 42, 0.06);
-  --wall-grid: rgba(15, 23, 42, 0.026);
+  /* Wallpaper — warm slate gradient with subtle colour blooms. */
+  --wall-base: linear-gradient(155deg, #f0eff5 0%, #e8e9f2 35%, #dfe1ed 65%, #d8dae8 100%);
+  --wall-bloom-1: rgba(99, 80, 200, 0.09);
+  --wall-bloom-2: rgba(147, 51, 234, 0.06);
+  --wall-bloom-3: rgba(37, 99, 235, 0.07);
+  --wall-bloom-4: rgba(16, 185, 129, 0.05);
+  --wall-dot: rgba(15, 10, 42, 0.055);
+  --wall-grid: rgba(15, 10, 42, 0.022);
 }
 
 /* ── Dark ──────────────────────────────────────────────────────────────── */
@@ -280,6 +280,21 @@
     scrollbar-width: thin;
     scrollbar-color: var(--color-hairline-strong) transparent;
   }
+
+  /* Smooth, momentum-based scrolling everywhere, and native momentum on
+     iOS/touch devices where it isn't on by default. */
+  html,
+  body {
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+  }
+  .overflow-y-auto,
+  .overflow-x-auto,
+  .overflow-auto {
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+  }
   *::-webkit-scrollbar {
     width: 11px;
     height: 11px;
@@ -321,14 +336,13 @@
     inset: 0;
     z-index: -1;
     pointer-events: none;
-    background-image:
-      radial-gradient(var(--wall-dot) 1px, transparent 1px),
-      linear-gradient(to right, var(--wall-grid) 1px, transparent 1px),
-      linear-gradient(to bottom, var(--wall-grid) 1px, transparent 1px);
-    background-size:
-      24px 24px,
-      132px 132px,
-      132px 132px;
+    background: linear-gradient(
+      168deg,
+      color-mix(in srgb, var(--wall-bloom-1) 12%, transparent) 0%,
+      transparent 40%,
+      color-mix(in srgb, var(--wall-bloom-3) 8%, transparent) 70%,
+      transparent 100%
+    );
   }
 
   /* ── Card ────────────────────────────────────────────────────────────
@@ -642,4 +656,16 @@
   .card-interactive:hover {
     transform: none;
   }
+}
+
+/* ── Maths (KaTeX) ─────────────────────────────────────────────────────── */
+/* Long working wraps at = + − instead of scrolling sideways. */
+.math-wrap .katex {
+  font-size: 1.08em;
+  white-space: normal;
+  text-wrap: wrap;
+}
+.math-wrap .katex .katex-html {
+  display: inline;
+  white-space: normal;
 }

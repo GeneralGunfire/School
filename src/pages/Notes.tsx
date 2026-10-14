@@ -159,7 +159,6 @@ export default function Notes() {
   return (
     <Page width="wide">
       <PageTitle
-        eyebrow="Your workings"
         title="My notes"
         highlight="notes"
         subtitle="One place per subject. Everything saves as you type."
@@ -171,8 +170,9 @@ export default function Notes() {
       />
 
       {/* min-h keeps the editor a usable height even when the note list is
-          short, instead of collapsing to its content. */}
-      <div className="grid min-h-[600px] grid-cols-[300px_1fr] gap-5">
+          short, instead of collapsing to its content. Stacks to a single
+          column below `lg`, where there isn't room for a fixed side list. */}
+      <div className="grid min-h-[600px] grid-cols-1 gap-5 lg:grid-cols-[300px_1fr]">
         {/* List */}
         <div className="flex min-h-0 flex-col gap-3">
           <div className="relative">

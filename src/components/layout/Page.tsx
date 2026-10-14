@@ -26,7 +26,7 @@ export function Page({
     full: 'max-w-none',
   }[width];
 
-  return <div className={cn('mx-auto w-full px-7 pb-16', max, className)}>{children}</div>;
+  return <div className={cn('mx-auto w-full px-4 pb-16 sm:px-7', max, className)}>{children}</div>;
 }
 
 /**
@@ -63,9 +63,11 @@ export function PageTitle({
 
       {/* Trailing controls align to the title's own line, not the bottom of
           the whole block — otherwise a long subtitle pushes them down and
-          they float beside the body text instead of the heading. */}
-      <div className="flex items-start justify-between gap-8">
-        <div className="min-w-0">
+          they float beside the body text instead of the heading. Below
+          `sm` there usually isn't room beside a full-width heading, so
+          trailing controls drop underneath instead of squeezing it. */}
+      <div className="flex flex-col items-start gap-4 sm:flex-row sm:items-start sm:justify-between sm:gap-8">
+        <div className="min-w-0 w-full sm:w-auto">
           {eyebrow && (
             <p className="mb-3 flex items-center gap-2.5 text-[0.68rem] font-bold tracking-[0.13em] text-muted-2 uppercase">
               <span className="label-rule" aria-hidden />

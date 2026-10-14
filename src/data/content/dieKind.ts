@@ -22,7 +22,6 @@ export const DIE_KIND_CHAPTER: Chapter = {
   subjectId: 'afrikaans',
   title: 'Die Kind — Inleiding',
   summary: 'Agtergrond, opsomming, karakters, temas, tegniek en eksamenvoorbereiding.',
-  term: 1,
   lessons: [
     /* ── 1. Background & context ────────────────────────────────────────── */
     {

@@ -514,7 +514,6 @@ export default function Timetable() {
   return (
     <Page width="wide">
       <PageTitle
-        eyebrow="Grade 10B"
         title="Weekly timetable"
         highlight="timetable"
         subtitle={

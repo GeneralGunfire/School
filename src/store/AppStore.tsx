@@ -7,7 +7,9 @@ import type {
   MasteryLevel,
   Note,
   StudyBlock,
+  StudyNote,
   SubjectId,
+  UserAcronym,
 } from '@/lib/types';
 import { seedBlocks, seedNotes, seedProgress } from '@/data/seed';
 
@@ -27,6 +29,8 @@ interface AppState {
   blocks: StudyBlock[];
   reflections: Record<string, DayReflection>;
   notes: Note[];
+  acronyms: UserAcronym[];
+  studyNotes: StudyNote[];
 }
 
 interface AppStore extends AppState {
@@ -42,6 +46,20 @@ interface AppStore extends AppState {
   addNote: (subjectId: SubjectId) => Note;
   updateNote: (id: string, patch: Partial<Pick<Note, 'title' | 'html'>>) => void;
   removeNote: (id: string) => void;
+
+  addAcronym: (subjectId: SubjectId, paper?: 1 | 2) => UserAcronym;
+  updateAcronym: (
+    id: string,
+    patch: Partial<Pick<UserAcronym, 'title' | 'subjectId' | 'paper' | 'letters'>>,
+  ) => void;
+  removeAcronym: (id: string) => void;
+
+  addStudyNote: (subjectId: SubjectId, paper?: 1 | 2) => StudyNote;
+  updateStudyNote: (
+    id: string,
+    patch: Partial<Pick<StudyNote, 'title' | 'subjectId' | 'paper' | 'points'>>,
+  ) => void;
+  removeStudyNote: (id: string) => void;
 
   resetAll: () => void;
 }
@@ -60,7 +78,7 @@ function bootstrap(): AppState {
     writeStore(KEYS.blocks, blocks);
     writeStore(KEYS.notes, notes);
     writeStore(KEYS.seeded, true);
-    return { progress, blocks, notes, reflections: {} };
+    return { progress, blocks, notes, reflections: {}, acronyms: [], studyNotes: [] };
   }
 
   return {
@@ -68,6 +86,8 @@ function bootstrap(): AppState {
     blocks: readStore<StudyBlock[]>(KEYS.blocks, []),
     reflections: readStore<Record<string, DayReflection>>(KEYS.reflections, {}),
     notes: readStore<Note[]>(KEYS.notes, []),
+    acronyms: readStore<UserAcronym[]>(KEYS.acronyms, []),
+    studyNotes: readStore<StudyNote[]>(KEYS.studyNotes, []),
   };
 }
 
@@ -94,6 +114,8 @@ export function AppStoreProvider({ children }: { children: React.ReactNode }) {
     writeStore(KEYS.blocks, next.blocks);
     writeStore(KEYS.reflections, next.reflections);
     writeStore(KEYS.notes, next.notes);
+    writeStore(KEYS.acronyms, next.acronyms);
+    writeStore(KEYS.studyNotes, next.studyNotes);
   }, []);
 
   const persist = React.useCallback(
@@ -204,6 +226,56 @@ export function AppStoreProvider({ children }: { children: React.ReactNode }) {
         })),
 
       removeNote: (id) => commit((prev) => ({ ...prev, notes: prev.notes.filter((n) => n.id !== id) })),
+
+      addAcronym: (subjectId, paper) => {
+        const acronym: UserAcronym = {
+          id: uid(),
+          subjectId,
+          paper,
+          title: '',
+          letters: [],
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+        };
+        commit((prev) => ({ ...prev, acronyms: [acronym, ...prev.acronyms] }));
+        return acronym;
+      },
+
+      updateAcronym: (id, patch) =>
+        commit((prev) => ({
+          ...prev,
+          acronyms: prev.acronyms.map((a) =>
+            a.id === id ? { ...a, ...patch, updatedAt: new Date().toISOString() } : a,
+          ),
+        })),
+
+      removeAcronym: (id) =>
+        commit((prev) => ({ ...prev, acronyms: prev.acronyms.filter((a) => a.id !== id) })),
+
+      addStudyNote: (subjectId, paper) => {
+        const note: StudyNote = {
+          id: uid(),
+          subjectId,
+          paper,
+          title: '',
+          points: [],
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+        };
+        commit((prev) => ({ ...prev, studyNotes: [note, ...prev.studyNotes] }));
+        return note;
+      },
+
+      updateStudyNote: (id, patch) =>
+        commit((prev) => ({
+          ...prev,
+          studyNotes: prev.studyNotes.map((n) =>
+            n.id === id ? { ...n, ...patch, updatedAt: new Date().toISOString() } : n,
+          ),
+        })),
+
+      removeStudyNote: (id) =>
+        commit((prev) => ({ ...prev, studyNotes: prev.studyNotes.filter((n) => n.id !== id) })),
 
       resetAll: () => {
         writeStore(KEYS.seeded, false);

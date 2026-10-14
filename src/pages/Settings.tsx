@@ -72,7 +72,6 @@ export default function Settings() {
   return (
     <Page width="narrow">
       <PageTitle
-        eyebrow="Preferences"
         title="Settings"
         highlight="Settings"
         subtitle="Appearance and stored data. Nothing here leaves this device."

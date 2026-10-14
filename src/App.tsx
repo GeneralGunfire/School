@@ -1,7 +1,8 @@
-import { MotionConfig } from 'motion/react';
+import { AnimatePresence, MotionConfig } from 'motion/react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import * as React from 'react';
 import { AppShell } from '@/components/layout/AppShell';
+import { SplashScreen, useSplashVisible } from '@/components/layout/SplashScreen';
 import { AppStoreProvider } from '@/store/AppStore';
 import { ThemeProvider } from '@/store/ThemeProvider';
 import { TimetableProvider } from '@/store/TimetableStore';
@@ -21,6 +22,7 @@ const Timetable = React.lazy(() => import('@/pages/Timetable'));
 const Calendar = React.lazy(() => import('@/pages/Calendar'));
 const Subjects = React.lazy(() => import('@/pages/Subjects'));
 const Notes = React.lazy(() => import('@/pages/Notes'));
+const AcronymsNotes = React.lazy(() => import('@/pages/AcronymsNotes'));
 const Settings = React.lazy(() => import('@/pages/Settings'));
 
 /** Warms every route chunk once the browser is idle after first paint. */
@@ -32,6 +34,7 @@ function usePrefetchRoutes() {
       void import('@/pages/Calendar');
       void import('@/pages/Subjects');
       void import('@/pages/Notes');
+      void import('@/pages/AcronymsNotes');
       void import('@/pages/Settings');
     };
     const ric = (window as unknown as { requestIdleCallback?: (cb: () => void) => number })
@@ -56,6 +59,8 @@ function Shell() {
 }
 
 export default function App() {
+  const { visible: splashVisible, dismiss: dismissSplash } = useSplashVisible();
+
   return (
     // `reducedMotion="user"` is the single place prefers-reduced-motion is
     // honoured for Framer Motion: it strips transform and layout animation
@@ -76,6 +81,7 @@ export default function App() {
                 <Route path="calendar" element={<Calendar />} />
                 <Route path="subjects" element={<Subjects />} />
                 <Route path="notes" element={<Notes />} />
+                <Route path="acronyms" element={<AcronymsNotes />} />
                 <Route path="settings" element={<Settings />} />
                 <Route path="*" element={<Navigate to="/" replace />} />
               </Route>
@@ -84,6 +90,12 @@ export default function App() {
         </TimetableProvider>
         </AppStoreProvider>
       </ThemeProvider>
+
+      {/* Mounted above everything else; the real app underneath is already
+          rendering, so dismissing this is purely cosmetic. */}
+      <AnimatePresence>
+        {splashVisible && <SplashScreen onDone={dismissSplash} />}
+      </AnimatePresence>
     </MotionConfig>
   );
 }

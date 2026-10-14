@@ -1,4 +1,4 @@
-import { motion } from 'motion/react';
+import { AnimatePresence, motion } from 'motion/react';
 import {
   BookOpen,
   CalendarDays,
@@ -7,6 +7,7 @@ import {
   Library,
   NotebookPen,
   Settings,
+  Sparkles,
   type LucideIcon,
 } from 'lucide-react';
 import { NavLink } from 'react-router-dom';
@@ -16,38 +17,16 @@ import { todayWeekday } from '@/data/timetable';
 import { useSchedule } from '@/store/TimetableStore';
 import { getSubject, subjectColor } from '@/data/subjects';
 import { nowMinutes, toMinutes } from '@/lib/utils';
+import { Logo } from '@/components/ui/Logo';
 import * as React from 'react';
 
 /* ── Logo ────────────────────────────────────────────────────────────────
-   A drawn mark, not a gradient square with a letter in it: three stacked
-   rules of decreasing width — a book's page edges, and the same motif as
-   the title rules used throughout the app. */
+   The real Scholar mark, scaled down for the sidebar/title bar. See
+   components/ui/Logo.tsx for the full-size splash version. */
 function Mark() {
   return (
-    <span
-      className="relative grid size-10 shrink-0 place-items-center overflow-hidden rounded-[11px] border"
-      style={{
-        borderColor: 'var(--btn-solid-border)',
-        background: 'var(--btn-solid)',
-        boxShadow: '0 1px 2px var(--shadow-contact), 0 4px 10px -3px var(--shadow-ambient)',
-      }}
-      aria-hidden
-    >
-      {/* Top highlight sweep, matching the buttons. */}
-      <span
-        className="pointer-events-none absolute inset-x-0 top-0 h-px"
-        style={{
-          background:
-            'linear-gradient(90deg, transparent, var(--btn-solid-inset) 22%, var(--btn-solid-inset) 78%, transparent)',
-        }}
-      />
-      {/* Three stacked rules of decreasing width — page edges, and the same
-          motif as the title rules used throughout the app. */}
-      <svg width="18" height="14" viewBox="0 0 18 14" fill="none">
-        <rect width="18" height="2.6" rx="1.3" fill="var(--btn-solid-fg)" />
-        <rect y="5.7" width="12.5" height="2.6" rx="1.3" fill="var(--btn-solid-fg)" opacity="0.6" />
-        <rect y="11.4" width="7" height="2.6" rx="1.3" fill="var(--btn-solid-fg)" opacity="0.32" />
-      </svg>
+    <span className="relative grid size-10 shrink-0 place-items-center overflow-hidden rounded-[11px]" aria-hidden>
+      <Logo size={40} />
     </span>
   );
 }
@@ -84,6 +63,7 @@ function useGroups(): { label: string; items: NavItem[] }[] {
       label: 'Personal',
       items: [
         { to: '/notes', label: 'Notes', icon: NotebookPen },
+        { to: '/acronyms', label: 'Acronyms & key notes', icon: Sparkles },
         { to: '/settings', label: 'Settings', icon: Settings },
       ],
     },
@@ -235,43 +215,78 @@ function UpNext() {
   );
 }
 
-export function Sidebar() {
+function SidebarBody() {
   const groups = useGroups();
-
   return (
-    <aside className="flex h-full w-[260px] shrink-0 flex-col p-3 pr-0">
-      <div className="card flex min-h-0 flex-1 flex-col">
-        {/* Brand */}
-        <div className="flex items-center gap-3 border-b border-hairline px-4 py-[18px]">
-          <Mark />
-          <div className="min-w-0">
-            <p className="text-[16px] leading-none font-semibold tracking-[-0.02em] text-ink">
-              Scholar
-            </p>
-            <p className="mt-[6px] text-[11px] leading-none text-muted-2">Grade 10 · CAPS</p>
-          </div>
-        </div>
-
-        {/* Nav */}
-        <nav className="min-h-0 flex-1 overflow-y-auto px-3 py-4">
-          {groups.map((group, gi) => (
-            <div key={group.label} className={cn(gi > 0 && 'mt-6')}>
-              <p className="mb-2 px-3 text-[10px] font-semibold tracking-[0.11em] text-muted-2 uppercase">
-                {group.label}
-              </p>
-              <div className="space-y-1">
-                {group.items.map((item) => (
-                  <NavRow key={item.to} item={item} />
-                ))}
-              </div>
-            </div>
-          ))}
-        </nav>
-
-        <div className="border-t border-hairline py-3">
-          <UpNext />
+    <div className="card flex min-h-0 flex-1 flex-col">
+      {/* Brand */}
+      <div className="flex items-center gap-3 border-b border-hairline px-4 py-[18px]">
+        <Mark />
+        <div className="min-w-0">
+          <p className="text-[16px] leading-none font-semibold tracking-[-0.02em] text-ink">
+            Scholar
+          </p>
+          <p className="mt-[6px] text-[11px] leading-none text-muted-2">Grade 10 · CAPS</p>
         </div>
       </div>
+
+      {/* Nav */}
+      <nav className="min-h-0 flex-1 overflow-y-auto px-3 py-4">
+        {groups.map((group, gi) => (
+          <div key={group.label} className={cn(gi > 0 && 'mt-6')}>
+            <p className="mb-2 px-3 text-[10px] font-semibold tracking-[0.11em] text-muted-2 uppercase">
+              {group.label}
+            </p>
+            <div className="space-y-1">
+              {group.items.map((item) => (
+                <NavRow key={item.to} item={item} />
+              ))}
+            </div>
+          </div>
+        ))}
+      </nav>
+
+      <div className="border-t border-hairline py-3">
+        <UpNext />
+      </div>
+    </div>
+  );
+}
+
+/** The fixed desktop rail. Hidden below `lg` in favour of the mobile drawer. */
+export function Sidebar() {
+  return (
+    <aside className="hidden h-full w-[260px] shrink-0 flex-col p-3 pr-0 lg:flex">
+      <SidebarBody />
     </aside>
+  );
+}
+
+/** Slide-over nav for phones and tablets, toggled from the header's menu button. */
+export function MobileSidebar({ open, onClose }: { open: boolean; onClose: () => void }) {
+  return (
+    <AnimatePresence>
+      {open && (
+        <motion.div className="fixed inset-0 z-[100] lg:hidden" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+          <motion.div
+            className="absolute inset-0 bg-black/40"
+            onClick={onClose}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          />
+          <motion.div
+            className="absolute inset-y-0 left-0 flex w-[82vw] max-w-[320px] flex-col p-3 pr-1"
+            initial={{ x: '-100%' }}
+            animate={{ x: 0 }}
+            exit={{ x: '-100%' }}
+            transition={{ type: 'spring', stiffness: 420, damping: 42 }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <SidebarBody />
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 }

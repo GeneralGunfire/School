@@ -42,7 +42,6 @@ export default function Subjects() {
   return (
     <Page>
       <PageTitle
-        eyebrow="Grade 10 · CAPS"
         title="All subjects"
         highlight="subjects"
         subtitle="Your twelve streams, with how often each one appears in the week."
