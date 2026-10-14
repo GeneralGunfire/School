@@ -1,11 +1,91 @@
-import { Plus, Sparkles, X } from 'lucide-react';
+import { MousePointerClick, Pencil, Plus, Sparkles, X } from 'lucide-react';
 import * as React from 'react';
 import { AnimatePresence, motion } from 'motion/react';
 import { Button } from '@/components/ui/primitives';
 import { SUBJECTS, getSubject } from '@/data/subjects';
 import { useStore } from '@/store/AppStore';
 import { cn, uid } from '@/lib/utils';
+import { useAcronymPickMode } from './PickModeContext';
 import type { AcronymLetter, SubjectId, UserAcronym } from '@/lib/types';
+
+/**
+ * A field that is filled either by typing or by "picking" — clicking into
+ * it starts pick mode, which lets the learner click a word/sentence on the
+ * lesson page behind the (minimized) modal instead of retyping it.
+ */
+function PickableField({
+  value,
+  placeholder,
+  onPick,
+  onChange,
+  disabled,
+  multiline,
+}: {
+  value: string;
+  placeholder: string;
+  onPick: () => void;
+  onChange: (v: string) => void;
+  disabled?: boolean;
+  multiline?: boolean;
+}) {
+  const [editing, setEditing] = React.useState(false);
+  const inputRef = React.useRef<HTMLInputElement | HTMLTextAreaElement>(null);
+
+  React.useEffect(() => {
+    if (editing) inputRef.current?.focus();
+  }, [editing]);
+
+  if (editing) {
+    const common = {
+      value,
+      onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => onChange(e.target.value),
+      onBlur: () => setEditing(false),
+      placeholder,
+      autoFocus: true,
+      className: cn(
+        'w-full rounded-md border border-accent bg-paper px-2.5 py-1.5 text-ink outline-none placeholder:text-muted-2',
+        multiline ? 'resize-none text-[12.5px]' : 'text-[13px]',
+      ),
+    };
+    return multiline ? (
+      <textarea ref={inputRef as React.RefObject<HTMLTextAreaElement>} rows={1} {...common} />
+    ) : (
+      <input ref={inputRef as React.RefObject<HTMLInputElement>} {...common} />
+    );
+  }
+
+  return (
+    <div
+      className={cn(
+        'group flex w-full items-center gap-1.5 rounded-md border border-hairline bg-paper px-2.5 py-1.5 text-left',
+        !disabled && 'hover:border-accent/60',
+      )}
+    >
+      <button
+        type="button"
+        onClick={() => !disabled && onPick()}
+        disabled={disabled}
+        className={cn(
+          'flex min-w-0 flex-1 items-center gap-1.5 text-left',
+          value ? 'text-[13px] text-ink' : 'text-[12.5px] text-muted-2',
+        )}
+      >
+        <MousePointerClick className="size-3.5 shrink-0 text-accent opacity-70" aria-hidden />
+        <span className="min-w-0 flex-1 truncate">{value || placeholder}</span>
+      </button>
+      {!disabled && (
+        <button
+          type="button"
+          onClick={() => setEditing(true)}
+          title="Type it instead"
+          className="shrink-0 rounded p-1 text-muted-2 opacity-0 transition-opacity group-hover:opacity-100 hover:text-ink"
+        >
+          <Pencil className="size-3.5" aria-hidden />
+        </button>
+      )}
+    </div>
+  );
+}
 
 /**
  * Modal for creating or editing a user acronym.
@@ -32,6 +112,7 @@ export function AcronymBuilder({
   initialSentence?: string;
 }) {
   const { addAcronym, updateAcronym } = useStore();
+  const { active: pickActive, startPick, cancelPick } = useAcronymPickMode();
 
   const [subjectId, setSubjectId] = React.useState<SubjectId>(existing?.subjectId ?? initialSubjectId ?? SUBJECTS[0].id);
   const [paper, setPaper] = React.useState<1 | 2 | undefined>(existing?.paper ?? initialPaper);
@@ -91,6 +172,21 @@ export function AcronymBuilder({
     setPickingLetterFor(null);
   };
 
+  // Closing the modal (or it being re-opened for a different acronym)
+  // should always drop any in-flight pick — there's nothing sensible left
+  // to fill it into.
+  React.useEffect(() => {
+    if (!open) cancelPick();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open]);
+
+  const pickWordFor = (letterId: string) => {
+    startPick('word', (word) => patchLetter(letterId, { word }));
+  };
+  const pickSentenceFor = (letterId: string) => {
+    startPick('sentence', (sentence) => patchLetter(letterId, { sentence }));
+  };
+
   const canSave = baseWord.trim().length > 0 && title.trim().length > 0;
 
   const save = () => {
@@ -113,19 +209,31 @@ export function AcronymBuilder({
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
         >
+          {!pickActive && (
+            <motion.div
+              data-pick-ignore
+              className="absolute inset-0 bg-black/40 backdrop-blur-[2px]"
+              onClick={onClose}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+            />
+          )}
           <motion.div
-            className="absolute inset-0 bg-black/40 backdrop-blur-[2px]"
-            onClick={onClose}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-          />
-          <motion.div
+            data-pick-ignore
             initial={{ opacity: 0, y: 12, scale: 0.98 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
+            animate={
+              pickActive
+                ? { opacity: 0.97, y: 0, scale: 0.9, x: 0, pointerEvents: 'none' as const }
+                : { opacity: 1, y: 0, scale: 1 }
+            }
             exit={{ opacity: 0, y: 8, scale: 0.98 }}
             transition={{ type: 'spring', stiffness: 420, damping: 36 }}
-            className="relative flex max-h-[85vh] w-full max-w-[36rem] flex-col overflow-hidden rounded-2xl border border-hairline bg-paper shadow-2xl"
+            style={pickActive ? { position: 'fixed', bottom: 20, right: 20, transformOrigin: 'bottom right' } : undefined}
+            className={cn(
+              'relative flex max-h-[85vh] w-full max-w-[36rem] flex-col overflow-hidden rounded-2xl border border-hairline bg-paper shadow-2xl transition-[filter] duration-200',
+              pickActive && 'max-w-[20rem] opacity-70 blur-[1px] grayscale-[0.3]',
+            )}
           >
             <div className="flex items-center justify-between gap-3 border-b border-hairline px-5 py-4">
               <p className="flex items-center gap-2 text-[14.5px] font-semibold text-ink">
@@ -211,6 +319,10 @@ export function AcronymBuilder({
 
               {letters.length > 0 && (
                 <div className="space-y-2.5">
+                  <p className="text-[11.5px] text-muted-2">
+                    Click <span className="font-semibold text-ink">a word</span> or{' '}
+                    <span className="font-semibold text-ink">a sentence</span> field, then click the matching text anywhere in the lesson behind this — a single word fills the word field, and clicking any word inside a sentence fills the whole sentence in.
+                  </p>
                   {letters.map((l) => {
                     const isPickTarget = !!pickingLetterFor && !l.sentence && !l.word;
                     return (
@@ -230,20 +342,20 @@ export function AcronymBuilder({
                           {l.letter}
                         </span>
                         <div className="min-w-0 flex-1 space-y-1.5">
-                          <input
+                          <PickableField
                             value={l.word}
-                            onChange={(e) => patchLetter(l.id, { word: e.target.value })}
-                            placeholder="One word for this letter (e.g. Plan)"
+                            placeholder="Click to pick one word from the lesson"
+                            onPick={() => pickWordFor(l.id)}
+                            onChange={(v) => patchLetter(l.id, { word: v })}
                             disabled={isPickTarget}
-                            className="w-full rounded-md border border-hairline bg-paper px-2.5 py-1.5 text-[13px] text-ink outline-none placeholder:text-muted-2 focus:border-accent"
                           />
-                          <textarea
+                          <PickableField
                             value={l.sentence}
-                            onChange={(e) => patchLetter(l.id, { sentence: e.target.value })}
-                            placeholder={isPickTarget ? 'Click this card to place the sentence here' : 'Or a full sentence to remember it by'}
-                            rows={1}
+                            placeholder={isPickTarget ? 'Click this card to place the sentence here' : 'Click to pick the whole sentence'}
+                            onPick={() => pickSentenceFor(l.id)}
+                            onChange={(v) => patchLetter(l.id, { sentence: v })}
                             disabled={isPickTarget}
-                            className="w-full resize-none rounded-md border border-hairline bg-paper px-2.5 py-1.5 text-[12.5px] text-ink outline-none placeholder:text-muted-2 focus:border-accent"
+                            multiline
                           />
                         </div>
                       </div>

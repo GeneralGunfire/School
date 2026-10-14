@@ -15,7 +15,11 @@ import { useStore } from '@/store/AppStore';
 import { cn } from '@/lib/utils';
 import { useListen, type ListenMode } from '@/lib/tts';
 import { SelectionCapture, type SelectionCaptureHandle } from '@/components/acronym/SelectionCapture';
+import { CaptureSelection } from '@/components/notebook/CaptureSelection';
+import { SaveToNotebookDialog } from '@/components/notebook/SaveToNotebookDialog';
+import { AddToMindMapDialog } from '@/components/notebook/AddToMindMapDialog';
 import { getChapterPaper } from '@/data/library';
+import type { HighlightColor } from '@/lib/types';
 import type { MasteryLevel, SubjectId, Lesson } from '@/lib/types';
 import {
   TranslatableLesson,
@@ -360,12 +364,15 @@ function LessonReader({ lessonId }: { lessonId: string }) {
   }, [lesson, lessonId]);
 
   const navigate = useNavigate();
+  const selectionRef = React.useRef<SelectionCaptureHandle>(null);
+  const [notebookCapture, setNotebookCapture] = React.useState<{ text: string; color: HighlightColor } | null>(null);
+  const [mindMapCapture, setMindMapCapture] = React.useState<{ text: string; color: HighlightColor } | null>(null);
 
   if (!lesson) return <EmptyState icon={BookOpen} title="Lesson not found" />;
 
   const mastery = progress[lesson.id]?.mastery ?? 'not-started';
   const wide = mode === 'split' || mode === 'hover';
-  const selectionRef = React.useRef<SelectionCaptureHandle>(null);
+  const captureSource = { lessonId: lesson.id, lessonTitle: lesson.title };
 
   return (
     <div className="mx-auto flex w-full justify-center gap-12">
@@ -411,8 +418,34 @@ function LessonReader({ lessonId }: { lessonId: string }) {
         </div>
 
         <SelectionCapture ref={selectionRef} subjectId={lesson.subjectId} paper={getChapterPaper(lesson.chapterId)}>
-          <TranslatableLesson lesson={lesson} mode={translatable ? mode : 'off'} visibleBlocks={visibleBlocks} isMath={isMathSubject} />
+          <CaptureSelection
+            onSaveToNotebook={(text, color) => setNotebookCapture({ text, color })}
+            onAddToMindMap={(text, color) => setMindMapCapture({ text, color })}
+          >
+            <TranslatableLesson lesson={lesson} mode={translatable ? mode : 'off'} visibleBlocks={visibleBlocks} isMath={isMathSubject} />
+          </CaptureSelection>
         </SelectionCapture>
+
+        {notebookCapture && (
+          <SaveToNotebookDialog
+            open
+            onClose={() => setNotebookCapture(null)}
+            subjectId={lesson.subjectId}
+            text={notebookCapture.text}
+            color={notebookCapture.color}
+            source={captureSource}
+          />
+        )}
+        {mindMapCapture && (
+          <AddToMindMapDialog
+            open
+            onClose={() => setMindMapCapture(null)}
+            subjectId={lesson.subjectId}
+            text={mindMapCapture.text}
+            color={mindMapCapture.color}
+            source={captureSource}
+          />
+        )}
 
         {/* Step mode controls */}
         {stepMode && (

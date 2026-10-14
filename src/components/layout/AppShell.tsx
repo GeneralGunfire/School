@@ -17,7 +17,7 @@ const TITLES: Record<string, string> = {
   calendar: 'Calendar',
   subjects: 'Subjects',
   notes: 'Notes',
-  acronyms: 'Acronyms & key notes',
+  acronyms: 'Study tools',
   settings: 'Settings',
 };
 

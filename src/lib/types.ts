@@ -380,6 +380,73 @@ export interface StudyNote {
   updatedAt: string;
 }
 
+// ── Notebooks ─────────────────────────────────────────────────────────────
+
+/** A highlight colour for a captured passage. Named, not raw hex, so the palette can change in one place. */
+export type HighlightColor = 'yellow' | 'green' | 'blue' | 'pink' | 'orange' | 'purple';
+
+/**
+ * A notebook groups captured passages under one topic within a subject —
+ * e.g. English might have a "General" notebook and a "Romeo and Juliet"
+ * notebook. Distinct from `Note` (the freeform rich-text notes page):
+ * a notebook holds short captured snippets, each sourced from a lesson via
+ * custom click-drag selection, not typed from scratch.
+ */
+export interface Notebook {
+  id: string;
+  subjectId: SubjectId;
+  title: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+/** One captured, highlighted passage saved into a notebook. */
+export interface NotebookEntry {
+  id: string;
+  notebookId: string;
+  /** The captured text — any selected span, not necessarily a full sentence. */
+  text: string;
+  color: HighlightColor;
+  /** Optional short comment the learner adds about why this matters. */
+  comment?: string;
+  /** Where it came from, so the learner can jump back to the lesson. */
+  source?: { lessonId: string; lessonTitle: string };
+  createdAt: string;
+}
+
+// ── Mind maps ─────────────────────────────────────────────────────────────
+
+/** One card on a mind map canvas. */
+export interface MindMapNode {
+  id: string;
+  x: number;
+  y: number;
+  width: number;
+  text: string;
+  color: HighlightColor;
+  source?: { lessonId: string; lessonTitle: string };
+}
+
+/** A drawn connector between two nodes. */
+export interface MindMapEdge {
+  id: string;
+  fromId: string;
+  toId: string;
+  /** Optional short label on the connector, e.g. "causes", "leads to". */
+  label?: string;
+}
+
+/** An Obsidian-canvas-style mind map: freely positioned, connectable cards. */
+export interface MindMap {
+  id: string;
+  subjectId: SubjectId;
+  title: string;
+  nodes: MindMapNode[];
+  edges: MindMapEdge[];
+  createdAt: string;
+  updatedAt: string;
+}
+
 export interface TestResult {
   id: string;
   subjectId: SubjectId;

@@ -28,6 +28,9 @@ export const KEYS = {
   timetable: `${PREFIX}timetable`,
   acronyms: `${PREFIX}acronyms`,
   studyNotes: `${PREFIX}studyNotes`,
+  notebooks: `${PREFIX}notebooks`,
+  notebookEntries: `${PREFIX}notebookEntries`,
+  mindMaps: `${PREFIX}mindMaps`,
 } as const;
 
 export function readStore<T>(key: string, fallback: T): T {

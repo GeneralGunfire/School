@@ -63,7 +63,7 @@ function useGroups(): { label: string; items: NavItem[] }[] {
       label: 'Personal',
       items: [
         { to: '/notes', label: 'Notes', icon: NotebookPen },
-        { to: '/acronyms', label: 'Acronyms & key notes', icon: Sparkles },
+        { to: '/acronyms', label: 'Study tools', icon: Sparkles },
         { to: '/settings', label: 'Settings', icon: Settings },
       ],
     },

@@ -5,7 +5,12 @@ import type {
   DayReflection,
   LessonProgress,
   MasteryLevel,
+  MindMap,
+  MindMapEdge,
+  MindMapNode,
   Note,
+  Notebook,
+  NotebookEntry,
   StudyBlock,
   StudyNote,
   SubjectId,
@@ -31,6 +36,9 @@ interface AppState {
   notes: Note[];
   acronyms: UserAcronym[];
   studyNotes: StudyNote[];
+  notebooks: Notebook[];
+  notebookEntries: NotebookEntry[];
+  mindMaps: MindMap[];
 }
 
 interface AppStore extends AppState {
@@ -61,6 +69,23 @@ interface AppStore extends AppState {
   ) => void;
   removeStudyNote: (id: string) => void;
 
+  addNotebook: (subjectId: SubjectId, title: string) => Notebook;
+  updateNotebook: (id: string, patch: Partial<Pick<Notebook, 'title'>>) => void;
+  removeNotebook: (id: string) => void;
+
+  addNotebookEntry: (entry: Omit<NotebookEntry, 'id' | 'createdAt'>) => NotebookEntry;
+  updateNotebookEntry: (id: string, patch: Partial<Pick<NotebookEntry, 'text' | 'color' | 'comment'>>) => void;
+  removeNotebookEntry: (id: string) => void;
+
+  addMindMap: (subjectId: SubjectId, title: string) => MindMap;
+  updateMindMap: (id: string, patch: Partial<Pick<MindMap, 'title'>>) => void;
+  removeMindMap: (id: string) => void;
+  addMindMapNode: (mapId: string, node: Omit<MindMapNode, 'id'>) => void;
+  updateMindMapNode: (mapId: string, nodeId: string, patch: Partial<Omit<MindMapNode, 'id'>>) => void;
+  removeMindMapNode: (mapId: string, nodeId: string) => void;
+  addMindMapEdge: (mapId: string, edge: Omit<MindMapEdge, 'id'>) => void;
+  removeMindMapEdge: (mapId: string, edgeId: string) => void;
+
   resetAll: () => void;
 }
 
@@ -78,7 +103,10 @@ function bootstrap(): AppState {
     writeStore(KEYS.blocks, blocks);
     writeStore(KEYS.notes, notes);
     writeStore(KEYS.seeded, true);
-    return { progress, blocks, notes, reflections: {}, acronyms: [], studyNotes: [] };
+    return {
+      progress, blocks, notes, reflections: {}, acronyms: [], studyNotes: [],
+      notebooks: [], notebookEntries: [], mindMaps: [],
+    };
   }
 
   return {
@@ -88,6 +116,9 @@ function bootstrap(): AppState {
     notes: readStore<Note[]>(KEYS.notes, []),
     acronyms: readStore<UserAcronym[]>(KEYS.acronyms, []),
     studyNotes: readStore<StudyNote[]>(KEYS.studyNotes, []),
+    notebooks: readStore<Notebook[]>(KEYS.notebooks, []),
+    notebookEntries: readStore<NotebookEntry[]>(KEYS.notebookEntries, []),
+    mindMaps: readStore<MindMap[]>(KEYS.mindMaps, []),
   };
 }
 
@@ -116,6 +147,9 @@ export function AppStoreProvider({ children }: { children: React.ReactNode }) {
     writeStore(KEYS.notes, next.notes);
     writeStore(KEYS.acronyms, next.acronyms);
     writeStore(KEYS.studyNotes, next.studyNotes);
+    writeStore(KEYS.notebooks, next.notebooks);
+    writeStore(KEYS.notebookEntries, next.notebookEntries);
+    writeStore(KEYS.mindMaps, next.mindMaps);
   }, []);
 
   const persist = React.useCallback(
@@ -276,6 +310,132 @@ export function AppStoreProvider({ children }: { children: React.ReactNode }) {
 
       removeStudyNote: (id) =>
         commit((prev) => ({ ...prev, studyNotes: prev.studyNotes.filter((n) => n.id !== id) })),
+
+      addNotebook: (subjectId, title) => {
+        const notebook: Notebook = {
+          id: uid(),
+          subjectId,
+          title: title.trim() || 'Untitled notebook',
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+        };
+        commit((prev) => ({ ...prev, notebooks: [notebook, ...prev.notebooks] }));
+        return notebook;
+      },
+
+      updateNotebook: (id, patch) =>
+        commit((prev) => ({
+          ...prev,
+          notebooks: prev.notebooks.map((n) =>
+            n.id === id ? { ...n, ...patch, updatedAt: new Date().toISOString() } : n,
+          ),
+        })),
+
+      removeNotebook: (id) =>
+        commit((prev) => ({
+          ...prev,
+          notebooks: prev.notebooks.filter((n) => n.id !== id),
+          notebookEntries: prev.notebookEntries.filter((e) => e.notebookId !== id),
+        })),
+
+      addNotebookEntry: (entry) => {
+        const full: NotebookEntry = { ...entry, id: uid(), createdAt: new Date().toISOString() };
+        commit((prev) => ({ ...prev, notebookEntries: [full, ...prev.notebookEntries] }));
+        return full;
+      },
+
+      updateNotebookEntry: (id, patch) =>
+        commit((prev) => ({
+          ...prev,
+          notebookEntries: prev.notebookEntries.map((e) => (e.id === id ? { ...e, ...patch } : e)),
+        })),
+
+      removeNotebookEntry: (id) =>
+        commit((prev) => ({ ...prev, notebookEntries: prev.notebookEntries.filter((e) => e.id !== id) })),
+
+      addMindMap: (subjectId, title) => {
+        const map: MindMap = {
+          id: uid(),
+          subjectId,
+          title: title.trim() || 'Untitled map',
+          nodes: [],
+          edges: [],
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+        };
+        commit((prev) => ({ ...prev, mindMaps: [map, ...prev.mindMaps] }));
+        return map;
+      },
+
+      updateMindMap: (id, patch) =>
+        commit((prev) => ({
+          ...prev,
+          mindMaps: prev.mindMaps.map((m) =>
+            m.id === id ? { ...m, ...patch, updatedAt: new Date().toISOString() } : m,
+          ),
+        })),
+
+      removeMindMap: (id) =>
+        commit((prev) => ({ ...prev, mindMaps: prev.mindMaps.filter((m) => m.id !== id) })),
+
+      addMindMapNode: (mapId, node) =>
+        commit((prev) => ({
+          ...prev,
+          mindMaps: prev.mindMaps.map((m) =>
+            m.id === mapId
+              ? { ...m, nodes: [...m.nodes, { ...node, id: uid() }], updatedAt: new Date().toISOString() }
+              : m,
+          ),
+        })),
+
+      updateMindMapNode: (mapId, nodeId, patch) =>
+        commit((prev) => ({
+          ...prev,
+          mindMaps: prev.mindMaps.map((m) =>
+            m.id === mapId
+              ? {
+                  ...m,
+                  nodes: m.nodes.map((n) => (n.id === nodeId ? { ...n, ...patch } : n)),
+                  updatedAt: new Date().toISOString(),
+                }
+              : m,
+          ),
+        })),
+
+      removeMindMapNode: (mapId, nodeId) =>
+        commit((prev) => ({
+          ...prev,
+          mindMaps: prev.mindMaps.map((m) =>
+            m.id === mapId
+              ? {
+                  ...m,
+                  nodes: m.nodes.filter((n) => n.id !== nodeId),
+                  edges: m.edges.filter((e) => e.fromId !== nodeId && e.toId !== nodeId),
+                  updatedAt: new Date().toISOString(),
+                }
+              : m,
+          ),
+        })),
+
+      addMindMapEdge: (mapId, edge) =>
+        commit((prev) => ({
+          ...prev,
+          mindMaps: prev.mindMaps.map((m) =>
+            m.id === mapId
+              ? { ...m, edges: [...m.edges, { ...edge, id: uid() }], updatedAt: new Date().toISOString() }
+              : m,
+          ),
+        })),
+
+      removeMindMapEdge: (mapId, edgeId) =>
+        commit((prev) => ({
+          ...prev,
+          mindMaps: prev.mindMaps.map((m) =>
+            m.id === mapId
+              ? { ...m, edges: m.edges.filter((e) => e.id !== edgeId), updatedAt: new Date().toISOString() }
+              : m,
+          ),
+        })),
 
       resetAll: () => {
         writeStore(KEYS.seeded, false);

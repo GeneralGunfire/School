@@ -4,6 +4,7 @@ import * as React from 'react';
 import { AppShell } from '@/components/layout/AppShell';
 import { SplashScreen, useSplashVisible } from '@/components/layout/SplashScreen';
 import { AppStoreProvider } from '@/store/AppStore';
+import { AcronymPickModeProvider } from '@/components/acronym/PickModeContext';
 import { ThemeProvider } from '@/store/ThemeProvider';
 import { TimetableProvider } from '@/store/TimetableStore';
 import Dashboard from '@/pages/Dashboard';
@@ -69,6 +70,7 @@ export default function App() {
       <ThemeProvider>
         <AppStoreProvider>
           <TimetableProvider>
+          <AcronymPickModeProvider>
           <React.Suspense fallback={<Fallback />}>
             <Routes>
               <Route element={<Shell />}>
@@ -87,6 +89,7 @@ export default function App() {
               </Route>
             </Routes>
           </React.Suspense>
+          </AcronymPickModeProvider>
         </TimetableProvider>
         </AppStoreProvider>
       </ThemeProvider>
