@@ -11,13 +11,25 @@ export const CH = 'eng-romeo';
 const L = (id: string, title: string, minutes: number, blocks: Array<WB | WB[]>): Lesson =>
   lessonIn('english', CH, id, title, minutes, blocks);
 
-/** One scene: where and when, what happens, why it matters, and a key quotation. */
-const scene = (title: string, setting: string, happens: string[], why: string, line: string, who: string): WB[] => [
+/**
+ * One scene: where and when, what happens, why it matters, and a key quotation.
+ * extraLines is optional: further short quotations with a brief note on word choice, imagery or form.
+ */
+const scene = (
+  title: string,
+  setting: string,
+  happens: string[],
+  why: string,
+  line: string,
+  who: string,
+  extraLines?: [string, string][],
+): WB[] => [
   h3(title),
   box(`Setting: ${setting}`),
   ...happens.map((t) => p(t)),
   table([['Why it matters', why]]),
   quote(`${line}  (${who})`),
+  ...(extraLines && extraLines.length ? [h3('More quotations from this scene'), table(extraLines)] : []),
 ];
 
 export const R_CONTEXT = L('rj-context', 'Background and Context', 30, [
@@ -54,6 +66,25 @@ export const R_CONTEXT = L('rj-context', 'Background and Context', 30, [
   h2('The Prologue: what it promises'),
   quote('Two households, both alike in dignity,\nIn fair Verona, where we lay our scene,\nFrom ancient grudge break to new mutiny,\nWhere civil blood makes civil hands unclean.\nFrom forth the fatal loins of these two foes\nA pair of star-cross’d lovers take their life;\nWhose misadventured piteous overthrows\nDo with their death bury their parents’ strife.'),
   p('In fourteen lines (a sonnet) the Chorus tells us the setting, the cause (an “ancient grudge”), the central lovers, their fate (“take their life”) and the result (“bury their parents’ strife”). Important phrases: “star-cross’d” (thwarted by the stars), “death-mark’d love” (love marked for death), “fatal” (fated and deadly), “misadventured” (unlucky), and “two hours’ traffic of our stage”, which tells us how long the performance runs.'),
+  h2('The Prologue as a sonnet: why the form matters'),
+  p('The Prologue is a Shakespearean (English) sonnet: fourteen lines of iambic pentameter, rhymed ABAB CDCD EFEF GG, ending in a couplet. Shakespeare uses the sonnet here, a form usually associated with love poetry, to announce a tragedy, which is itself a clue: love and death are fused from the very first lines. The final couplet (“The which if you with patient ears attend, / What here shall miss, our toil shall strive to mend”) asks the audience for patient attention and promises that the actors will make up in effort what the words cannot fully convey. Shakespeare returns to the sonnet form twice more: the Chorus speaks a second sonnet before Act 2, and Romeo and Juliet share a sonnet at their first meeting in 1.5, so the “doomed love” sonnet of the Prologue is echoed in the sonnet of their falling in love.'),
+  h2('Elizabethan theatre conventions you must know'),
+  table([
+    ['Bare stage, rich language', 'No scenery and little furniture, so words do the work of setting: time of day, weather and location are all created through speech (e.g. Romeo insisting it is night when the stage is lit by daylight).'],
+    ['Open-air, daylight performance', 'Plays at the Globe were performed in the afternoon in natural light, which is why darkness, night and secrecy had to be built through imagery rather than lighting.'],
+    ['All-male cast', 'Boy actors played Juliet, Lady Capulet and the Nurse. This affects how we read moments of intimacy (the balcony scene) and comedy (the Nurse’s bawdy jokes), since the original audience watched boys perform womanhood.'],
+    ['Direct address and asides', 'Actors could speak straight to the audience (the Chorus, Romeo’s asides at the balcony), closing the distance between actor and crowd and building dramatic irony.'],
+    ['Music and sound effects, not special effects', 'Swordplay, trumpets and bells stood in for spectacle; the duels (1.1, 3.1, 5.3) were performed live and had to be fast and exciting to hold a standing audience.'],
+    ['Continuous staging', 'Scenes ran into one another with no blackout, which is why Shakespeare uses a scene’s final lines (often a couplet) to signal an ending and a change of place.'],
+  ]),
+  h2('Dramatic irony: how it actually works'),
+  p('Dramatic irony happens when the audience holds information a character does not. In Romeo and Juliet, Shakespeare sets this up in the very first lines (the Prologue tells us the lovers die) and then exploits it constantly, so almost every hopeful or happy moment is shadowed by what we already know is coming.'),
+  ul([
+    'Example 1: Juliet jokes, “My grave is like to be my wedding bed” (1.5), not knowing how literally true this will become. The audience, who has heard the Prologue, feels the full weight of the line; Juliet herself means it only as a feverish exaggeration of her hopeless love.',
+    'Example 2: In 4.4–4.5 the household rushes about joyfully preparing Juliet’s wedding breakfast while the audience knows she lies drugged, not dead, in her bed, and that the celebration is seconds away from becoming a scene of horror.',
+    'Example 3: Romeo tells the Apothecary, “Come, cordial and not poison” (5.1), confident his plan will reunite him with Juliet, while the audience knows Juliet is alive and that his information (from Balthasar, not from the Friar’s letter) is incomplete and fatal.',
+  ]),
+  box('Exam tip: when a question asks you to discuss dramatic irony, always name WHO knows what, WHAT they do not know, and WHAT EFFECT the gap has on the audience (dread, pity, or a bittersweet reading of a “happy” line). A bare description of the plot is not enough.'),
 ]);
 
 export const R_TIMELINE = L('rj-timeline', 'The Five-Day Timeline', 20, [
@@ -103,6 +134,10 @@ export const R_ACT1 = L('rj-act1', 'Act 1: Scene-by-Scene Narrative', 40, [
     'The first scene shows hatred in action and introduces the feud that will ultimately destroy the lovers. It sets up Tybalt’s aggression, Benvolio as the peacemaker, and the Prince’s threat, which makes later violence deadly. We also meet Romeo as a self-indulgent, conventional lover, who is in love with the idea of love, a contrast to the real love he will soon find.',
     'Here’s much to do with hate, but more with love.',
     'Romeo, 1.1',
+    [
+      ['Rebellious subjects, enemies to peace', '(Prince, 1.1) The Prince’s harsh, formal blank verse marks him as the voice of law above the feud; “rebellious” frames the brawlers as a threat to the state, not just to each other.'],
+      ['O brawling love! O loving hate!', '(Romeo, 1.1) A string of oxymorons in balanced, end-stopped lines. The contradictions show Romeo performing the conventional language of a “Petrarchan” lover rather than feeling anything specific; the form (neat antithesis) exposes the artificiality of the feeling.'],
+    ],
   ),
   scene(
     'Act 1, Scene 2: Paris’s request and a servant’s mistake',
@@ -114,6 +149,9 @@ export const R_ACT1 = L('rj-act1', 'Act 1: Scene-by-Scene Narrative', 40, [
     'The servant’s mistake, accidentally inviting the enemy to the feast, is a classic example of how chance is woven into the plot. It also introduces Paris as a rival, and shows that Capulet at first values his daughter’s happiness (“My will to her consent is but a part”). Notice how his attitude changes later.',
     'My will to her consent is but a part.',
     'Capulet, 1.2',
+    [
+      ['Let two more summers wither in their pride, / Ere we may think her ripe to be a bride', '(Capulet, 1.2) The seasonal metaphor (“wither”, “ripe”) treats Juliet’s growing up like fruit ripening, a reminder that in this society a daughter’s marriageability is measured, almost literally, by age.'],
+    ],
   ),
   scene(
     'Act 1, Scene 3: Juliet and the Nurse',
@@ -125,6 +163,10 @@ export const R_ACT1 = L('rj-act1', 'Act 1: Scene-by-Scene Narrative', 40, [
     'This scene introduces the Nurse’s earthy humour, the very different relationships Juliet has with her mother (formal, distant) and her Nurse (warm, affectionate), and the pressure on Juliet to marry. Juliet is polite, obedient and cautious, which makes her later rebellion more striking.',
     'It is an honour that I dream not of.',
     'Juliet, 1.3',
+    [
+      ['Thou wast the prettiest babe that e’er I nursed', '(Nurse, 1.3) Prose-like, rambling syntax packed with homely detail (bread, falling over, a dead husband’s joke) marks the Nurse as a comic, lower-status voice next to Lady Capulet’s formal verse, and establishes her function as comic relief from the very first scene she appears in.'],
+      ['I was your mother much upon these years / That you are now a maid', '(Lady Capulet, 1.3) Stated as simple fact, without warmth; the flat, declarative line shows Lady Capulet discussing marriage as a practical inevitability rather than an emotional step, which sharpens the contrast with the Nurse’s affection.'],
+    ],
   ),
   scene(
     'Act 1, Scene 4: On the way to the masque',
@@ -136,6 +178,10 @@ export const R_ACT1 = L('rj-act1', 'Act 1: Scene-by-Scene Narrative', 40, [
     'The Queen Mab speech shows Mercutio’s imagination and his disillusionment with love and dreams. Romeo’s forebodings are an example of foreshadowing: the audience senses that the night will have terrible consequences. Fate is already at work.',
     'Some consequence yet hanging in the stars.',
     'Romeo, 1.4',
+    [
+      ['True, I talk of dreams, / Which are the children of an idle brain', '(Mercutio, 1.4) Mercutio dismisses his own Queen Mab fantasy as nonsense even as he revels in it; the self-aware irony shows his restless, sceptical imagination, in contrast to Romeo’s earnest belief in omens.'],
+      ['If love be blind, love cannot hit the mark', '(Mercutio, 1.4, said earlier in the scene) A pun on Cupid’s blindness and archery; Mercutio reduces love to a joke about aim, establishing his cynical, physical view of love that will clash with Romeo’s idealism throughout the play.'],
+    ],
   ),
   scene(
     'Act 1, Scene 5: The Capulet feast; love at first sight',
@@ -148,6 +194,10 @@ export const R_ACT1 = L('rj-act1', 'Act 1: Scene-by-Scene Narrative', 40, [
     'The meeting of the lovers is the turning point of the whole play. The sonnet they share shows their connection is instant, mutual and spiritual. It also bonds love with the language of religion, danger and death. Juliet’s remark about her grave is powerful dramatic irony. The scene also shows Tybalt’s uncontrollable hatred and Capulet’s power: the first sign of the conflict between the individuals’ choices and the authority of the older generation.',
     'My only love sprung from my only hate!',
     'Juliet, 1.5',
+    [
+      ['Content thee, gentle coz, let him alone; / He bears him like a portly gentleman', '(Capulet, 1.5) Measured, calm blank verse controls Tybalt’s rage; Capulet’s concern for reputation and hospitality (rather than principle) shows his authority is partly about appearances, which makes his later tyranny in 3.5 feel like a mask dropping rather than a true change.'],
+      ['Too early seen unknown, and known too late!', '(Juliet, 1.5) A tight antithesis (early/late, seen/known) compresses the whole tragedy of timing into one line, introducing the theme of haste before the lovers have even spoken a second time.'],
+    ],
   ),
 ]);
 
@@ -164,6 +214,9 @@ export const R_ACT2 = L('rj-act2', 'Act 2: Scene-by-Scene Narrative', 40, [
     'Mercutio and Romeo have opposite views of love: Mercutio treats it as physical and foolish; Romeo sees it as spiritual and serious. The scene shows their friendship and ends with the stage empty, ready for the balcony.',
     'He jests at scars that never felt a wound.',
     'Romeo, 2.1',
+    [
+      ['The ape is dead, and I must conjure him', '(Mercutio, 2.1) Mercutio compares calling for Romeo to summoning a spirit; his string of crude jokes about Rosaline’s body is in deliberate prose-like bawdiness, a comic register that contrasts with the elevated verse Romeo is about to use at the balcony.'],
+    ],
   ),
   scene(
     'Act 2, Scene 2: The balcony scene',
@@ -176,7 +229,12 @@ export const R_ACT2 = L('rj-act2', 'Act 2: Scene-by-Scene Narrative', 40, [
     'The balcony scene is the emotional heart of the play. Juliet is shown as intelligent, direct and brave: she is the one who proposes marriage, and she is the one who warns that their love is rash. The imagery of light and darkness, birds, and religion enriches the language. The scene also highlights the play’s tension between love and the family names that divide them, and the dramatic irony of “too like the lightning”.',
     'What’s in a name? That which we call a rose / By any other name would smell as sweet.',
     'Juliet, 2.2',
+    [
+      ['My bounty is as boundless as the sea, / My love as deep', '(Juliet, 2.2) A simile drawn from nature (the sea) suggests love without limit; the generous, flowing rhythm of the line matches the idea of boundlessness, and contrasts with the Nurse’s offstage interruptions, which keep pulling the lovers back to practical time.'],
+      ['Good night, good night! parting is such sweet sorrow, / That I shall say good night till it be morrow', '(Juliet, 2.2) The scene closes on a rhyming couplet, the first use of rhyme after a long stretch of blank verse in this scene; the couplet’s neatness gives the parting a sense of closure and ritual, even though the oxymoron “sweet sorrow” keeps the mood unresolved.'],
+    ],
   ),
+  box('The sonnet form and 2.2: although the balcony scene itself is written mainly in blank verse (not a strict sonnet), its opening exchange echoes the sonnet tradition of a lover praising his lady in images of light and worship, the same tradition the Prologue borrows for its doom-laden announcement. The true shared sonnet comes earlier, at 1.5, when Romeo and Juliet speak fourteen rhymed lines together at their first meeting; by 2.2, their love has outgrown the polished, public form of the sonnet into the freer, more urgent blank verse of private feeling.'),
   scene(
     'Act 2, Scene 3: Friar Laurence and his herbs',
     'Friar Laurence’s cell, early Monday morning',
@@ -187,6 +245,9 @@ export const R_ACT2 = L('rj-act2', 'Act 2: Scene-by-Scene Narrative', 40, [
     'The herb speech is an extended metaphor for the idea that good and evil are mixed, and foreshadows the use of the sleeping potion (and the apothecary’s poison). The Friar’s advice about haste states one of the play’s main themes. His decision to marry them, made with good intentions and some political hope, is a pivotal choice with fatal consequences.',
     'Wisely and slow; they stumble that run fast.',
     'Friar Laurence, 2.3',
+    [
+      ['Young men’s love then lies / Not truly in their hearts, but in their eyes', '(Friar Laurence, 2.3) A neat antithesis (hearts/eyes) delivered in calm, didactic blank verse; the Friar diagnoses Romeo’s pattern of falling in love with appearances, which is both a fair judgement of the Rosaline episode and, ironically, a warning he fails to apply fully to Romeo’s feelings for Juliet.'],
+    ],
   ),
   scene(
     'Act 2, Scene 4: The Nurse as messenger',
@@ -198,6 +259,9 @@ export const R_ACT2 = L('rj-act2', 'Act 2: Scene-by-Scene Narrative', 40, [
     'The scene is full of comedy, but Tybalt’s challenge is a ticking bomb. It also shows the Nurse as a go-between and as someone who will later fail Juliet. The fast, comic pace contrasts with the slow, serious Friar.',
     'Now art thou sociable, now art thou Romeo.',
     'Mercutio, 2.4',
+    [
+      ['More than Prince of Cats', '(Mercutio, 2.4) A mocking nickname for Tybalt’s fashionable swordsmanship, delivered in witty, fast-paced prose-like banter; the lightness of this joke makes Tybalt’s lethal skill with that same sword in 3.1 land as a far darker surprise.'],
+    ],
   ),
   scene(
     'Act 2, Scene 5: Juliet waits for the Nurse',
@@ -208,6 +272,9 @@ export const R_ACT2 = L('rj-act2', 'Act 2: Scene-by-Scene Narrative', 40, [
     'The comic delay shows time as a theme: for the lovers, minutes are an eternity. It also characterises the Nurse (earthy, teasing, loving) and Juliet’s eager impatience. Compare the later scene in which the Nurse brings dreadful news with a different kind of delay.',
     'Love’s heralds should be thoughts, / Which ten times faster glide than the sun’s beams.',
     'Juliet, 2.5',
+    [
+      ['Had she affections and warm youthful blood, / She would be as swift in motion as a ball', '(Juliet, 2.5) An image of a ball struck back and forth; Juliet imagines herself and Romeo trading words at speed, contrasting her own impatient youth with the Nurse’s slow, aching old age, a small instance of the youth-versus-age theme played for comedy.'],
+    ],
   ),
   scene(
     'Act 2, Scene 6: The wedding',
@@ -219,6 +286,9 @@ export const R_ACT2 = L('rj-act2', 'Act 2: Scene-by-Scene Narrative', 40, [
     'The Friar’s warning is a clear prophecy for the audience. The word “violent” links love and death, and the image of gunpowder and fire shows passion as both beautiful and destructive. This is the last moment of pure happiness in the play.',
     'These violent delights have violent ends.',
     'Friar Laurence, 2.6',
+    [
+      ['Then love-devouring death do what he dare; / It is enough I may but call her mine', '(Romeo, 2.6) The personification of death as a devourer sets up the love/death fusion that runs through the play; Romeo’s willingness to accept any cost for the marriage foreshadows the price he will actually pay.'],
+    ],
   ),
   box('Check-point: after Act 2, the lovers are married in secret, the Friar and Nurse are involved, and Tybalt is hunting Romeo. The audience knows that everything is about to break.'),
 ]);

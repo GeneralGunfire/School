@@ -28,3 +28,6 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
+
+# Local audio-render scripts/logs (not part of the app)
+tools/render/

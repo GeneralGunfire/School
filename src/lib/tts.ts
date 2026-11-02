@@ -26,7 +26,22 @@ interface Segment {
   /** Silence after this segment, ms. */
   pause: number;
   rate?: number;
+  /** Source block this segment was spoken from, for scroll-follow + highlight. Undefined for intro/outro lines. */
+  blockId?: string;
 }
+
+/**
+ * Phones (and the WebView the Tauri build uses) can't reliably run the
+ * ~90 MB Kokoro neural model: WASM/Worker memory limits, slow first
+ * downloads on cellular, and some WebViews not shipping OffscreenCanvas/
+ * SharedArrayBuffer at all cause it to hang or silently fail. Mobile skips
+ * Kokoro entirely and always uses the system voice, which phones ship good
+ * natural voices for anyway (iOS/Android TTS has improved a lot).
+ */
+export const IS_MOBILE =
+  typeof navigator !== 'undefined' &&
+  (/Android|iPhone|iPad|iPod/i.test(navigator.userAgent) ||
+    (navigator.maxTouchPoints > 1 && /Mac/.test(navigator.userAgent)));
 
 /* ── System voices (used for Afrikaans, and as an offline fallback) ──── */
 
@@ -126,7 +141,7 @@ function blockSegments(b: LessonBlock, lang: Lang, podcast: boolean): Segment[] 
   const P = PHRASES[lang];
   const say = (text: string, host: 'A' | 'B', pause = 250, rate?: number) => {
     const t = clean(text);
-    if (t) out.push({ text: t, lang, host: podcast ? host : 'A', pause, rate });
+    if (t) out.push({ text: t, lang, host: podcast ? host : 'A', pause, rate, blockId: b.id });
   };
   const prose = (text: string, host: 'A' | 'B') => {
     for (const s of sentences(text)) say(s, host, /[.!?]$/.test(s) ? 280 : 180);
@@ -183,24 +198,38 @@ function blockSegments(b: LessonBlock, lang: Lang, podcast: boolean): Segment[] 
   return out;
 }
 
-function buildSegments(lesson: Lesson, mode: ListenMode, langs: ListenLangs): Segment[] {
+/**
+ * Builds the spoken script for one lesson, or for a whole chapter read
+ * straight through (an array of lessons, e.g. the combined chapter page).
+ * For more than one lesson, each lesson after the first gets a short
+ * "Next up" transition instead of the full podcast welcome, so a chapter
+ * reads as one continuous piece rather than N separate intros.
+ */
+function buildSegments(lessons: Lesson | Lesson[], mode: ListenMode, langs: ListenLangs): Segment[] {
+  const list = Array.isArray(lessons) ? lessons : [lessons];
   const podcast = mode === 'podcast';
   const main: Lang = langs === 'en' ? 'en' : 'af';
   const out: Segment[] = [];
-  const intro = (lang: Lang, title: string) => {
-    const P = PHRASES[lang];
-    if (podcast) {
-      out.push({ text: `${P.welcome} ${title}.`, lang, host: 'A', pause: 450 });
-      out.push({ text: P.dive, lang, host: 'B', pause: 500 });
-    } else out.push({ text: `${title}.`, lang, host: 'A', pause: 600 });
-  };
 
-  intro(main, main === 'en' && lesson.titleEn ? lesson.titleEn : lesson.title);
-  for (const b of lesson.blocks) {
-    out.push(...blockSegments(b, main, podcast));
-    // Side by side: the English follows each block (paragraph) it translates.
-    if (langs === 'both' && b.en !== undefined) out.push(...blockSegments(b, 'en', podcast));
-  }
+  list.forEach((lesson, i) => {
+    const title = main === 'en' && lesson.titleEn ? lesson.titleEn : lesson.title;
+    const P = PHRASES[main];
+    if (i === 0) {
+      if (podcast) {
+        out.push({ text: `${P.welcome} ${title}.`, lang: main, host: 'A', pause: 450 });
+        out.push({ text: P.dive, lang: main, host: 'B', pause: 500 });
+      } else out.push({ text: `${title}.`, lang: main, host: 'A', pause: 600 });
+    } else {
+      out.push({ text: podcast ? `${P.next} ${title}.` : `${title}.`, lang: main, host: 'A', pause: 500 });
+    }
+
+    for (const b of lesson.blocks) {
+      out.push(...blockSegments(b, main, podcast));
+      // Side by side: the English follows each block (paragraph) it translates.
+      if (langs === 'both' && b.en !== undefined) out.push(...blockSegments(b, 'en', podcast));
+    }
+  });
+
   if (podcast) out.push({ text: PHRASES[main].end, lang: main, host: 'B', pause: 0 });
   return out;
 }
@@ -223,11 +252,19 @@ function getWorker() {
     const m = e.data;
     if (m.type === 'progress') listeners.forEach((l) => l(m.value));
     else if (m.type === 'audio') pending.get(m.id)?.ok({ samples: m.samples, rate: m.rate });
-    else if (m.type === 'error') pending.get(m.id)?.fail(new Error(m.message));
+    else if (m.type === 'error') {
+      console.error('[tts] Worker reported an error:', m.message);
+      pending.get(m.id)?.fail(new Error(m.message));
+    }
     if (m.type === 'audio' || m.type === 'error') pending.delete(m.id);
   };
-  worker.onerror = () => {
-    pending.forEach((p) => p.fail(new Error('worker failed')));
+  worker.onerror = (e: ErrorEvent) => {
+    // A worker-level crash — the module failed to load/instantiate, not
+    // just a single generate() call failing. Previously silent, so a
+    // misconfigured CSP or an unsupported WebView would downgrade to the
+    // system voice with zero trace of why.
+    console.error('[tts] TTS worker crashed:', e.message, e.filename, e.lineno);
+    pending.forEach((p) => p.fail(new Error(e.message || 'worker failed')));
     pending.clear();
     worker = undefined;
   };
@@ -244,14 +281,21 @@ function synth(text: string, voice: string, speed: number): Promise<Clip> {
 
 /* ── Player hook ─────────────────────────────────────────────────────── */
 
-export function useListen(lesson: Lesson | undefined, langs: ListenLangs) {
+export function useListen(lessonOrLessons: Lesson | Lesson[] | undefined, langs: ListenLangs) {
+  const lessons = React.useMemo(
+    () => (Array.isArray(lessonOrLessons) ? lessonOrLessons : lessonOrLessons ? [lessonOrLessons] : []),
+    [lessonOrLessons],
+  );
+  const lessonKey = lessons.map((l) => l.id).join(',');
   const voices = useVoices();
   const [state, setState] = React.useState<ListenState>('idle');
   const [mode, setMode] = React.useState<ListenMode>('podcast');
   const [rate, setRate] = React.useState(1);
   const [progress, setProgress] = React.useState(0);
   const [download, setDownload] = React.useState(0);
-  const [fallback, setFallback] = React.useState(false);
+  const [fallback, setFallback] = React.useState(IS_MOBILE);
+  const [activeBlockId, setActiveBlockId] = React.useState<string | undefined>(undefined);
+  const [activeText, setActiveText] = React.useState<string | undefined>(undefined);
 
   const run = React.useRef({
     segs: [] as Segment[], idx: 0, token: 0, timer: undefined as number | undefined,
@@ -259,7 +303,7 @@ export function useListen(lesson: Lesson | undefined, langs: ListenLangs) {
     ctx: undefined as AudioContext | undefined,
     src: undefined as AudioBufferSourceNode | undefined,
     kind: 'neural' as 'neural' | 'system',
-    fallback: false,
+    fallback: IS_MOBILE,
   });
   const rateRef = React.useRef(rate);
   rateRef.current = rate;
@@ -311,6 +355,8 @@ export function useListen(lesson: Lesson | undefined, langs: ListenLangs) {
     const seg = r.segs[idx];
     r.kind = 'system';
     setState('playing');
+    setActiveBlockId(seg.blockId);
+    setActiveText(seg.text);
     const set = seg.lang === 'af' ? afVoices : enVoices;
     const v = seg.host === 'A' ? set.a : set.b;
     const u = new SpeechSynthesisUtterance(seg.text);
@@ -324,7 +370,7 @@ export function useListen(lesson: Lesson | undefined, langs: ListenLangs) {
   const play = async (idx: number) => {
     const r = run.current;
     const seg = r.segs[idx];
-    if (!seg) { halt(); setState('idle'); setProgress(0); return; }
+    if (!seg) { halt(); setState('idle'); setProgress(0); setActiveBlockId(undefined); setActiveText(undefined); return; }
     r.idx = idx;
     const token = ++r.token;
     if (seg.lang === 'af' || r.fallback) return speakSystem(idx, token);
@@ -336,6 +382,8 @@ export function useListen(lesson: Lesson | undefined, langs: ListenLangs) {
       if (token !== r.token) return;
       r.kind = 'neural';
       setState('playing');
+      setActiveBlockId(seg.blockId);
+      setActiveText(seg.text);
       r.ctx ??= new AudioContext();
       const buf = r.ctx.createBuffer(1, c.samples.length, c.rate);
       buf.copyToChannel(c.samples as Float32Array<ArrayBuffer>, 0);
@@ -345,8 +393,11 @@ export function useListen(lesson: Lesson | undefined, langs: ListenLangs) {
       src.onended = () => token === r.token && advance(idx, token, seg);
       r.src = src;
       src.start();
-    } catch {
-      // Model could not load (offline on first run): use the system voice instead.
+    } catch (err) {
+      // Model could not load (offline on first run, or the WebView can't
+      // run it): use the system voice instead. Logged so a real failure is
+      // diagnosable instead of just silently downgrading every time.
+      console.error('[tts] Falling back to system voice — neural voice failed:', err);
       if (token !== r.token) return;
       r.fallback = true;
       setFallback(true);
@@ -356,12 +407,12 @@ export function useListen(lesson: Lesson | undefined, langs: ListenLangs) {
   playRef.current = play;
 
   const start = (m: ListenMode) => {
-    if (!lesson) return;
+    if (!lessons.length) return;
     halt();
     setMode(m);
-    run.current.segs = buildSegments(lesson, m, langs);
-    run.current.fallback = false;
-    setFallback(false);
+    run.current.segs = buildSegments(lessons, m, langs);
+    run.current.fallback = IS_MOBILE;
+    setFallback(IS_MOBILE);
     setProgress(0);
     setState('loading');
     play(0);
@@ -378,10 +429,19 @@ export function useListen(lesson: Lesson | undefined, langs: ListenLangs) {
     setState('playing');
     if (r.kind === 'neural' && r.ctx) r.ctx.resume(); else play(r.idx);
   };
-  const stop = React.useCallback(() => { halt(); setState('idle'); setProgress(0); }, [halt]);
+  const stop = React.useCallback(() => {
+    halt();
+    setState('idle');
+    setProgress(0);
+    setActiveBlockId(undefined);
+    setActiveText(undefined);
+  }, [halt]);
 
-  // Stop when the lesson or the language view changes.
-  React.useEffect(() => stop, [stop, lesson?.id, langs]);
+  // Stop when the lesson(s) or the language view changes.
+  React.useEffect(() => stop, [stop, lessonKey, langs]);
 
-  return { state, mode, rate, setRate, progress, download, start, pause, resume, stop, fallback, langs, missingAfVoice };
+  return {
+    state, mode, rate, setRate, progress, download, start, pause, resume, stop,
+    fallback, langs, missingAfVoice, activeBlockId, activeText,
+  };
 }

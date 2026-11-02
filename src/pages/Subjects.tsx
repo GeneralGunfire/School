@@ -66,13 +66,13 @@ export default function Subjects() {
               </span>
 
               <div className="min-w-0 flex-1">
-                <p className="text-[15.5px] font-semibold text-ink">{st.subject.name}</p>
-                <p className="text-pretty mt-1 text-[12.5px] text-muted">{st.subject.blurb}</p>
+                <p className="text-[14.5px] font-semibold text-ink">{st.subject.name}</p>
+                <p className="text-pretty mt-1 text-[11.75px] text-muted">{st.subject.blurb}</p>
               </div>
 
               {/* Weekly footprint */}
               <div className="hidden w-[150px] shrink-0 lg:block">
-                <p className="mb-1.5 text-[11px] text-muted-2">
+                <p className="mb-1.5 text-[10.5px] text-muted-2">
                   {st.periods} period{st.periods === 1 ? '' : 's'} a week
                 </p>
                 <div className="flex gap-1">
@@ -83,7 +83,7 @@ export default function Subjects() {
                         key={d.value}
                         title={d.label}
                         className={cn(
-                          'grid h-5 flex-1 place-items-center rounded text-[9.5px] font-semibold',
+                          'grid h-5 flex-1 place-items-center rounded text-[9px] font-semibold',
                           on ? 'text-paper' : 'border border-hairline text-muted-2',
                         )}
                         style={on ? { background: color } : undefined}
@@ -99,13 +99,13 @@ export default function Subjects() {
               <div className="w-[130px] shrink-0">
                 {st.available ? (
                   <>
-                    <p className="mb-1.5 text-[11px] text-muted-2 tabular-nums">
+                    <p className="mb-1.5 text-[10.5px] text-muted-2 tabular-nums">
                       {st.done}/{st.total} lessons
                     </p>
                     <ProgressBar value={st.pct} color={color} />
                   </>
                 ) : (
-                  <p className="flex items-center justify-end gap-1.5 text-[11.5px] text-muted-2">
+                  <p className="flex items-center justify-end gap-1.5 text-[11px] text-muted-2">
                     <Lock className="size-3" aria-hidden /> No content
                   </p>
                 )}

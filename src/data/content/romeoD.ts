@@ -1,5 +1,5 @@
 import type { Lesson } from '../../lib/types';
-import { h2, h3, p, ul, box, table, lessonIn, type WB } from './writeKit';
+import { h2, h3, p, ul, box, table, qa, lessonIn, type WB } from './writeKit';
 import { CH } from './romeoA';
 
 /** Romeo and Juliet: themes, motifs and imagery, language and dramatic technique, and the question of blame. */
@@ -129,6 +129,19 @@ export const R_THEMES = L('rj-themes', 'Themes', 60, [
     'Death moves from a threat (the Prince’s warning) to a reality (Mercutio, Tybalt) and finally a choice (Romeo and Juliet).',
     'Show how language connects love and death.',
   ),
+  ...theme(
+    'Public vs Private',
+    'The play keeps separating what happens in public, streets, feasts, the Prince’s court, from what happens in private, orchards at night, the Friar’s cell, bedrooms. Almost everything that destroys the lovers starts as a public event (a street brawl, a public feast, a public duel) while almost everything that might have saved them happens in private and in secret, which is itself the problem: because their love must stay hidden, it has no public protection when the crisis comes.',
+    [
+      ['Public violence starts the tragedy', 'The street brawl (1.1) is public and immediately brings in the Prince, the highest public authority, who makes future violence a matter of public law and death.'],
+      ['Private love has no standing', 'The balcony scene (2.2) and the wedding (2.6) happen in near-total secrecy, visible only to the Nurse and the Friar; because the marriage is never made public, Capulet can arrange a second, bigamous marriage to Paris without knowing he is doing anything wrong.'],
+      ['The public duel kills the hope of peace', 'The fight in 3.1 takes place in “a public place”, in daylight, with citizens watching; Benvolio’s honest public account to the Prince saves Romeo from execution, but cannot undo the public, witnessed killing of Tybalt.'],
+      ['Private deception collapses in public', 'The Friar’s plan is entirely private, one potion, one letter, one secret, and it fails the moment it must survive contact with the public world: a quarantined messenger, a grieving public household, a watch summoned to the tomb.'],
+      ['Public reconciliation, at a private cost', 'The play ends with Capulet and Montague shaking hands in front of the Prince and the whole community, a public, political resolution bought only by the completely private tragedy of their children’s deaths.'],
+    ],
+    'The pattern reverses across the play: it begins with public violence spilling into private lives (the feud shaping Romeo and Juliet before they even meet) and ends with private tragedy forcing a public peace. Shakespeare suggests that a love this genuine could not survive in a world where personal feeling has no public legitimacy.',
+    'Argue that the lovers’ fatal mistake is not love itself but secrecy: discuss what might have happened if the marriage had been made public immediately after 2.6.',
+  ),
 ]);
 
 export const R_MOTIFS = L('rj-motifs', 'Motifs, Imagery and Symbols', 35, [
@@ -222,6 +235,12 @@ export const R_LANGUAGE = L('rj-language', 'Language, Form and Dramatic Techniqu
     'Use verbs like “suggests”, “reveals”, “emphasises”, “contrasts”.',
   ]),
   box('Formula: “Shakespeare uses [device] in “[short quote]” to [effect], which highlights [theme/character].”'),
+  h3('Practice: language and form'),
+  qa([
+    { q: 'Why does Shakespeare write the Prologue as a sonnet rather than in ordinary blank verse? (3)', a: 'The sonnet is a form traditionally used for love poetry, so using it to announce a tragedy immediately fuses love and death, the play’s central pairing. Its tight structure (fourteen lines, a clear rhyme scheme, a closing couplet) also lets the Chorus deliver the whole plot, cause, lovers, fate and outcome, in a compressed, memorable shape that an audience can grasp before the action even begins.' },
+    { q: 'Identify the dramatic technique in Juliet’s line “My grave is like to be my wedding bed” (1.5) and explain its effect. (3)', a: 'This is dramatic irony combined with foreshadowing: Juliet means it only as an exaggerated expression of hopeless love, but the audience, who already knows from the Prologue that the lovers will die, hears it as a literal prediction. The effect is to make an otherwise romantic, excited scene feel quietly ominous.' },
+    { q: 'Explain how the shift from verse to prose signals something about character or mood, using one example. (3)', a: 'Shakespeare generally gives verse to noble, serious or romantic characters and moments, and prose to servants, comedy or informal exchanges. For example, Mercutio and the servants slip into prose for bawdy jokes and banter (such as in 2.4), which marks those moments as light and informal, in contrast to the elevated blank verse Romeo and Juliet use when discussing their love.' },
+  ]),
 ]);
 
 export const R_BLAME = L('rj-blame', 'Who Is to Blame?', 30, [
@@ -249,4 +268,9 @@ export const R_BLAME = L('rj-blame', 'Who Is to Blame?', 30, [
   ]),
   h2('Sample paragraph'),
   box('Point: The older generation must take much of the responsibility.\nEvidence: Capulet threatens to disown Juliet (“hang, beg, starve, die in the streets”), Lady Capulet says “I have done with thee”, and the Nurse tells her to marry Paris.\nExplain: Each adult Juliet turns to abandons her, which leaves her to rely on the Friar’s dangerous plan.\nLink: Therefore the adults’ failure of care directly causes the crisis that leads to the tomb.'),
+  h3('Practice: essay-style questions on blame'),
+  qa([
+    { q: '“The tragedy of Romeo and Juliet is caused more by chance than by choice.” Discuss this statement. (10)', a: 'There is a reasonable case for chance: the Prologue announces the lovers are “star-cross’d”, the servant who cannot read accidentally invites Romeo to the feast where he meets Juliet, and Friar John is quarantined by the plague so Romeo never receives the letter explaining the plan, meaning he hears only that Juliet is dead. However, the tragedy depends more heavily on human choices made in haste: Romeo chooses to kill Tybalt in revenge rather than wait for the Prince’s justice; Capulet chooses to bring the wedding with Paris forward, unaware of Juliet’s marriage; the Friar chooses a secret, risky plan rather than a public solution; and Romeo chooses to buy poison and go to the tomb without first verifying Balthasar’s news or waiting for word from the Friar. Each of these choices is avoidable, while the chance events (the plague, the illiterate servant) only create the conditions in which these choices become fatal. On balance, chance provides the opportunities, but the characters’ repeated choice of haste over patience is what turns misfortune into tragedy.' },
+    { q: 'To what extent is the Nurse responsible for Juliet’s death? (8)', a: 'The Nurse bears some responsibility because she is Juliet’s most trusted adult and, at the critical moment in 3.5, she abandons her own advice and loyalty, telling Juliet to forget Romeo and marry Paris: “I think it best you married with the County.” This betrayal removes Juliet’s last source of practical support and pushes her directly to the Friar for a more desperate solution. However, the Nurse’s responsibility is limited: she does not know Romeo has killed Tybalt out of any malice, she is genuinely trying to protect Juliet from a hopeless situation by conventional standards, and she has no way of knowing the Friar’s plan will fail. Compared with Capulet’s tyranny or the Friar’s risky scheme, her fault is one of limited understanding rather than cruelty. She is therefore partly, but not primarily, responsible.' },
+  ]),
 ]);

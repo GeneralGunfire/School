@@ -44,7 +44,7 @@ function SubjectTogglers({
       <button
         onClick={() => onChange('all')}
         className={cn(
-          'rounded-full border px-3 py-1.5 text-[12.5px] font-semibold transition-colors',
+          'rounded-full border px-3 py-1.5 text-[11.75px] font-semibold transition-colors',
           value === 'all' ? 'border-ink bg-ink text-paper' : 'border-hairline text-muted hover:border-hairline-strong hover:text-ink',
         )}
       >
@@ -59,7 +59,7 @@ function SubjectTogglers({
             key={id}
             onClick={() => onChange(id)}
             className={cn(
-              'rounded-full border px-3 py-1.5 text-[12.5px] font-semibold transition-colors',
+              'rounded-full border px-3 py-1.5 text-[11.75px] font-semibold transition-colors',
               active ? 'text-paper' : 'border-hairline text-muted hover:border-hairline-strong hover:text-ink',
             )}
             style={active ? { background: subjectColor(id), borderColor: subjectColor(id) } : undefined}
@@ -87,16 +87,16 @@ function AcronymCard({ acronym, onEdit }: { acronym: UserAcronym; onEdit: () => 
             {acronym.letters.map((l) => (
               <span
                 key={l.id}
-                className="grid size-7 place-items-center rounded-md border border-hairline text-[13px] font-bold text-ink"
+                className="grid size-7 place-items-center rounded-md border border-hairline text-[12.25px] font-bold text-ink"
                 style={{ background: 'var(--surface-raise)' }}
               >
                 {l.letter}
               </span>
             ))}
           </div>
-          <p className="mt-2 truncate text-[14px] font-semibold text-ink">{acronym.title || 'Untitled acronym'}</p>
+          <p className="mt-2 truncate text-[13px] font-semibold text-ink">{acronym.title || 'Untitled acronym'}</p>
           <div className="mt-1 flex items-center gap-2">
-            <span className="text-[11.5px] font-semibold" style={{ color }}>{subject?.shortName}</span>
+            <span className="text-[11px] font-semibold" style={{ color }}>{subject?.shortName}</span>
             {acronym.paper && <Badge tone="accent">Paper {acronym.paper}</Badge>}
           </div>
         </div>
@@ -111,7 +111,7 @@ function AcronymCard({ acronym, onEdit }: { acronym: UserAcronym; onEdit: () => 
 
       <div className="space-y-1.5">
         {acronym.letters.filter((l) => l.word || l.sentence).map((l) => (
-          <div key={l.id} className="flex gap-2 text-[12.5px]">
+          <div key={l.id} className="flex gap-2 text-[11.75px]">
             <span className="shrink-0 font-bold text-ink">{l.letter} —</span>
             <span className="min-w-0 text-muted">
               {l.word && <span className="font-medium text-ink-2">{l.word}</span>}
@@ -149,12 +149,12 @@ function NoteEditorCard({ note }: { note: StudyNote }) {
           value={note.title}
           onChange={(e) => updateStudyNote(note.id, { title: e.target.value })}
           placeholder="Note title"
-          className="min-w-0 flex-1 bg-transparent text-[14px] font-semibold text-ink outline-none placeholder:text-muted-2"
+          className="min-w-0 flex-1 bg-transparent text-[13px] font-semibold text-ink outline-none placeholder:text-muted-2"
         />
         <select
           value={note.subjectId}
           onChange={(e) => updateStudyNote(note.id, { subjectId: e.target.value as SubjectId })}
-          className="shrink-0 rounded-md border border-hairline bg-paper px-2 py-1 text-[11.5px] text-muted outline-none focus:border-accent"
+          className="shrink-0 rounded-md border border-hairline bg-paper px-2 py-1 text-[11px] text-muted outline-none focus:border-accent"
         >
           {SUBJECTS.map((s) => (
             <option key={s.id} value={s.id}>{s.shortName}</option>
@@ -163,7 +163,7 @@ function NoteEditorCard({ note }: { note: StudyNote }) {
         <select
           value={note.paper ?? ''}
           onChange={(e) => updateStudyNote(note.id, { paper: e.target.value ? (Number(e.target.value) as 1 | 2) : undefined })}
-          className="shrink-0 rounded-md border border-hairline bg-paper px-2 py-1 text-[11.5px] text-muted outline-none focus:border-accent"
+          className="shrink-0 rounded-md border border-hairline bg-paper px-2 py-1 text-[11px] text-muted outline-none focus:border-accent"
         >
           <option value="">No paper</option>
           <option value="1">Paper 1</option>
@@ -183,7 +183,7 @@ function NoteEditorCard({ note }: { note: StudyNote }) {
         onBlur={commitPoints}
         placeholder={'Key sentences, one per line…'}
         rows={4}
-        className="w-full resize-y rounded-lg border border-hairline bg-paper px-3 py-2 text-[13px] leading-relaxed text-ink outline-none placeholder:text-muted-2 focus:border-accent"
+        className="w-full resize-y rounded-lg border border-hairline bg-paper px-3 py-2 text-[12.25px] leading-relaxed text-ink outline-none placeholder:text-muted-2 focus:border-accent"
       />
     </Card>
   );
@@ -201,9 +201,9 @@ function NotebookList({ notebook }: { notebook: Notebook }) {
         <input
           value={notebook.title}
           onChange={(e) => updateNotebook(notebook.id, { title: e.target.value })}
-          className="min-w-0 flex-1 bg-transparent text-[15px] font-semibold text-ink outline-none"
+          className="min-w-0 flex-1 bg-transparent text-[14px] font-semibold text-ink outline-none"
         />
-        <span className="shrink-0 text-[11px] text-muted-2">{entries.length} {entries.length === 1 ? 'entry' : 'entries'}</span>
+        <span className="shrink-0 text-[10.5px] text-muted-2">{entries.length} {entries.length === 1 ? 'entry' : 'entries'}</span>
         <button
           onClick={() => removeNotebook(notebook.id)}
           aria-label="Delete notebook"
@@ -214,7 +214,7 @@ function NotebookList({ notebook }: { notebook: Notebook }) {
       </div>
 
       {entries.length === 0 ? (
-        <p className="py-6 text-center text-[12.5px] text-muted-2">
+        <p className="py-6 text-center text-[11.75px] text-muted-2">
           Select any text in a lesson and choose "Save" to add it here.
         </p>
       ) : (
@@ -222,12 +222,12 @@ function NotebookList({ notebook }: { notebook: Notebook }) {
           {entries.map((entry) => (
             <div
               key={entry.id}
-              className="group relative rounded-lg border-l-4 py-2.5 pr-8 pl-3 text-[13px] leading-relaxed text-ink-2"
+              className="group relative rounded-lg border-l-4 py-2.5 pr-8 pl-3 text-[12.25px] leading-relaxed text-ink-2"
               style={{ borderColor: highlightHex(entry.color), background: highlightWash(entry.color, 12) }}
             >
               "{entry.text}"
-              {entry.comment && <p className="mt-1.5 text-[12px] font-medium text-ink">{entry.comment}</p>}
-              {entry.source && <p className="mt-1 text-[11px] text-muted-2">{entry.source.lessonTitle}</p>}
+              {entry.comment && <p className="mt-1.5 text-[11.5px] font-medium text-ink">{entry.comment}</p>}
+              {entry.source && <p className="mt-1 text-[10.5px] text-muted-2">{entry.source.lessonTitle}</p>}
               <button
                 onClick={() => removeNotebookEntry(entry.id)}
                 aria-label="Remove entry"
@@ -279,7 +279,7 @@ function MindMapsTab({ subjectFilter }: { subjectFilter: SubjectId | 'all' }) {
             key={m.id}
             onClick={() => setSearchParams({ tab: 'mindmaps', map: m.id })}
             className={cn(
-              'rounded-lg border px-3 py-1.5 text-[12.5px] font-semibold transition-colors',
+              'rounded-lg border px-3 py-1.5 text-[11.75px] font-semibold transition-colors',
               m.id === active?.id ? 'border-ink bg-ink text-paper' : 'border-hairline text-muted hover:border-hairline-strong hover:text-ink',
             )}
           >
@@ -288,7 +288,7 @@ function MindMapsTab({ subjectFilter }: { subjectFilter: SubjectId | 'all' }) {
         ))}
         <button
           onClick={create}
-          className="flex items-center gap-1 rounded-lg border border-dashed border-hairline-strong px-3 py-1.5 text-[12.5px] font-semibold text-muted hover:border-accent hover:text-accent"
+          className="flex items-center gap-1 rounded-lg border border-dashed border-hairline-strong px-3 py-1.5 text-[11.75px] font-semibold text-muted hover:border-accent hover:text-accent"
         >
           <Plus className="size-3.5" /> New
         </button>
@@ -300,7 +300,7 @@ function MindMapsTab({ subjectFilter }: { subjectFilter: SubjectId | 'all' }) {
             <RenameMap map={active} />
             <button
               onClick={() => removeMindMap(active.id)}
-              className="flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-[12px] font-semibold text-critical hover:bg-critical-wash"
+              className="flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-[11.5px] font-semibold text-critical hover:bg-critical-wash"
             >
               <Trash2 className="size-3.5" /> Delete map
             </button>
@@ -318,7 +318,7 @@ function RenameMap({ map }: { map: { id: string; title: string } }) {
     <input
       value={map.title}
       onChange={(e) => updateMindMap(map.id, { title: e.target.value })}
-      className="rounded-lg bg-transparent px-1 text-[16px] font-semibold text-ink outline-none focus:bg-paper-raise"
+      className="rounded-lg bg-transparent px-1 text-[15px] font-semibold text-ink outline-none focus:bg-paper-raise"
     />
   );
 }

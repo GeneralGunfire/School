@@ -26,7 +26,7 @@ export function Page({
     full: 'max-w-none',
   }[width];
 
-  return <div className={cn('mx-auto w-full px-4 pb-16 sm:px-7', max, className)}>{children}</div>;
+  return <div className={cn('mx-auto w-full px-4 pb-10 sm:px-6', max, className)}>{children}</div>;
 }
 
 /**
@@ -51,11 +51,11 @@ export function PageTitle({
   trailing?: React.ReactNode;
 }) {
   return (
-    <div className="pt-9 pb-8">
+    <div className="pt-6 pb-6">
       {onBack && (
         <button
           onClick={onBack}
-          className="-ml-2 mb-3 inline-flex items-center gap-1 rounded-lg px-2 py-1.5 text-[0.8rem] font-semibold text-muted transition-colors duration-100 hover:bg-paper-raise hover:text-ink"
+          className="-ml-2 mb-2.5 inline-flex items-center gap-1 rounded-lg px-2 py-1.5 text-[0.8rem] font-semibold text-muted transition-colors duration-100 hover:bg-paper-raise hover:text-ink"
         >
           <ChevronLeft className="size-[0.95rem]" aria-hidden /> Back
         </button>
@@ -66,27 +66,27 @@ export function PageTitle({
           they float beside the body text instead of the heading. Below
           `sm` there usually isn't room beside a full-width heading, so
           trailing controls drop underneath instead of squeezing it. */}
-      <div className="flex flex-col items-start gap-4 sm:flex-row sm:items-start sm:justify-between sm:gap-8">
+      <div className="flex flex-col items-start gap-3 sm:flex-row sm:items-start sm:justify-between sm:gap-8">
         <div className="min-w-0 w-full sm:w-auto">
           {eyebrow && (
-            <p className="mb-3 flex items-center gap-2.5 text-[0.68rem] font-bold tracking-[0.13em] text-muted-2 uppercase">
+            <p className="mb-2 flex items-center gap-2.5 text-[0.68rem] font-bold tracking-[0.13em] text-muted-2 uppercase">
               <span className="label-rule" aria-hidden />
               {eyebrow}
             </p>
           )}
 
-          <h1 className="display text-balance text-[clamp(2rem,2.4vw,2.6rem)] text-ink">
+          <h1 className="display text-balance text-[clamp(1.6rem,2vw,2.1rem)] text-ink">
             {withSwoop(title, highlight)}
           </h1>
 
           {subtitle && (
-            <p className="text-pretty mt-5 max-w-[46rem] text-[0.88rem] leading-relaxed text-muted">
+            <p className="text-pretty mt-3 max-w-[46rem] text-[0.86rem] leading-relaxed text-muted">
               {subtitle}
             </p>
           )}
         </div>
 
-        {trailing && <div className={cn('shrink-0', eyebrow && 'mt-8')}>{trailing}</div>}
+        {trailing && <div className={cn('shrink-0', eyebrow && 'mt-6')}>{trailing}</div>}
       </div>
     </div>
   );

@@ -39,7 +39,7 @@ function monthGrid(month: Date): string[] {
 }
 
 const FIELD =
-  'w-full rounded-[0.55rem] border px-3 py-2 text-[0.82rem] text-ink outline-none ' +
+  'w-full rounded-[0.55rem] border px-3 py-2 text-[0.76rem] text-ink outline-none ' +
   'transition-[border-color,box-shadow] duration-100 placeholder:text-muted-2 ' +
   'focus:border-accent focus:shadow-[0_0_0_3px_var(--color-accent-ring)]';
 
@@ -140,7 +140,7 @@ function AddBlockForm({ date, onDone }: { date: string; onDone: () => void }) {
             Done
           </Button>
         </div>
-        <p className="text-[0.68rem] text-muted-2">Enter adds and keeps the form open.</p>
+        <p className="text-[0.64rem] text-muted-2">Enter adds and keeps the form open.</p>
       </div>
     </form>
   );
@@ -192,10 +192,10 @@ function DayPanel({ date, onClose }: { date: string; onClose: () => void }) {
           style={{ borderColor: 'var(--edge)' }}
         >
           <div className="min-w-0">
-            <p className="text-[0.95rem] font-semibold text-ink">
+            <p className="text-[0.88rem] font-semibold text-ink">
               {formatLongDate(fromDayKey(date))}
             </p>
-            <p className="mt-1 text-[0.75rem] text-muted">
+            <p className="mt-1 text-[0.7rem] text-muted">
               {dayBlocks.length === 0
                 ? 'Nothing planned'
                 : `${done}/${dayBlocks.length} done · ${totalMinutes} min planned`}
@@ -209,7 +209,7 @@ function DayPanel({ date, onClose }: { date: string; onClose: () => void }) {
         <div className="min-h-0 flex-1 space-y-5 overflow-y-auto px-5 py-5">
           <section>
             <div className="mb-3 flex items-center justify-between">
-              <h3 className="flex items-center gap-2 text-[0.68rem] font-bold tracking-[0.13em] text-muted uppercase">
+              <h3 className="flex items-center gap-2 text-[0.64rem] font-bold tracking-[0.13em] text-muted uppercase">
                 <span className="label-rule" aria-hidden />
                 Study blocks
               </h3>
@@ -237,7 +237,7 @@ function DayPanel({ date, onClose }: { date: string; onClose: () => void }) {
             </AnimatePresence>
 
             {dayBlocks.length === 0 && !adding ? (
-              <p className="py-8 text-center text-[0.8rem] text-muted-2">
+              <p className="py-8 text-center text-[0.75rem] text-muted-2">
                 No study blocks for this day.
               </p>
             ) : (
@@ -265,25 +265,25 @@ function DayPanel({ date, onClose }: { date: string; onClose: () => void }) {
                     <div className="min-w-0 flex-1">
                       <p
                         className={cn(
-                          'text-[0.82rem] font-medium',
+                          'text-[0.76rem] font-medium',
                           b.done ? 'text-muted-2 line-through' : 'text-ink',
                         )}
                       >
                         {b.topic}
                       </p>
-                      <p className="mt-1 text-[0.72rem] text-muted">
+                      <p className="mt-1 text-[0.67rem] text-muted">
                         <span style={{ color: subjectColor(b.subjectId) }}>
                           {getSubject(b.subjectId)?.shortName}
                         </span>
                         {' · '}
                         {b.duration} min
                       </p>
-                      {b.notes && <p className="mt-1 text-[0.72rem] text-muted-2">{b.notes}</p>}
+                      {b.notes && <p className="mt-1 text-[0.67rem] text-muted-2">{b.notes}</p>}
                     </div>
                     <button
                       onClick={() => removeBlock(b.id)}
                       aria-label="Remove block"
-                      className="shrink-0 rounded-md p-1 text-muted-2 opacity-0 transition-all duration-100 group-hover:opacity-100 hover:bg-critical-wash hover:text-critical"
+                      className="shrink-0 rounded-md p-1 text-muted-2 opacity-0 transition-[opacity,background-color,color] duration-100 group-hover:opacity-100 hover:bg-critical-wash hover:text-critical"
                     >
                       <Trash2 className="size-3.5" />
                     </button>
@@ -294,7 +294,7 @@ function DayPanel({ date, onClose }: { date: string; onClose: () => void }) {
           </section>
 
           <section>
-            <h3 className="mb-3 flex items-center gap-2 text-[0.68rem] font-bold tracking-[0.13em] text-muted uppercase">
+            <h3 className="mb-3 flex items-center gap-2 text-[0.64rem] font-bold tracking-[0.13em] text-muted uppercase">
               <span className="label-rule" aria-hidden />
               Daily reflection
             </h3>
@@ -306,7 +306,7 @@ function DayPanel({ date, onClose }: { date: string; onClose: () => void }) {
               className={cn(FIELD, 'resize-none leading-relaxed')}
               style={FIELD_STYLE}
             />
-            <p className="mt-2 text-[0.68rem] text-muted-2">Saves as you type.</p>
+            <p className="mt-2 text-[0.64rem] text-muted-2">Saves as you type.</p>
           </section>
         </div>
       </motion.aside>
@@ -337,9 +337,10 @@ function MonthView({
     <Card className="overflow-hidden">
       <div className="surface-header grid grid-cols-7 border-b" style={{ borderColor: 'var(--edge)' }}>
         {WEEKDAY_LABELS.map((d) => (
-          <div key={d} className="px-3 py-2.5 text-center">
-            <span className="text-[0.66rem] font-bold tracking-[0.13em] text-muted-2 uppercase">
-              {d}
+          <div key={d} className="px-1 py-1.5 text-center sm:px-3">
+            <span className="text-[0.62rem] font-bold tracking-[0.13em] text-muted-2 uppercase">
+              <span className="sm:hidden">{d.slice(0, 1)}</span>
+              <span className="hidden sm:inline">{d}</span>
             </span>
           </div>
         ))}
@@ -357,7 +358,7 @@ function MonthView({
               key={key}
               onClick={() => onPick(key)}
               className={cn(
-                'group relative min-h-[6.2rem] border-r border-b p-2 text-left transition-colors duration-100',
+                'group relative min-h-[3.4rem] border-r border-b p-1 text-left transition-colors duration-100 sm:min-h-[3.6rem] sm:p-1.5',
                 'hover:bg-paper-raise',
                 !inMonth && 'opacity-45',
                 i % 7 === 6 && 'border-r-0',
@@ -366,7 +367,7 @@ function MonthView({
             >
               <span
                 className={cn(
-                  'inline-grid size-[1.6rem] place-items-center rounded-full text-[0.78rem] font-semibold tabular-nums transition-colors duration-100',
+                  'inline-grid size-[1.4rem] place-items-center rounded-full text-[0.67rem] font-semibold tabular-nums transition-colors duration-100 sm:size-[1.6rem] sm:text-[0.73rem]',
                   isToday
                     ? 'text-accent-foreground [background:var(--grad-royal)] shadow-[0_1px_3px_var(--shadow-mid)]'
                     : 'text-ink',
@@ -375,12 +376,25 @@ function MonthView({
                 {d.getDate()}
               </span>
 
-              <div className="mt-2 space-y-1">
-                {dayBlocks.slice(0, 3).map((b) => (
+              {/* Phones: a row of coloured dots, one per block. Desktop: full topic chips. */}
+              {dayBlocks.length > 0 && (
+                <div className="mt-1.5 flex flex-wrap gap-1 sm:hidden">
+                  {dayBlocks.slice(0, 4).map((b) => (
+                    <span
+                      key={b.id}
+                      className={cn('size-[5px] rounded-full', b.done && 'opacity-40')}
+                      style={{ background: subjectColor(b.subjectId) }}
+                    />
+                  ))}
+                </div>
+              )}
+
+              <div className="mt-1 hidden space-y-0.5 sm:block">
+                {dayBlocks.slice(0, 2).map((b) => (
                   <div
                     key={b.id}
                     className={cn(
-                      'truncate rounded-[0.3rem] px-1.5 py-[3px] text-[0.66rem] font-medium',
+                      'truncate rounded-[0.3rem] px-1.5 py-0.5 text-[0.59rem] font-medium',
                       b.done && 'opacity-50 line-through',
                     )}
                     style={{
@@ -391,14 +405,14 @@ function MonthView({
                     {b.topic}
                   </div>
                 ))}
-                {dayBlocks.length > 3 && (
-                  <p className="pl-1.5 text-[0.66rem] text-muted-2">+{dayBlocks.length - 3} more</p>
+                {dayBlocks.length > 2 && (
+                  <p className="pl-1.5 text-[0.59rem] text-muted-2">+{dayBlocks.length - 2} more</p>
                 )}
               </div>
 
               {/* Quick-add affordance, revealed on hover. */}
               {dayBlocks.length === 0 && (
-                <span className="absolute right-2 bottom-2 grid size-5 place-items-center rounded-md text-muted-2 opacity-0 transition-opacity duration-100 group-hover:opacity-100">
+                <span className="absolute right-2 bottom-2 hidden size-5 place-items-center rounded-md text-muted-2 opacity-0 transition-opacity duration-100 group-hover:opacity-100 sm:grid">
                   <Plus className="size-3.5" />
                 </span>
               )}
@@ -420,7 +434,7 @@ function WeekView({ anchor, onPick }: { anchor: Date; onPick: (d: string) => voi
   const today = todayKey();
 
   return (
-    <div className="grid grid-cols-7 gap-3">
+    <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-7">
       {days.map((key, i) => {
         const d = fromDayKey(key);
         const dayBlocks = blocks.filter((b) => b.date === key);
@@ -432,12 +446,12 @@ function WeekView({ anchor, onPick }: { anchor: Date; onPick: (d: string) => voi
                 interactive
                 className={cn('min-h-[14rem] p-3.5', isToday && 'border-accent/45')}
               >
-                <p className="text-[0.66rem] font-bold tracking-[0.13em] text-muted-2 uppercase">
+                <p className="text-[0.62rem] font-bold tracking-[0.13em] text-muted-2 uppercase">
                   {WEEKDAY_LABELS[(d.getDay() + 6) % 7]}
                 </p>
                 <p
                   className={cn(
-                    'mt-1 text-[1.3rem] font-semibold tabular-nums',
+                    'mt-1 text-[1.2rem] font-semibold tabular-nums',
                     isToday ? 'text-accent' : 'text-ink',
                   )}
                 >
@@ -453,12 +467,12 @@ function WeekView({ anchor, onPick }: { anchor: Date; onPick: (d: string) => voi
                       }}
                     >
                       <p
-                        className="truncate text-[0.68rem] font-semibold"
+                        className="truncate text-[0.64rem] font-semibold"
                         style={{ color: subjectColor(b.subjectId) }}
                       >
                         {getSubject(b.subjectId)?.shortName}
                       </p>
-                      <p className={cn('mt-0.5 truncate text-[0.68rem] text-muted', b.done && 'line-through')}>
+                      <p className={cn('mt-0.5 truncate text-[0.64rem] text-muted', b.done && 'line-through')}>
                         {b.topic}
                       </p>
                     </div>
@@ -482,7 +496,7 @@ export default function Calendar() {
   const [selected, setSelected] = React.useState<string | null>(null);
 
   return (
-    <Page width="wide">
+    <Page width="default">
       <PageTitle
         title="Study calendar"
         highlight="calendar"
@@ -513,7 +527,7 @@ export default function Calendar() {
           >
             <ChevronLeft />
           </Button>
-          <span className="min-w-[10rem] text-center text-[0.9rem] font-semibold text-ink">
+          <span className="min-w-[10rem] text-center text-[0.84rem] font-semibold text-ink">
             {formatMonthYear(month)}
           </span>
           <Button
@@ -525,7 +539,7 @@ export default function Calendar() {
             <ChevronRight />
           </Button>
 
-          <span className="ml-auto text-[0.75rem] text-muted-2">
+          <span className="ml-auto text-[0.7rem] text-muted-2">
             {blocks.length} block{blocks.length === 1 ? '' : 's'} planned
           </span>
         </div>

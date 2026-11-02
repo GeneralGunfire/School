@@ -1,0 +1,367 @@
+import type { Chapter } from '@/lib/types';
+
+export const BUSINESS_CHAPTER_7: Chapter = {
+  id: 'business-ch7',
+  subjectId: 'business',
+  title: 'Chapter 7: Business Sectors',
+  summary: 'Grade 10 Paper 1 — Primary, secondary and tertiary sectors and their relationship; the formal and informal sectors; the public and private sectors; and the differences between each pair.',
+  paper: 1,
+  category: 'Business Environments',
+  lessons: [
+    // ── Lesson 1: Primary, Secondary & Tertiary Sectors ─────────────────────
+    {
+      id: 'bs-ch7-production-sectors',
+      chapterId: 'business-ch7',
+      subjectId: 'business',
+      title: 'Primary, Secondary & Tertiary Sectors',
+      minutes: 12,
+      blocks: [
+        { id: 'bs7-prod-h1', type: 'heading', level: 2, text: 'The Primary, Secondary and Tertiary Sectors' },
+        {
+          id: 'bs7-prod-tip',
+          type: 'callout',
+          text: ' Exam Tip: Think of it as a production chain — Primary EXTRACTS from nature → Secondary PROCESSES/MANUFACTURES → Tertiary SERVICES/DISTRIBUTES to the final consumer. Learn at least 2 examples per sector.',
+        },
+        { id: 'bs7-prod-h2', type: 'heading', level: 3, text: 'Meaning of the Primary Sector' },
+        {
+          id: 'bs7-prod-primary',
+          type: 'list',
+          text: [
+            'The primary sector is the first stage in the production process.',
+            'This sector deals with the extraction of raw materials from nature.',
+            'The primary sector is involved in collecting resources direct from nature.',
+            'These raw materials are then supplied to other businesses for further processing.',
+          ],
+        },
+        {
+          id: 'bs7-prod-primary-examples',
+          type: 'list',
+          text: [
+            'Farming/Agriculture — produces agricultural products such as cattle and wheat.',
+            'Forestry — supplies wood for building/furniture.',
+            'Fishing — from the sea/lakes and rivers.',
+            'Mining — extracts minerals such as coal and gold from the earth.',
+          ],
+        },
+        { id: 'bs7-prod-h3', type: 'heading', level: 3, text: 'Meaning of the Secondary Sector' },
+        {
+          id: 'bs7-prod-secondary',
+          type: 'list',
+          text: [
+            'The secondary sector is responsible for converting/processing/manufacturing raw materials into final products.',
+            'It is the link to the primary sector, where raw materials are extracted from nature.',
+            'It includes manufacturing factories, construction and energy generation.',
+            'The secondary sector plays an important/critical role because not all resources in their natural state are functional/useful and require further processing.',
+          ],
+        },
+        {
+          id: 'bs7-prod-secondary-examples',
+          type: 'list',
+          text: ['Construction', 'Factories', 'Manufacturing', 'Production of cars, food, etc.'],
+        },
+        { id: 'bs7-prod-h4', type: 'heading', level: 3, text: 'Meaning of the Tertiary Sector' },
+        {
+          id: 'bs7-prod-tertiary',
+          type: 'list',
+          text: [
+            'Businesses that offer services to other businesses and consumers.',
+            'This sector distributes goods processed in the secondary sector to consumers.',
+            'The tertiary sector aims to bring products and services within reach of the consumer.',
+            'They exist to facilitate the transport, distribution and sale of goods produced in the secondary sector.',
+          ],
+        },
+        {
+          id: 'bs7-prod-tertiary-examples',
+          type: 'list',
+          text: ['Healthcare', 'Education', 'Entertainment', 'Banking, Insurance, Legal Services', 'Tourism, Hospitality', 'Marketing', 'Distribution'],
+        },
+        { id: 'bs7-prod-h5', type: 'heading', level: 3, text: 'The Relationship Between the Primary, Secondary and Tertiary Sectors' },
+        {
+          id: 'bs7-prod-relationship',
+          type: 'list',
+          text: [
+            'The sectors work together to create an economic chain of production.',
+            'The primary sector depends on the secondary sector for manufactured goods such as machinery/equipment/fertilisers, e.g. a farmer may require seeds from another farm.',
+            'The primary sector is dependent on the tertiary sector for its customer needs.',
+            'The secondary sector processes the raw materials obtained from the primary sector into more useful products.',
+            'The secondary sector depends on the primary sector for raw materials and products.',
+            'The secondary sector depends on other secondary industries, e.g. BMW needs tyres from Dunlop, another secondary sector player.',
+            'The secondary sector needs the tertiary sector to sell its processed or manufactured goods, and also for services such as banks, insurance, transport and communication.',
+            'The tertiary sector depends on the primary sector for raw materials that do not need processing by the secondary sector.',
+            'The tertiary sector depends on the secondary sector for manufactured goods such as office machines/office furniture/stationery, etc.',
+          ],
+        },
+        {
+          id: 'bs7-prod-note',
+          type: 'callout',
+          text: 'NOTE from the source material: learners must make a collage showing the relationship between the primary, secondary and tertiary sectors.',
+        },
+        {
+          id: 'bs7-prod-qa',
+          type: 'questions',
+          qa: [
+            {
+              q: 'Define the term "primary sector" and give TWO examples.',
+              marks: 4,
+              a: [
+                'The primary sector is the first stage in the production process — it deals with the extraction of raw materials directly from nature.',
+                'Examples: Farming/Agriculture; Mining (any two of: Forestry, Fishing).',
+              ],
+            },
+            {
+              q: 'Explain why the secondary sector plays a critical role in the production process.',
+              marks: 3,
+              a: 'The secondary sector converts/processes/manufactures raw materials into final products — not all resources in their natural state are functional or useful, so they require further processing before they can be sold to consumers.',
+            },
+            {
+              q: 'Using an example, explain the relationship between the secondary and tertiary sectors.',
+              marks: 3,
+              a: 'The secondary sector needs the tertiary sector to sell its processed or manufactured goods and to access services such as banks, insurance, transport and communication — e.g. a car manufacturer (secondary) relies on a bank (tertiary) for finance and an insurance company (tertiary) to insure its factory.',
+            },
+          ],
+        },
+      ],
+    },
+
+    // ── Lesson 2: Formal & Informal Sectors ──────────────────────────────────
+    {
+      id: 'bs-ch7-formal-informal',
+      chapterId: 'business-ch7',
+      subjectId: 'business',
+      title: 'The Formal & Informal Sectors',
+      minutes: 14,
+      blocks: [
+        { id: 'bs7-fi-h1', type: 'heading', level: 2, text: 'The Formal and Informal Sectors' },
+        { id: 'bs7-fi-h2', type: 'heading', level: 3, text: 'Meaning of the Formal Sector' },
+        {
+          id: 'bs7-fi-formal',
+          type: 'list',
+          text: [
+            'The formal sector refers to businesses that are registered and pay tax.',
+            'These businesses are required to register with the Companies and Intellectual Property Commission (CIPC).',
+            'Businesses have to register with the South African Revenue Service (SARS) and are liable to pay tax on turnover and profits at a prescribed threshold.',
+            'The formal sector is within the mainstream of the economy.',
+            'This sector includes small, medium and large businesses.',
+            'Employees are protected in many ways, such as unemployment funds, disability and injured-on-duty funds.',
+            'They are controlled by the laws and regulations of the government.',
+            'They keep accounting records and audit their books.',
+            'It is capital intensive, as it involves using machinery/equipment, etc.',
+            'They operate under an acknowledged form of ownership, such as partnerships, close corporations, companies and sole proprietors.',
+          ],
+        },
+        { id: 'bs7-fi-formal-importance-h', type: 'heading', level: 3, text: 'The Importance of the Formal Sector' },
+        {
+          id: 'bs7-fi-formal-importance',
+          type: 'list',
+          text: [
+            'Business activities are included in the GDP figures of the country.',
+            'Companies pay taxes on their profits.',
+            'People who are employed at companies pay personal income tax.',
+            'Provides employment to highly skilled, semi-skilled and unskilled labourers.',
+            'They supply legal products.',
+            'Products supplied by the formal sector are guaranteed, which means that faulty goods can be returned.',
+            'People working in the formal sector gain the necessary skills to start their own businesses.',
+            'Provides a large variety of goods and services to satisfy consumers.',
+            'They employ many people with different skills and qualifications.',
+          ],
+        },
+        { id: 'bs7-fi-h3', type: 'heading', level: 3, text: 'Meaning of the Informal Sector' },
+        {
+          id: 'bs7-fi-informal',
+          type: 'list',
+          text: [
+            'The informal sector refers to businesses that are not registered and do not pay tax.',
+            'The informal sector refers to those workers who are self-employed.',
+            'This sector includes activities by people who are unable to find jobs.',
+            'It falls outside the mainstream economy.',
+            'It is labour intensive, as it does not require a huge capital outlay for establishment.',
+            'Employees are not protected and can be exploited.',
+            'Owners of businesses in the informal sector take responsibility for the success and failure of their businesses.',
+            'It is not monitored by government.',
+            'It is not added into the Gross Domestic Product (GDP) figures.',
+            'Examples of informal businesses: street vendors, spaza shops, flea markets, informal day care for children, general handyman services.',
+          ],
+        },
+        { id: 'bs7-fi-informal-importance-h', type: 'heading', level: 3, text: 'The Importance of the Informal Sector' },
+        {
+          id: 'bs7-fi-informal-importance',
+          type: 'list',
+          text: [
+            'Provides employment opportunities for communities and contributes to poverty alleviation.',
+            'People working in the informal sector gain work experience to be used in the formal sector.',
+            'People start informal businesses to supplement their income earned in the formal sector.',
+            'Encourages entrepreneurship as self-employment.',
+            'Provides opportunity for the marginalised/disadvantaged by encouraging street trade.',
+            'Serves as a buffer between employment and unemployment.',
+            'It is easy to enter this sector, and it serves the needs of individuals.',
+          ],
+        },
+        { id: 'bs7-fi-h4', type: 'heading', level: 3, text: 'Differences Between the Formal and Informal Sectors' },
+        {
+          id: 'bs7-fi-differences',
+          type: 'definitions',
+          rows: [
+            { term: 'Formal sector — registration', meaning: 'Industries in this sector are legally registered, fall within the mainstream of the economy, pay tax.' },
+            { term: 'Informal sector — registration', meaning: 'Not legally registered, falls outside the mainstream economy (also known as the second/marginalised economy), does not pay tax.' },
+            { term: 'Formal sector — scale & capital', meaning: 'Made up of small, medium and large businesses; higher capital is required.' },
+            { term: 'Informal sector — scale & capital', meaning: 'Small-scale operations; low capital needed for operation.' },
+            { term: 'Formal sector — employees', meaning: 'Employees are protected (unemployment funds, disability funds, injured-on-duty funds); employees have a steady income; usually more labour intensive.' },
+            { term: 'Informal sector — employees', meaning: 'Employees are not protected and can be exploited; employees\' income is inconsistent; usually more skill intensive.' },
+            { term: 'Formal sector — regulation & GDP', meaning: 'Controlled by the laws and regulations of government; output can be measured into the country\'s GDP; not easy to enter as businesses have to be legally registered.' },
+            { term: 'Informal sector — regulation & GDP', meaning: 'Not tracked by any form of government; estimates must be made to measure its contribution to GDP; easy to enter, as there are no legal formalities needed.' },
+            { term: 'Examples', meaning: 'Formal: mining, manufacturing, retail and banking companies. Informal: spaza shops, street vendors, hairdressers, gardening services, car wash services and other home-based activities.' },
+          ],
+        },
+        {
+          id: 'bs7-fi-qa',
+          type: 'questions',
+          qa: [
+            {
+              q: 'Define the term "formal sector."',
+              marks: 2,
+              a: 'The formal sector refers to businesses that are registered (with the CIPC and SARS) and pay tax; it is within the mainstream of the economy.',
+            },
+            {
+              q: 'Define the term "informal sector."',
+              marks: 2,
+              a: 'The informal sector refers to businesses that are not registered and do not pay tax; it falls outside the mainstream economy.',
+            },
+            {
+              q: 'Distinguish between the formal and informal sectors with regard to CAPITAL and EMPLOYEE PROTECTION.',
+              marks: 4,
+              a: [
+                'Capital: the formal sector requires higher capital, as it is capital intensive; the informal sector needs low capital, as it is labour intensive.',
+                'Employee protection: formal sector employees are protected by unemployment, disability and injured-on-duty funds; informal sector employees are not protected and can be exploited.',
+              ],
+            },
+            {
+              q: 'State FOUR reasons why the informal sector is important to the South African economy.',
+              marks: 4,
+              a: [
+                'Provides employment opportunities and contributes to poverty alleviation.',
+                'Gives people work experience that can be used in the formal sector.',
+                'Encourages entrepreneurship/self-employment.',
+                'Serves as a buffer between employment and unemployment.',
+              ],
+            },
+          ],
+        },
+      ],
+    },
+
+    // ── Lesson 3: Public & Private Sectors ───────────────────────────────────
+    {
+      id: 'bs-ch7-public-private',
+      chapterId: 'business-ch7',
+      subjectId: 'business',
+      title: 'The Public & Private Sectors',
+      minutes: 14,
+      blocks: [
+        { id: 'bs7-pp-h1', type: 'heading', level: 2, text: 'The Public and Private Sector' },
+        {
+          id: 'bs7-pp-tip',
+          type: 'callout',
+          text: ' Exam Tip: Public = service, not profit, funded by tax, owned by government. Private = profit, owned by entrepreneurs, funded by owners/loans. If a question gives "NGOs/NPOs," remember these are PRIVATE SECTOR organisations that do not aim to make a profit — this often trips learners up.',
+        },
+        { id: 'bs7-pp-h2', type: 'heading', level: 3, text: 'Meaning of the Public Sector' },
+        {
+          id: 'bs7-pp-public',
+          type: 'list',
+          text: [
+            'These refer to businesses that are owned and controlled by the government.',
+            'It is composed of all levels of government and government-controlled enterprises.',
+            'It does not include private companies, voluntary organisations and households.',
+            'Non-profit organisations are categorised under the public sector.',
+            'Businesses in this sector are partly or wholly funded by tax money.',
+            'The motive is not to make profit but to offer a service.',
+          ],
+        },
+        { id: 'bs7-pp-public-importance-h', type: 'heading', level: 3, text: 'Importance of the Public Sector' },
+        {
+          id: 'bs7-pp-public-importance',
+          type: 'list',
+          text: [
+            'Provides public goods and services such as water and electricity to meet the needs of its people.',
+            'Offers more affordable services than the private sector.',
+            'Aims to meet the needs of society.',
+            'Public sector businesses do not aim to make a profit.',
+            'Provides infrastructure that supports private sector development.',
+            'Provides people with job opportunities.',
+            'Improves the general standard of living of all people.',
+            'Controls pollution and protects/conserves natural resources such as water, wildlife and precious stones.',
+            'Intervenes in the economy to limit anti-competitive behaviour.',
+            'Offers valuable services such as public roads/public hospitals/public schools, etc.',
+          ],
+        },
+        { id: 'bs7-pp-h3', type: 'heading', level: 3, text: 'Meaning of the Private Sector' },
+        {
+          id: 'bs7-pp-private',
+          type: 'list',
+          text: [
+            'Privately owned by entrepreneurs.',
+            'Aimed at meeting both the needs and wants of society.',
+            'Profit-driven businesses.',
+            'Owners provide their own funds or loans to run their businesses.',
+            'Examples include businesses owned privately as sole traders, partnerships or companies with a profit motive.',
+            'The businesses are focused on meeting the demand of consumers.',
+            'Businesses in this sector that do not operate to make a profit are NGOs (non-government organisations) and NPOs (non-profit organisations).',
+            'Some services from the public sector are repeated in this sector, such as education, healthcare and housing, and could be of better quality than the government service.',
+          ],
+        },
+        { id: 'bs7-pp-private-importance-h', type: 'heading', level: 3, text: 'Importance of the Private Sector' },
+        {
+          id: 'bs7-pp-private-importance',
+          type: 'list',
+          text: [
+            'Creates job opportunities for different types of skills.',
+            'Provides businesses with the opportunity to create wealth.',
+            'Offers more competitive salaries than the public sector.',
+            'Offers a greater variety of goods and services than the public sector.',
+            'Offers opportunities for employees to be part of more innovative projects with cutting-edge infrastructure.',
+          ],
+        },
+        { id: 'bs7-pp-h4', type: 'heading', level: 3, text: 'Differences Between the Public and Private Sectors' },
+        {
+          id: 'bs7-pp-differences',
+          type: 'definitions',
+          rows: [
+            { term: 'Aim', meaning: 'Public sector: to meet the needs of society. Private sector: to meet both the needs and wants of society.' },
+            { term: 'Ownership', meaning: 'Public sector: state owned/state run, or parastatals operated by a private company. Private sector: privately owned by entrepreneurs.' },
+            { term: 'Funding', meaning: 'Public sector: partly or wholly funded by tax money. Private sector: owners raise capital to fund their businesses.' },
+            { term: 'Motive', meaning: 'Public sector: motive is to provide a service. Private sector: motive is to make a profit.' },
+            { term: 'Reporting & oversight', meaning: 'Public sector: state-owned businesses report to government, which monitors and oversees their performance. Private sector: businesses do not report to government but to their owners, who oversee performance.' },
+          ],
+        },
+        {
+          id: 'bs7-pp-qa',
+          type: 'questions',
+          qa: [
+            {
+              q: 'Define the term "public sector."',
+              marks: 2,
+              a: 'The public sector refers to businesses that are owned and controlled by the government; businesses in this sector are partly or wholly funded by tax money and the motive is to provide a service rather than make a profit.',
+            },
+            {
+              q: 'Define the term "private sector."',
+              marks: 2,
+              a: 'The private sector refers to businesses that are privately owned by entrepreneurs, are profit-driven, and are funded by the owners\' own funds or loans.',
+            },
+            {
+              q: 'Distinguish between the public and private sector with regard to AIM/MOTIVE and FUNDING.',
+              marks: 4,
+              a: [
+                'Aim/Motive: the public sector aims to meet the needs of society and provide a service (not profit); the private sector aims to meet both needs and wants of society and is profit-driven.',
+                'Funding: the public sector is partly or wholly funded by tax money; the private sector is funded by owners raising their own capital or loans.',
+              ],
+            },
+            {
+              q: 'State TWO reasons why NGOs and NPOs are classified under the private sector despite not aiming to make a profit.',
+              marks: 2,
+              a: 'NGOs and NPOs are privately established and owned/run independently of government (not state owned), even though, like the public sector, their motive is to provide a service rather than make a profit.',
+            },
+          ],
+        },
+      ],
+    },
+  ],
+};

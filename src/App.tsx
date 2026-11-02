@@ -19,6 +19,9 @@ import Dashboard from '@/pages/Dashboard';
  * instant.
  */
 const Library = React.lazy(() => import('@/pages/Library'));
+const PracticeExams = React.lazy(() => import('@/pages/PracticeExams'));
+const PracticeExamTaker = React.lazy(() => import('@/pages/PracticeExamTaker'));
+const BusinessMockMemo = React.lazy(() => import('@/pages/BusinessMockMemo'));
 const Timetable = React.lazy(() => import('@/pages/Timetable'));
 const Calendar = React.lazy(() => import('@/pages/Calendar'));
 const Subjects = React.lazy(() => import('@/pages/Subjects'));
@@ -31,6 +34,9 @@ function usePrefetchRoutes() {
   React.useEffect(() => {
     const load = () => {
       void import('@/pages/Library');
+      void import('@/pages/PracticeExams');
+      void import('@/pages/PracticeExamTaker');
+      void import('@/pages/BusinessMockMemo');
       void import('@/pages/Timetable');
       void import('@/pages/Calendar');
       void import('@/pages/Subjects');
@@ -79,6 +85,9 @@ export default function App() {
                 <Route path="library/:subjectId" element={<Library />} />
                 <Route path="library/:subjectId/:chapterId" element={<Library />} />
                 <Route path="library/:subjectId/:chapterId/:lessonId" element={<Library />} />
+                <Route path="practice-exams" element={<PracticeExams />} />
+                <Route path="practice-exams/:subjectId/:examId" element={<PracticeExamTaker />} />
+                <Route path="business-mock-nov2026-p1" element={<BusinessMockMemo />} />
                 <Route path="timetable" element={<Timetable />} />
                 <Route path="calendar" element={<Calendar />} />
                 <Route path="subjects" element={<Subjects />} />

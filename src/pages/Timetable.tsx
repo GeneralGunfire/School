@@ -22,13 +22,13 @@ function EntryChip({ entry, dense }: { entry: TimetableEntry; dense?: boolean })
       style={{ borderColor: 'var(--edge)', background: 'var(--surface-raise)' }}
     >
       <p
-        className="truncate text-[0.76rem] leading-tight font-semibold"
+        className="truncate text-[0.71rem] leading-tight font-semibold"
         style={{ color: subjectColor(entry.subjectId) }}
       >
         {subject?.shortName ?? entry.label}
       </p>
       {!dense && entry.teacher && (
-        <p className="mt-0.5 truncate text-[0.66rem] text-muted">
+        <p className="mt-0.5 truncate text-[0.62rem] text-muted">
           {entry.teacher}
           {entry.room ? ` · ${entry.room}` : ''}
         </p>
@@ -43,7 +43,7 @@ function BreakChip({ label }: { label: string }) {
       className="rounded-[0.4rem] border border-dashed px-2 py-1.5"
       style={{ borderColor: 'var(--color-hairline-strong)' }}
     >
-      <p className="flex items-center gap-1.5 text-[0.72rem] font-medium text-muted">
+      <p className="flex items-center gap-1.5 text-[0.67rem] font-medium text-muted">
         <Coffee className="size-3" aria-hidden />
         {label}
       </p>
@@ -51,7 +51,7 @@ function BreakChip({ label }: { label: string }) {
   );
 }
 
-const FIELD = 'rounded-[0.45rem] border px-2.5 py-1.5 text-[0.78rem] outline-none focus:border-accent';
+const FIELD = 'rounded-[0.45rem] border px-2.5 py-1.5 text-[0.73rem] outline-none focus:border-accent';
 const FIELD_STYLE: React.CSSProperties = {
   borderColor: 'var(--edge)',
   background: 'var(--color-paper)',
@@ -122,10 +122,10 @@ function SlotEditor({ day, period, onClose }: { day: Weekday; period: Period; on
         style={{ borderColor: 'var(--edge)' }}
       >
         <div>
-          <p className="text-[0.9rem] font-semibold text-ink">
+          <p className="text-[0.84rem] font-semibold text-ink">
             {DAYS.find((d) => d.value === day)?.label} · {period.label}
           </p>
-          <p className="mt-0.5 text-[0.72rem] text-muted">
+          <p className="mt-0.5 text-[0.67rem] text-muted">
             {formatTime(period.start)} – {formatTime(period.end)}
           </p>
         </div>
@@ -136,7 +136,7 @@ function SlotEditor({ day, period, onClose }: { day: Weekday; period: Period; on
 
       <div className="min-h-0 flex-1 space-y-2.5 overflow-y-auto p-4">
         {draft.length === 0 && (
-          <p className="py-4 text-center text-[0.78rem] text-muted-2">Free period.</p>
+          <p className="py-4 text-center text-[0.73rem] text-muted-2">Free period.</p>
         )}
 
         {draft.map((e, i) => (
@@ -239,8 +239,8 @@ function PeriodEditor({ onClose }: { onClose: () => void }) {
         style={{ borderColor: 'var(--edge)' }}
       >
         <div>
-          <p className="text-[0.9rem] font-semibold text-ink">Periods &amp; times</p>
-          <p className="mt-0.5 text-[0.72rem] text-muted">Applies across the whole app.</p>
+          <p className="text-[0.84rem] font-semibold text-ink">Periods &amp; times</p>
+          <p className="mt-0.5 text-[0.67rem] text-muted">Applies across the whole app.</p>
         </div>
         <Button variant="ghost" size="icon-sm" onClick={onClose} aria-label="Close">
           <X />
@@ -332,9 +332,10 @@ function WeekGrid({
 
   return (
     <Card className="overflow-hidden">
-      <div className="grid grid-cols-[7rem_repeat(5,1fr)]">
+      <div className="overflow-x-auto">
+      <div className="grid min-w-[46rem] grid-cols-[7rem_repeat(5,1fr)]">
         <div className="surface-header border-b px-4 py-2.5" style={{ borderColor: 'var(--edge)' }}>
-          <span className="text-[0.66rem] font-bold tracking-[0.13em] text-muted-2 uppercase">
+          <span className="text-[0.62rem] font-bold tracking-[0.13em] text-muted-2 uppercase">
             Period
           </span>
         </div>
@@ -346,7 +347,7 @@ function WeekGrid({
           >
             <span
               className={cn(
-                'flex items-center gap-1.5 text-[0.78rem] font-semibold',
+                'flex items-center gap-1.5 text-[0.73rem] font-semibold',
                 d.value === today ? 'text-ink' : 'text-muted',
               )}
             >
@@ -366,10 +367,10 @@ function WeekGrid({
                 className={cn('border-b px-4 py-2.5', isNow && 'bg-paper-raise')}
                 style={{ borderColor: 'var(--edge)' }}
               >
-                <p className={cn('text-[0.76rem] font-semibold', isNow ? 'text-accent' : 'text-ink')}>
+                <p className={cn('text-[0.71rem] font-semibold', isNow ? 'text-accent' : 'text-ink')}>
                   {p.label}
                 </p>
-                <p className="mt-0.5 text-[0.66rem] text-muted-2 tabular-nums">
+                <p className="mt-0.5 text-[0.62rem] text-muted-2 tabular-nums">
                   {p.start}–{p.end}
                 </p>
               </div>
@@ -391,7 +392,7 @@ function WeekGrid({
                     {p.kind === 'break' ? (
                       <BreakChip label={p.label} />
                     ) : slot.length === 0 ? (
-                      <span className="flex justify-center py-2 text-[0.7rem] text-muted-2">
+                      <span className="flex justify-center py-2 text-[0.66rem] text-muted-2">
                         {editing ? <Plus className="size-3.5" /> : '—'}
                       </span>
                     ) : (
@@ -409,6 +410,7 @@ function WeekGrid({
             </React.Fragment>
           );
         })}
+      </div>
       </div>
     </Card>
   );
@@ -435,10 +437,10 @@ function TodayList({ day }: { day: Weekday }) {
         <Rise i={i} key={r.period.id}>
           <Card className={cn('flex items-center gap-6 px-5 py-4', r.isPast && 'opacity-45')}>
             <div className="w-[6.8rem] shrink-0">
-              <p className={cn('text-[0.84rem] font-semibold', r.isNow ? 'text-accent' : 'text-ink')}>
+              <p className={cn('text-[0.78rem] font-semibold', r.isNow ? 'text-accent' : 'text-ink')}>
                 {r.period.label}
               </p>
-              <p className="mt-0.5 text-[0.7rem] text-muted-2 tabular-nums">
+              <p className="mt-0.5 text-[0.66rem] text-muted-2 tabular-nums">
                 {formatTime(r.period.start)} – {formatTime(r.period.end)}
               </p>
             </div>
@@ -453,13 +455,13 @@ function TodayList({ day }: { day: Weekday }) {
                   ) : (
                     <div key={ei} className="min-w-0">
                       <p
-                        className="text-[0.9rem] leading-tight font-semibold"
+                        className="text-[0.84rem] leading-tight font-semibold"
                         style={{ color: subjectColor(e.subjectId) }}
                       >
                         {getSubject(e.subjectId)?.name ?? e.label}
                       </p>
                       {(e.teacher || e.room) && (
-                        <p className="mt-1 text-[0.72rem] text-muted">
+                        <p className="mt-1 text-[0.67rem] text-muted">
                           {[e.teacher, e.room].filter(Boolean).join(' · ')}
                         </p>
                       )}
@@ -470,7 +472,7 @@ function TodayList({ day }: { day: Weekday }) {
             </div>
 
             {r.isNow && (
-              <span className="shrink-0 rounded-[0.4rem] px-2 py-1 text-[0.66rem] font-bold tracking-wide text-accent-foreground uppercase [background:var(--grad-royal)]">
+              <span className="shrink-0 rounded-[0.4rem] px-2 py-1 text-[0.62rem] font-bold tracking-wide text-accent-foreground uppercase [background:var(--grad-royal)]">
                 Now
               </span>
             )}

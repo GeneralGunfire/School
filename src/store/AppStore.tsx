@@ -91,6 +91,36 @@ interface AppStore extends AppState {
 
 const Ctx = React.createContext<AppStore | null>(null);
 
+/**
+ * External store for selector-based reads.
+ *
+ * `useStore()` above gives every consumer the whole store, so any change
+ * anywhere re-renders every consumer — fine for a handful of components,
+ * but a chapter list with 15+ rows each calling `useStore()` for `progress`
+ * means marking one lesson done re-renders all 15. `useStoreSelector`
+ * subscribes via `useSyncExternalStore` instead: a component only
+ * re-renders when the slice its selector returns actually changes
+ * reference, which happens only when that slice was part of the update.
+ * Kept alongside the context (not replacing it) so existing call sites are
+ * untouched; new hot-path list rows should prefer this.
+ */
+let externalState: AppStore | null = null;
+const listeners = new Set<() => void>();
+
+function publishExternalState(next: AppStore) {
+  externalState = next;
+  for (const l of listeners) l();
+}
+
+function subscribe(listener: () => void) {
+  listeners.add(listener);
+  return () => listeners.delete(listener);
+}
+
+export function useStoreSelector<T>(selector: (s: AppStore) => T): T {
+  return React.useSyncExternalStore(subscribe, () => selector(externalState!));
+}
+
 /** Seeds first-run data exactly once, then never again. */
 function bootstrap(): AppState {
   const alreadySeeded = readStore<boolean>(KEYS.seeded, false);
@@ -448,6 +478,17 @@ export function AppStoreProvider({ children }: { children: React.ReactNode }) {
   // Only the data half changes identity, and only when the data actually
   // changed.
   const store = React.useMemo<AppStore>(() => ({ ...state, ...actions }), [state, actions]);
+
+  // Published outside React state, after commit, so `useStoreSelector`
+  // consumers (via `useSyncExternalStore`) can read it without notifying
+  // mid-render — notifying during another component's render risks tearing.
+  React.useEffect(() => {
+    publishExternalState(store);
+  }, [store]);
+  // First paint: useEffect runs after render, but a selector consumer's own
+  // `useSyncExternalStore` call happens during that same first render, so
+  // seed the external snapshot synchronously before anything subscribes.
+  externalState ??= store;
 
   return <Ctx.Provider value={store}>{children}</Ctx.Provider>;
 }

@@ -86,9 +86,9 @@ function Editor({ note }: { note: Note }) {
           value={note.title}
           onChange={(e) => updateNote(note.id, { title: e.target.value })}
           placeholder="Note title"
-          className="min-w-0 flex-1 bg-transparent text-[15px] font-semibold text-ink outline-none placeholder:text-muted-2"
+          className="min-w-0 flex-1 bg-transparent text-[14px] font-semibold text-ink outline-none placeholder:text-muted-2"
         />
-        <span className="shrink-0 text-[11.5px] text-muted-2">
+        <span className="shrink-0 text-[11px] text-muted-2">
           {relativeDay(toDayKey(new Date(note.updatedAt)))}
         </span>
         <button
@@ -111,9 +111,9 @@ function Editor({ note }: { note: Note }) {
         aria-label="Note body"
         onInput={(e) => updateNote(note.id, { html: e.currentTarget.innerHTML })}
         className={cn(
-          'min-h-0 flex-1 overflow-y-auto px-5 py-4 text-[14.5px] leading-[1.75] text-ink-2 outline-none',
+          'min-h-0 flex-1 overflow-y-auto px-5 py-4 text-[13.5px] leading-[1.75] text-ink-2 outline-none',
           // Minimal prose styling scoped to the editor body.
-          '[&_h3]:mt-4 [&_h3]:mb-1.5 [&_h3]:text-[16px] [&_h3]:font-semibold [&_h3]:text-ink',
+          '[&_h3]:mt-4 [&_h3]:mb-1.5 [&_h3]:text-[15px] [&_h3]:font-semibold [&_h3]:text-ink',
           '[&_ul]:my-2 [&_ul]:list-disc [&_ul]:pl-5 [&_ol]:my-2 [&_ol]:list-decimal [&_ol]:pl-5',
           '[&_li]:my-0.5 [&_p]:my-2 [&_strong]:font-semibold [&_strong]:text-ink',
           'empty:before:text-muted-2 empty:before:content-[attr(data-placeholder)]',
@@ -181,14 +181,14 @@ export default function Notes() {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Search notes"
-              className="w-full rounded-lg border border-hairline bg-paper py-2 pr-3 pl-9 text-[13px] text-ink outline-none placeholder:text-muted-2 focus:border-accent"
+              className="w-full rounded-lg border border-hairline bg-paper py-2 pr-3 pl-9 text-[12.25px] text-ink outline-none placeholder:text-muted-2 focus:border-accent"
             />
           </div>
 
           <select
             value={filter}
             onChange={(e) => setFilter(e.target.value as SubjectId | 'all')}
-            className="w-full rounded-lg border border-hairline bg-paper px-3 py-2 text-[13px] text-ink outline-none focus:border-accent"
+            className="w-full rounded-lg border border-hairline bg-paper px-3 py-2 text-[12.25px] text-ink outline-none focus:border-accent"
           >
             <option value="all">All subjects</option>
             {SUBJECTS.map((s) => (

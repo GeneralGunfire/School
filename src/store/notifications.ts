@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useStore } from '@/store/AppStore';
+import { useStoreSelector } from '@/store/AppStore';
 import { getSubject } from '@/data/subjects';
 import { DAYS, todayWeekday } from '@/data/timetable';
 import { useSchedule } from '@/store/TimetableStore';
@@ -29,7 +29,10 @@ export interface Notice {
 }
 
 export function useNotices(): Notice[] {
-  const { blocks } = useStore();
+  // Mounted in the header on every page — a plain useStore() here would
+  // re-render the notification bell on every store write anywhere in the
+  // app, not just when `blocks` changes.
+  const blocks = useStoreSelector((s) => s.blocks);
   const { periods, entriesAt } = useSchedule();
 
   return React.useMemo(() => {

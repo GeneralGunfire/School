@@ -2,16 +2,23 @@ import { AnimatePresence, motion } from 'motion/react';
 import {
   Columns2, Languages, MousePointer2, ChevronDown, ChevronUp,
   Lightbulb, Zap, HelpCircle, CheckCircle2, Bot, Check, Copy,
+  Square, ArrowRight,
 } from 'lucide-react';
 import * as React from 'react';
-import type { Lesson, LessonBlock, DefinitionRow, AcronymItem, PoemLine, QAItem, SolutionStep } from '@/lib/types';
+import { useNavigate } from 'react-router-dom';
+import type { Lesson, LessonBlock, DefinitionRow, AcronymItem, PoemLine, QAItem, SolutionStep, ChecklistItem } from '@/lib/types';
 import { RichText, Tex } from '@/components/math/Tex';
 import { FigureBlock } from '@/components/math/Figure';
+import { DiagramBlock } from '@/components/science/Diagram';
 import { cn } from '@/lib/utils';
 import { SegmentedControl } from '@/components/ui/primitives';
 import { EASE_OUT_EXPO } from '@/lib/motion';
+import { KEYS, readStore, writeStore } from '@/lib/storage';
 
 export type TranslationMode = 'off' | 'split' | 'hover';
+
+/** Current lesson's title, for building per-question AI prompts without threading a prop through every BlockBody call site. */
+const LessonTitleCtx = React.createContext('');
 
 /* ── AI Prompt generator ─────────────────────────────────────────────────── */
 
@@ -56,6 +63,37 @@ function buildSectionPrompt(lessonTitle: string, sectionTitle: string, blocks: L
   return lines.join('\n');
 }
 
+/**
+ * One question, its marks, context/passage and model answer, turned into a
+ * prompt to paste into an external AI chat — for when the model answer
+ * alone doesn't click. Works for any subject's `questions` block (exam
+ * papers, essay practice, worked examples), not just maths.
+ */
+function buildQuestionPrompt(lessonTitle: string, item: QAItem): string {
+  const lines: string[] = [
+    `I'm working through a Grade 10 CAPS question from "${lessonTitle}" and the model answer isn't clicking for me. Can you explain it in a way that actually makes sense?`,
+    ``,
+  ];
+  if (item.context) {
+    lines.push(`Context / passage:`, item.context, ``);
+  }
+  lines.push(`Question${item.n ? ` ${item.n}` : ''}: ${item.q}`);
+  if (item.marks !== undefined) lines.push(`(${item.marks} marks)`);
+  lines.push(``, `The model answer given is:`);
+  if (Array.isArray(item.a)) {
+    for (const point of item.a) lines.push(`- ${point}`);
+  } else {
+    lines.push(item.a);
+  }
+  lines.push(
+    ``,
+    `Please explain, step by step, how you'd actually arrive at this answer — the reasoning, not just the result — ` +
+      `and point out anything in the question that's easy to misread. If it helps, give one more similar example worked ` +
+      `through fully so I can check I've actually got it.`,
+  );
+  return lines.join('\n');
+}
+
 export function buildTopicPrompt(lesson: Lesson): string {
   const sectionTitles: string[] = [];
   for (const b of lesson.blocks) {
@@ -80,10 +118,11 @@ export function buildTopicPrompt(lesson: Lesson): string {
   return lines.join('\n');
 }
 
-function AiPromptButton({ prompt, label }: { prompt: string; label: string }) {
+function AiPromptButton({ prompt, label, size = 'md' }: { prompt: string; label: string; size?: 'md' | 'sm' }) {
   const [copied, setCopied] = React.useState(false);
 
-  const copy = () => {
+  const copy = (e: React.MouseEvent) => {
+    e.stopPropagation();
     navigator.clipboard.writeText(prompt).then(() => {
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
@@ -94,7 +133,8 @@ function AiPromptButton({ prompt, label }: { prompt: string; label: string }) {
     <button
       onClick={copy}
       className={cn(
-        'flex items-center gap-2 rounded-xl border px-3.5 py-2 text-[12.5px] font-semibold transition-all duration-150',
+        'flex items-center gap-2 rounded-xl border font-semibold transition-colors duration-150',
+        size === 'sm' ? 'px-2.5 py-1.5 text-[11px]' : 'px-3.5 py-2 text-[11.75px]',
         copied
           ? 'border-positive bg-positive/10 text-positive'
           : 'border-[#5865f2]/40 bg-[#5865f2]/8 text-[#5865f2] hover:bg-[#5865f2]/14 hover:border-[#5865f2]/60',
@@ -107,35 +147,146 @@ function AiPromptButton({ prompt, label }: { prompt: string; label: string }) {
   );
 }
 
+/** A long block of text meant to be pasted into an AI tutor: copy button on top, collapsed preview beneath. */
+function PromptBlock({ title, text }: { title?: string; text: string }) {
+  const [open, setOpen] = React.useState(false);
+  return (
+    <div className="overflow-hidden rounded-xl border border-hairline bg-surface">
+      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-hairline/60 px-4 py-3">
+        <div className="min-w-0">
+          {title && <div className="text-[13px] font-semibold text-ink">{title}</div>}
+          <div className="text-[11px] text-muted">{text.length.toLocaleString()} characters · paste into ChatGPT</div>
+        </div>
+        <AiPromptButton prompt={text} label="Copy scope" />
+      </div>
+      <pre
+        className={cn(
+          'whitespace-pre-wrap break-words px-4 py-3 font-sans text-[12.5px] leading-[1.65] text-ink-2',
+          !open && 'max-h-40 overflow-hidden',
+        )}
+      >
+        {text}
+      </pre>
+      <button
+        onClick={() => setOpen((v) => !v)}
+        className="flex w-full items-center justify-center gap-1.5 border-t border-hairline/60 py-2 text-[11px] font-medium text-muted hover:text-ink"
+      >
+        {open ? <ChevronUp className="size-3.5" /> : <ChevronDown className="size-3.5" />}
+        {open ? 'Collapse' : 'Show all'}
+      </button>
+    </div>
+  );
+}
+
 /* ── Definitions block ───────────────────────────────────────────────────── */
 
 function DefinitionsBlock({ rows }: { rows: DefinitionRow[] }) {
   return (
     <div className="overflow-hidden rounded-xl border border-hairline-strong">
-      <div className="grid grid-cols-[minmax(160px,28%)_1fr] border-b border-hairline bg-paper-raise">
+      <div className="hidden border-b border-hairline bg-paper-raise sm:grid sm:grid-cols-[minmax(140px,28%)_1fr]">
         <div className="px-4 py-2.5">
-          <span className="text-[10.5px] font-bold tracking-[0.12em] text-muted-2 uppercase">Term / Concept</span>
+          <span className="text-[10px] font-bold tracking-[0.12em] text-muted-2 uppercase">Term / Concept</span>
         </div>
         <div className="border-l border-hairline px-4 py-2.5">
-          <span className="text-[10.5px] font-bold tracking-[0.12em] text-muted-2 uppercase">Definition / Meaning</span>
+          <span className="text-[10px] font-bold tracking-[0.12em] text-muted-2 uppercase">Definition / Meaning</span>
         </div>
       </div>
       {rows.map((row, i) => (
         <div
           key={i}
           className={cn(
-            'grid grid-cols-[minmax(160px,28%)_1fr]',
+            'grid grid-cols-1 sm:grid-cols-[minmax(140px,28%)_1fr]',
             i < rows.length - 1 && 'border-b border-hairline',
           )}
         >
-          <div className="px-4 py-3">
-            <span className="text-[13.5px] font-semibold text-ink">{row.term}</span>
+          <div className="bg-paper-raise px-4 py-2.5 sm:bg-transparent sm:py-3">
+            <span className="text-[12.5px] font-semibold text-ink">{row.term}</span>
           </div>
-          <div className="border-l border-hairline px-4 py-3">
-            <span className="text-[13.5px] leading-[1.65] text-ink-2">{row.meaning}</span>
+          <div className="px-4 py-3 sm:border-l sm:border-hairline">
+            <span className="text-[12.5px] leading-[1.65] text-ink-2 wrap-break-word">{row.meaning}</span>
           </div>
         </div>
       ))}
+    </div>
+  );
+}
+
+/* ── Checklist block ──────────────────────────────────────────────────────── */
+
+type ChecklistStore = Record<string, boolean>;
+
+/** Ticked items persist in localStorage, keyed by the block id so each checklist (e.g. a paper's Overview) tracks independently. */
+function useChecklistState(blockId: string) {
+  const [checked, setChecked] = React.useState<ChecklistStore>(() => {
+    const all = readStore<Record<string, ChecklistStore>>(KEYS.checklists, {});
+    return all[blockId] ?? {};
+  });
+
+  const toggle = (itemId: string) => {
+    setChecked((prev) => {
+      const next = { ...prev, [itemId]: !prev[itemId] };
+      const all = readStore<Record<string, ChecklistStore>>(KEYS.checklists, {});
+      writeStore(KEYS.checklists, { ...all, [blockId]: next });
+      return next;
+    });
+  };
+
+  return { checked, toggle };
+}
+
+function ChecklistBlock({ blockId, items }: { blockId: string; items: ChecklistItem[] }) {
+  const { checked, toggle } = useChecklistState(blockId);
+  const navigate = useNavigate();
+  const doneCount = items.filter((it) => checked[it.id]).length;
+
+  return (
+    <div className="overflow-hidden rounded-xl border border-hairline-strong">
+      <div className="flex items-center justify-between border-b border-hairline bg-paper-raise px-4 py-2.5">
+        <span className="text-[10px] font-bold tracking-[0.12em] text-muted-2 uppercase">Revision checklist</span>
+        <span className="text-[11px] font-semibold text-muted">{doneCount} / {items.length} done</span>
+      </div>
+      {items.map((item, i) => {
+        const isChecked = !!checked[item.id];
+        return (
+          <div
+            key={item.id}
+            className={cn(
+              'flex items-start gap-3 px-4 py-3',
+              i < items.length - 1 && 'border-b border-hairline',
+            )}
+          >
+            <button
+              type="button"
+              onClick={() => toggle(item.id)}
+              aria-pressed={isChecked}
+              aria-label={isChecked ? `Mark "${item.text}" as not done` : `Mark "${item.text}" as done`}
+              className="mt-0.5 shrink-0 text-muted-2 transition-colors hover:text-accent"
+            >
+              {isChecked ? <CheckCircle2 size={18} className="text-accent" /> : <Square size={18} />}
+            </button>
+            <div className="min-w-0 flex-1">
+              <p className={cn('text-[13px] font-semibold', isChecked ? 'text-muted line-through' : 'text-ink')}>
+                {item.text}
+              </p>
+              {item.detail && (
+                <p className={cn('mt-0.5 text-[12.5px] leading-[1.6]', isChecked ? 'text-muted-2' : 'text-ink-2')}>
+                  {item.detail}
+                </p>
+              )}
+            </div>
+            {item.goTo && (
+              <button
+                type="button"
+                onClick={() => navigate(`/library/${item.goTo!.subjectId}/${item.goTo!.chapterId}`)}
+                className="flex shrink-0 items-center gap-1 self-center rounded-full border border-hairline-strong px-2.5 py-1 text-[11px] font-semibold text-ink-2 transition-colors hover:border-accent hover:text-accent"
+              >
+                Chapter
+                <ArrowRight size={12} />
+              </button>
+            )}
+          </div>
+        );
+      })}
     </div>
   );
 }
@@ -151,14 +302,14 @@ function AcronymBlock({ word, forWhat, items }: { word?: string; forWhat?: strin
     >
       <div className="mb-4 flex items-start gap-4">
         <div
-          className="grid size-12 shrink-0 place-items-center rounded-xl text-[22px] font-black tracking-tighter text-accent"
+          className="grid size-12 shrink-0 place-items-center rounded-xl text-[20.5px] font-black tracking-tighter text-accent"
           style={{ background: 'var(--color-accent-wash, color-mix(in srgb, var(--color-accent) 12%, transparent))' }}
         >
           {word ?? '?'}
         </div>
         <div className="min-w-0 flex-1 pt-1">
-          <p className="text-[11px] font-bold tracking-[0.11em] text-muted-2 uppercase">Mnemonic</p>
-          {forWhat && <p className="mt-0.5 text-[13px] text-muted">{forWhat}</p>}
+          <p className="text-[10.5px] font-bold tracking-[0.11em] text-muted-2 uppercase">Mnemonic</p>
+          {forWhat && <p className="mt-0.5 text-[12.25px] text-muted">{forWhat}</p>}
         </div>
         <Zap className="mt-1 size-4 shrink-0 text-accent opacity-60" aria-hidden />
       </div>
@@ -166,14 +317,14 @@ function AcronymBlock({ word, forWhat, items }: { word?: string; forWhat?: strin
         {items.map((item, i) => (
           <div key={i} className="flex items-start gap-3">
             <span
-              className="grid size-8 shrink-0 place-items-center rounded-lg text-[15px] font-black text-accent"
+              className="grid size-8 shrink-0 place-items-center rounded-lg text-[14px] font-black text-accent"
               style={{ background: 'var(--color-accent-wash, color-mix(in srgb, var(--color-accent) 10%, transparent))' }}
             >
               {item.letter}
             </span>
             <div className="min-w-0 flex-1 pt-1">
-              <span className="text-[14px] font-semibold text-ink">{item.stands}</span>
-              {item.note && <p className="mt-0.5 text-[12px] leading-snug text-muted">{item.note}</p>}
+              <span className="text-[13px] font-semibold text-ink">{item.stands}</span>
+              {item.note && <p className="mt-0.5 text-[11.5px] leading-snug text-muted">{item.note}</p>}
             </div>
           </div>
         ))}
@@ -193,8 +344,8 @@ function PoemBlock({ lines }: { lines?: PoemLine[] }) {
     >
       {lines.map((line, i) => (
         <div key={i} className="flex items-baseline gap-3">
-          <span className="w-6 shrink-0 text-right text-[10px] tabular-nums text-muted-2 select-none">{line.n}</span>
-          <span className="text-[15px] leading-[1.9] text-ink">{line.text}</span>
+          <span className="w-6 shrink-0 text-right text-[9.5px] tabular-nums text-muted-2 select-none">{line.n}</span>
+          <span className="text-[14px] leading-[1.9] text-ink">{line.text}</span>
         </div>
       ))}
     </div>
@@ -231,8 +382,8 @@ function LineAnalysisBlock({ lines }: { lines?: PoemLine[] }) {
               onClick={() => (hasNote || hasDevices) && setOpenId(open ? null : line.n)}
               disabled={!hasNote && !hasDevices}
             >
-              <span className="mt-[3px] w-5 shrink-0 text-right text-[10.5px] tabular-nums text-muted-2 select-none">{line.n}</span>
-              <span className="min-w-0 flex-1 font-['Georgia',_serif] text-[14px] leading-[1.75] text-ink">
+              <span className="mt-[3px] w-5 shrink-0 text-right text-[10px] tabular-nums text-muted-2 select-none">{line.n}</span>
+              <span className="min-w-0 flex-1 font-['Georgia',_serif] text-[13px] leading-[1.75] text-ink">
                 {line.text}
               </span>
               {(hasNote || hasDevices) && (
@@ -255,7 +406,7 @@ function LineAnalysisBlock({ lines }: { lines?: PoemLine[] }) {
                     {line.note && (
                       <div className="flex gap-2.5">
                         <Lightbulb className="mt-0.5 size-3.5 shrink-0 text-accent" aria-hidden />
-                        <p className="text-[13.5px] leading-[1.7] text-ink-2">{line.note}</p>
+                        <p className="text-[12.5px] leading-[1.7] text-ink-2">{line.note}</p>
                       </div>
                     )}
                     {line.devices && line.devices.length > 0 && (
@@ -263,7 +414,7 @@ function LineAnalysisBlock({ lines }: { lines?: PoemLine[] }) {
                         {line.devices.map((d, i) => (
                           <span
                             key={i}
-                            className="rounded-md px-2 py-0.5 text-[11px] font-semibold text-accent"
+                            className="rounded-md px-2 py-0.5 text-[10.5px] font-semibold text-accent"
                             style={{ background: 'var(--color-accent-wash, color-mix(in srgb, var(--color-accent) 10%, transparent))' }}
                           >
                             {d}
@@ -286,6 +437,7 @@ function LineAnalysisBlock({ lines }: { lines?: PoemLine[] }) {
 
 function QuestionsBlock({ qa }: { qa?: QAItem[] }) {
   const [openIdx, setOpenIdx] = React.useState<number | null>(null);
+  const lessonTitle = React.useContext(LessonTitleCtx);
   if (!qa?.length) return null;
 
   return (
@@ -296,7 +448,7 @@ function QuestionsBlock({ qa }: { qa?: QAItem[] }) {
         return (
           <React.Fragment key={i}>
             {showContext && (
-              <p className="px-1 pt-3 text-[13.5px] leading-[1.65] text-ink-2 first:pt-0">
+              <p className="px-1 pt-3 text-[12.5px] leading-[1.65] text-ink-2 first:pt-0">
                 <RichText text={item.context!} />
               </p>
             )}
@@ -311,15 +463,15 @@ function QuestionsBlock({ qa }: { qa?: QAItem[] }) {
               onClick={() => setOpenIdx(open ? null : i)}
             >
               <span
-                className="mt-0.5 flex h-5 min-w-5 shrink-0 items-center justify-center rounded-full px-1.5 text-[10px] font-bold text-white"
+                className="mt-0.5 flex h-5 min-w-5 shrink-0 items-center justify-center rounded-full px-1.5 text-[9.5px] font-bold text-white"
                 style={{ background: open ? 'var(--color-accent, #6366f1)' : 'var(--ink-3, #999)' }}
               >
                 {item.n ?? i + 1}
               </span>
-              <span className="min-w-0 flex-1 text-[14px] font-semibold leading-snug text-ink">
+              <span className="min-w-0 flex-1 text-[13px] font-semibold leading-snug text-ink">
                 <RichText text={item.q} />
                 {item.marks !== undefined && (
-                  <span className="ml-2 text-[12px] font-normal text-muted-2">({item.marks} marks)</span>
+                  <span className="ml-2 text-[11.5px] font-normal text-muted-2">({item.marks} marks)</span>
                 )}
               </span>
               {open
@@ -340,21 +492,28 @@ function QuestionsBlock({ qa }: { qa?: QAItem[] }) {
                     className="border-t border-hairline px-4 py-4"
                     style={{ background: 'var(--surface-raise)' }}
                   >
-                    <div className="mb-2 flex items-center gap-1.5">
-                      <CheckCircle2 className="size-3.5 shrink-0 text-positive" aria-hidden />
-                      <span className="text-[10.5px] font-bold tracking-[0.1em] text-positive uppercase">Model Answer</span>
+                    <div className="mb-2 flex items-center justify-between gap-3">
+                      <div className="flex items-center gap-1.5">
+                        <CheckCircle2 className="size-3.5 shrink-0 text-positive" aria-hidden />
+                        <span className="text-[10px] font-bold tracking-[0.1em] text-positive uppercase">Model Answer</span>
+                      </div>
+                      <AiPromptButton
+                        prompt={buildQuestionPrompt(lessonTitle, item)}
+                        label="Explain with AI"
+                        size="sm"
+                      />
                     </div>
                     {Array.isArray(item.a) ? (
                       <ol className="space-y-1.5">
                         {(item.a as string[]).map((point, pi) => (
-                          <li key={pi} className="flex gap-2.5 text-[13.5px] leading-[1.7] text-ink-2">
-                            <span className="mt-[2px] shrink-0 text-[11px] font-bold text-positive tabular-nums">{pi + 1}.</span>
+                          <li key={pi} className="flex gap-2.5 text-[12.5px] leading-[1.7] text-ink-2">
+                            <span className="mt-[2px] shrink-0 text-[10.5px] font-bold text-positive tabular-nums">{pi + 1}.</span>
                             <span><RichText text={point} /></span>
                           </li>
                         ))}
                       </ol>
                     ) : (
-                      <p className="text-[13.5px] leading-[1.75] text-ink-2"><RichText text={item.a as string} /></p>
+                      <p className="text-[12.5px] leading-[1.75] text-ink-2"><RichText text={item.a as string} /></p>
                     )}
                   </div>
                 </motion.div>
@@ -537,14 +696,14 @@ function GraphBlock({ block }: { block: LessonBlock }) {
         <div className="flex flex-wrap items-center gap-3 border-b border-hairline px-4 py-2.5">
           {isMulti && curves
             ? curves.map((c, i) => (
-                <span key={i} className="flex items-center gap-1.5 font-mono text-[12.5px] font-semibold text-ink">
+                <span key={i} className="flex items-center gap-1.5 font-mono text-[11.75px] font-semibold text-ink">
                   <span className="inline-block h-2 w-5 rounded-sm" style={{ background: c.color ?? CURVE_COLORS[i % CURVE_COLORS.length] }} />
                   {c.equation}
                 </span>
               ))
             : <>
-                {equation && <span className="font-mono text-[13px] font-semibold text-ink">{equation}</span>}
-                {label && <span className="text-[12px] text-muted">{label}</span>}
+                {equation && <span className="font-mono text-[12.25px] font-semibold text-ink">{equation}</span>}
+                {label && <span className="text-[11.5px] text-muted">{label}</span>}
               </>
           }
         </div>
@@ -644,7 +803,7 @@ function MathBlock({ tex, label }: { tex: string; label?: string }) {
       className="rounded-xl border px-5 pt-3 pb-1.5"
       style={{ borderColor: 'var(--color-accent-ring)', background: 'var(--color-accent-wash)' }}
     >
-      <p className="text-[10.5px] font-bold tracking-[0.1em] text-accent uppercase">{label}</p>
+      <p className="text-[10px] font-bold tracking-[0.1em] text-accent uppercase">{label}</p>
       <div className="py-1 text-ink" style={{ fontSize: '1.08em' }}>
         <Tex tex={tex} display />
       </div>
@@ -659,7 +818,7 @@ function StepsBlock({ title, steps }: { title?: string; steps: SolutionStep[] })
   return (
     <div className="overflow-hidden rounded-xl border border-hairline-strong">
       <div className="border-b border-hairline bg-paper-raise px-4 py-2">
-        <span className="text-[10.5px] font-bold tracking-[0.1em] text-muted uppercase">{title ?? 'Solution'}</span>
+        <span className="text-[10px] font-bold tracking-[0.1em] text-muted uppercase">{title ?? 'Solution'}</span>
       </div>
       <div className="divide-y divide-hairline">
         {steps.map((st, i) => (
@@ -668,7 +827,7 @@ function StepsBlock({ title, steps }: { title?: string; steps: SolutionStep[] })
             className={cn('px-4 py-2.5', twoCol && st.tex && 'grid gap-x-5 gap-y-1 sm:grid-cols-[minmax(0,12rem)_minmax(0,1fr)]')}
           >
             {st.note && (
-              <p className="self-center text-[13px] leading-snug text-muted">
+              <p className="self-center text-[12.25px] leading-snug text-muted">
                 <RichText text={st.note} />
               </p>
             )}
@@ -694,11 +853,11 @@ function BlockBody({ block, variant }: { block: LessonBlock; variant: 'source' |
     case 'heading':
       if (text === undefined) return null;
       return block.level === 3 ? (
-        <h3 className={cn('text-[15.5px] font-semibold tracking-[-0.01em]', muted ? 'text-muted' : 'text-ink')}>
+        <h3 className={cn('text-[14.5px] font-semibold tracking-[-0.01em]', muted ? 'text-muted' : 'text-ink')}>
           <RichText text={text as string} />
         </h3>
       ) : (
-        <h2 className={cn('text-[20px] font-semibold tracking-[-0.02em]', muted ? 'text-muted' : 'text-ink')}>
+        <h2 className={cn('text-[18.5px] font-semibold tracking-[-0.02em]', muted ? 'text-muted' : 'text-ink')}>
           <RichText text={text as string} />
         </h2>
       );
@@ -708,7 +867,7 @@ function BlockBody({ block, variant }: { block: LessonBlock; variant: 'source' |
       return (
         <ul className={cn('space-y-2', muted ? 'text-muted' : 'text-ink-2')}>
           {(text as string[]).map((item, i) => (
-            <li key={i} className="flex gap-3 text-[14.5px] leading-[1.7]">
+            <li key={i} className="flex gap-3 text-[13.5px] leading-[1.7]">
               <span
                 className={cn('mt-[10px] h-px w-2.5 shrink-0', muted ? 'bg-muted-2' : 'bg-hairline-strong')}
                 aria-hidden
@@ -724,7 +883,7 @@ function BlockBody({ block, variant }: { block: LessonBlock; variant: 'source' |
       return (
         <blockquote
           className={cn(
-            'border-l-2 py-1 pl-5 text-[15px] leading-[1.7] italic',
+            'border-l-2 py-1 pl-5 text-[14px] leading-[1.7] italic',
             muted ? 'border-hairline text-muted' : 'border-ink/25 text-ink-2',
           )}
         >
@@ -737,7 +896,7 @@ function BlockBody({ block, variant }: { block: LessonBlock; variant: 'source' |
       return (
         <div
           className={cn(
-            'rounded-lg border px-4 py-3 text-[13.5px] leading-[1.6]',
+            'rounded-lg border px-4 py-3 text-[12.5px] leading-[1.6]',
             muted
               ? 'border-hairline bg-paper-raise text-muted'
               : 'border-hairline-strong bg-paper-raise text-ink-2',
@@ -768,10 +927,10 @@ function BlockBody({ block, variant }: { block: LessonBlock; variant: 'source' |
       return (
         <div className="my-4 rounded-xl border p-4" style={{ borderColor: 'var(--edge)', background: 'var(--surface-raise)' }}>
           {block.caption && (
-            <p className="mb-2 text-[13px] font-semibold text-ink">{block.caption}</p>
+            <p className="mb-2 text-[12.25px] font-semibold text-ink">{block.caption}</p>
           )}
           {block.text && (
-            <p className="mb-3 text-[12.5px] text-muted">{block.text as string}</p>
+            <p className="mb-3 text-[11.75px] text-muted">{block.text as string}</p>
           )}
           <audio controls preload="metadata" className="w-full" style={{ height: 40 }}>
             <source src={`/${block.src}`} type="audio/mpeg" />
@@ -796,15 +955,42 @@ function BlockBody({ block, variant }: { block: LessonBlock; variant: 'source' |
       if (variant === 'en' || !block.figure) return null;
       return <FigureBlock figure={block.figure} />;
 
+    case 'diagram':
+      if (variant === 'en' || !block.diagram) return null;
+      return <DiagramBlock diagram={block.diagram} />;
+
+    case 'prompt':
+      if (variant === 'en' || typeof block.text !== 'string') return null;
+      return <PromptBlock title={block.caption} text={block.text} />;
+
+    case 'checklist':
+      if (variant === 'en'|| !block.checklistItems?.length) return null;
+      return <ChecklistBlock blockId={block.id} items={block.checklistItems} />;
+
     default:
       if (text === undefined) return null;
       return (
-        <p className={cn('text-[15px] leading-[1.78]', muted ? 'text-muted' : 'text-ink-2')}>
+        <p className={cn('text-[14px] leading-[1.78]', muted ? 'text-muted' : 'text-ink-2')}>
           <RichText text={text as string} />
         </p>
       );
   }
 }
+
+/* ── Read-aloud scroll-follow + highlight ────────────────────────────────── */
+
+/** Smoothly scrolls the currently-spoken block into view as read-aloud plays. */
+function useFollowActiveBlock(activeBlockId: string | undefined) {
+  React.useEffect(() => {
+    if (!activeBlockId) return;
+    const el = document.getElementById(`block-${activeBlockId}`);
+    el?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }, [activeBlockId]);
+}
+
+/** Highlight classes applied to the block currently being read aloud. */
+const READING_HIGHLIGHT =
+  'rounded-lg ring-2 ring-accent/50 bg-accent-wash transition-[box-shadow,background-color] duration-300 -mx-3 px-3 -my-1.5 py-1.5';
 
 /* ── Section grouping ────────────────────────────────────────────────────── */
 
@@ -840,12 +1026,14 @@ function SectionCard({
   index,
   isMath,
   variant,
+  activeBlockId,
 }: {
   section: Section;
   lessonTitle: string;
   index: number;
   isMath: boolean;
   variant: 'source' | 'en';
+  activeBlockId?: string;
 }) {
   const noteBlocks = section.blocks.filter(b => b.type !== 'questions');
   const questionBlocks = section.blocks.filter(b => b.type === 'questions');
@@ -866,7 +1054,7 @@ function SectionCard({
       {/* Notes area */}
       <div className="space-y-5 p-6">
         {noteBlocks.map((block) => (
-          <div key={block.id} id={`block-${block.id}`} className="scroll-mt-4">
+          <div key={block.id} id={`block-${block.id}`} className={cn('scroll-mt-4', block.id === activeBlockId && READING_HIGHLIGHT)}>
             <BlockBody block={block} variant={variant} />
           </div>
         ))}
@@ -878,7 +1066,7 @@ function SectionCard({
           <div className="px-6 pt-4 pb-1">
             <div className="flex items-center gap-2">
               <HelpCircle className="size-3.5 text-accent" aria-hidden />
-              <span className="text-[11px] font-bold tracking-[0.1em] text-accent uppercase">Practice Questions</span>
+              <span className="text-[10.5px] font-bold tracking-[0.1em] text-accent uppercase">Practice Questions</span>
             </div>
           </div>
           <div className="space-y-0 px-6 pb-5 pt-3">
@@ -894,7 +1082,7 @@ function SectionCard({
       {/* AI Help footer */}
       {isMath && section.title && (
         <div className="flex items-center justify-between border-t border-hairline/60 bg-[#5865f2]/5 px-6 py-3">
-          <span className="text-[11.5px] text-muted">Need more help with this section?</span>
+          <span className="text-[11px] text-muted">Need more help with this section?</span>
           <AiPromptButton prompt={sectionPrompt} label="Copy AI prompt" />
         </div>
       )}
@@ -971,7 +1159,7 @@ function HoverReader({ blocks }: { blocks: LessonBlock[] }) {
                   className="pointer-events-none absolute top-0 left-full z-30 ml-8 w-[320px]"
                 >
                   <div className="card px-4 py-3">
-                    <p className="mb-2 flex items-center gap-1.5 text-[10px] font-semibold tracking-[0.1em] text-muted-2 uppercase">
+                    <p className="mb-2 flex items-center gap-1.5 text-[9.5px] font-semibold tracking-[0.1em] text-muted-2 uppercase">
                       <Languages className="size-3" aria-hidden /> English
                     </p>
                     <BlockBody block={block} variant="en" />
@@ -1016,46 +1204,67 @@ export function TranslatableLesson({
   mode,
   visibleBlocks,
   isMath,
+  activeBlockId,
 }: {
   lesson: Lesson;
   mode: TranslationMode;
   visibleBlocks?: LessonBlock[];
   isMath?: boolean;
+  /** Block currently being spoken by read-aloud/podcast — scrolled into view and highlighted. */
+  activeBlockId?: string;
+  activeText?: string;
 }) {
   const blocks = visibleBlocks ?? lesson.blocks;
   const useSections = isMath && mode !== 'hover' && mode !== 'split';
+  useFollowActiveBlock(activeBlockId);
 
-  if (mode === 'hover') return <HoverReader blocks={blocks} />;
+  if (mode === 'hover') return (
+    <LessonTitleCtx.Provider value={lesson.title}>
+      <HoverReader blocks={blocks} />
+    </LessonTitleCtx.Provider>
+  );
 
   if (mode === 'split') {
     return (
+      <LessonTitleCtx.Provider value={lesson.title}>
       <div>
-        <div className="mb-6 grid grid-cols-2 gap-10 border-b border-hairline pb-2.5">
-          <p className="text-[10px] font-semibold tracking-[0.11em] text-muted-2 uppercase">Afrikaans</p>
-          <p className="text-[10px] font-semibold tracking-[0.11em] text-muted-2 uppercase">English</p>
+        <div className="mb-6 hidden grid-cols-2 gap-10 border-b border-hairline pb-2.5 sm:grid">
+          <p className="text-[9.5px] font-semibold tracking-[0.11em] text-muted-2 uppercase">Afrikaans</p>
+          <p className="text-[9.5px] font-semibold tracking-[0.11em] text-muted-2 uppercase">English</p>
         </div>
         <div className="space-y-6">
           {blocks.map((block, i) => (
             <motion.div
               key={block.id}
               id={`block-${block.id}`}
-              className="grid scroll-mt-6 grid-cols-2 items-start gap-10"
+              className={cn(
+                'grid scroll-mt-6 grid-cols-1 items-start gap-3 sm:grid-cols-2 sm:gap-10',
+                block.id === activeBlockId && READING_HIGHLIGHT,
+              )}
               initial={{ opacity: 0, y: 4 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.18, ease: EASE_OUT_EXPO, delay: Math.min(i * 0.015, 0.2) }}
             >
-              <BlockBody block={block} variant="source" />
-              <BlockBody block={block} variant="en" />
+              <div>
+                <p className="mb-1 text-[9.5px] font-semibold tracking-[0.11em] text-muted-2 uppercase sm:hidden">Afrikaans</p>
+                <BlockBody block={block} variant="source" />
+              </div>
+              <div className="border-t border-hairline pt-3 sm:border-t-0 sm:pt-0">
+                <p className="mb-1 text-[9.5px] font-semibold tracking-[0.11em] text-muted-2 uppercase sm:hidden">English</p>
+                <BlockBody block={block} variant="en" />
+              </div>
             </motion.div>
           ))}
         </div>
       </div>
+      </LessonTitleCtx.Provider>
     );
   }
 
   if (useSections) {
     const sections = groupIntoSections(blocks);
     return (
+      <LessonTitleCtx.Provider value={lesson.title}>
       <div className="space-y-5">
         {sections.map((section, i) => (
           <SectionCard
@@ -1065,19 +1274,22 @@ export function TranslatableLesson({
             index={i}
             isMath={!!isMath}
             variant="source"
+            activeBlockId={activeBlockId}
           />
         ))}
       </div>
+      </LessonTitleCtx.Provider>
     );
   }
 
   return (
+    <LessonTitleCtx.Provider value={lesson.title}>
     <div className="prose-measure space-y-6">
       {blocks.map((block, i) => (
         <motion.div
           key={block.id}
           id={`block-${block.id}`}
-          className="scroll-mt-6"
+          className={cn('scroll-mt-6', block.id === activeBlockId && READING_HIGHLIGHT)}
           initial={{ opacity: 0, y: 4 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.18, ease: EASE_OUT_EXPO, delay: Math.min(i * 0.015, 0.2) }}
@@ -1086,5 +1298,6 @@ export function TranslatableLesson({
         </motion.div>
       ))}
     </div>
+    </LessonTitleCtx.Provider>
   );
 }

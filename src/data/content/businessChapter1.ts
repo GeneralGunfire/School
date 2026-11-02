@@ -6,6 +6,7 @@ export const BUSINESS_CHAPTER_1: Chapter = {
  title: 'Chapter 1: Components of the Micro-Environment',
  summary: 'Grade 10 Term 1 — Business environments, VMGO, organisational resources, management (POLC), structure, culture, and the eight business functions.',
  paper: 1,
+ category: 'Business Environments',
  lessons: [
  // ── Lesson 1: Key Definitions ────────────────────────────────────────────
  {

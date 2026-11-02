@@ -121,14 +121,13 @@
   --grad-steel: linear-gradient(142deg, #334155 0%, #475569 100%);
   --grad-teal: linear-gradient(142deg, #0e7490 0%, #0891b2 100%);
 
-  /* Wallpaper — warm slate gradient with subtle colour blooms. */
-  --wall-base: linear-gradient(155deg, #f0eff5 0%, #e8e9f2 35%, #dfe1ed 65%, #d8dae8 100%);
-  --wall-bloom-1: rgba(99, 80, 200, 0.09);
-  --wall-bloom-2: rgba(147, 51, 234, 0.06);
-  --wall-bloom-3: rgba(37, 99, 235, 0.07);
-  --wall-bloom-4: rgba(16, 185, 129, 0.05);
-  --wall-dot: rgba(15, 10, 42, 0.055);
-  --wall-grid: rgba(15, 10, 42, 0.022);
+  /* Wallpaper — a slow-drifting monochrome "liquid" gradient: soft white
+     and near-black blooms on a light-grey ground, animated so they slowly
+     migrate rather than sitting static. No colour at all — the accent
+     stays the one spot of hue in the whole app. */
+  --wall-base: #e9e9ec;
+  --wall-light: rgba(255, 255, 255, 0.95);
+  --wall-dark: rgba(20, 20, 24, 0.1);
 }
 
 /* ── Dark ──────────────────────────────────────────────────────────────── */
@@ -198,13 +197,11 @@
   --grad-steel: linear-gradient(142deg, #64748b 0%, #94a3b8 100%);
   --grad-teal: linear-gradient(142deg, #06b6d4 0%, #22d3ee 100%);
 
-  --wall-base: linear-gradient(170deg, #0f1319 0%, #090c11 48%, #05070a 100%);
-  --wall-bloom-1: rgba(59, 130, 246, 0.22);
-  --wall-bloom-2: rgba(30, 64, 175, 0.16);
-  --wall-bloom-3: rgba(56, 189, 248, 0.14);
-  --wall-bloom-4: rgba(8, 145, 178, 0.12);
-  --wall-dot: rgba(190, 215, 255, 0.06);
-  --wall-grid: rgba(190, 215, 255, 0.026);
+  /* Same liquid idea, inverted: near-black ground with soft lighter-grey
+     blooms instead of the light version's white-on-grey. */
+  --wall-base: #0a0a0c;
+  --wall-light: rgba(255, 255, 255, 0.07);
+  --wall-dark: rgba(0, 0, 0, 0.5);
 
   /* Subject hues lift in dark mode — the light values sit at the same
      luminance as the charcoal surfaces and vanish. */
@@ -323,26 +320,40 @@
     inset: 0;
     z-index: -2;
     pointer-events: none;
-    background:
-      radial-gradient(58rem 42rem at 2% -12%, var(--wall-bloom-1), transparent 52%),
-      radial-gradient(46rem 36rem at 100% -4%, var(--wall-bloom-3), transparent 54%),
-      radial-gradient(52rem 38rem at 88% 58%, var(--wall-bloom-4), transparent 54%),
-      radial-gradient(50rem 38rem at 36% 114%, var(--wall-bloom-2), transparent 52%),
-      var(--wall-base);
+    background: var(--wall-base);
   }
+  /* Liquid blooms — soft white/black radial blobs that slowly drift. Moved
+     with `transform: translate()`, not `background-position`: a transform
+     is handled by the compositor on its own layer (effectively free, every
+     frame), where animating `background-position` (and especially a CSS
+     `filter: blur()` on top of it) forces a full repaint of this fixed,
+     full-viewport element every frame — which was costly enough to make
+     the whole app feel laggy on input, not just the background itself.
+     Each gradient's own `transparent` falloff gives the soft edge that
+     `filter: blur()` used to, with none of its per-frame repaint cost. */
   .app-wallpaper::after {
     content: '';
     position: fixed;
-    inset: 0;
+    inset: -15%;
     z-index: -1;
     pointer-events: none;
-    background: linear-gradient(
-      168deg,
-      color-mix(in srgb, var(--wall-bloom-1) 12%, transparent) 0%,
-      transparent 40%,
-      color-mix(in srgb, var(--wall-bloom-3) 8%, transparent) 70%,
-      transparent 100%
-    );
+    will-change: transform;
+    background-image:
+      radial-gradient(34rem 28rem at 18% 22%, var(--wall-light), transparent 72%),
+      radial-gradient(30rem 26rem at 82% 28%, var(--wall-dark), transparent 70%),
+      radial-gradient(28rem 24rem at 38% 82%, var(--wall-light), transparent 74%);
+    background-repeat: no-repeat;
+    animation: wall-drift 60s linear infinite;
+  }
+  @keyframes wall-drift {
+    0%   { transform: translate(0%, 0%); }
+    50%  { transform: translate(-3%, 2%); }
+    100% { transform: translate(0%, 0%); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .app-wallpaper::after {
+      animation: none;
+    }
   }
 
   /* ── Card ────────────────────────────────────────────────────────────
@@ -527,8 +538,8 @@
     border-radius: var(--radius-card);
     border: 1px solid var(--edge);
     background:
-      radial-gradient(28rem 14rem at 8% -40%, var(--wall-bloom-1), transparent 62%),
-      radial-gradient(24rem 12rem at 92% 140%, var(--wall-bloom-3), transparent 60%),
+      radial-gradient(28rem 14rem at 8% -40%, var(--color-accent-wash), transparent 62%),
+      radial-gradient(24rem 12rem at 92% 140%, var(--color-accent-wash), transparent 60%),
       var(--surface-raise);
     box-shadow: inset 0 1px 0 var(--surface-inset-top);
   }

@@ -399,7 +399,7 @@ export function CreateAcronymButton({
       <button
         onClick={() => setOpen(true)}
         className={
-          'flex items-center gap-1.5 rounded-xl border px-3 py-1.5 text-[12.5px] font-medium transition-all duration-150 ' +
+          'flex items-center gap-1.5 rounded-xl border px-3 py-1.5 text-[12.5px] font-medium transition-colors duration-150 ' +
           'border-accent/40 bg-accent-wash text-accent-strong hover:bg-accent-wash hover:border-accent/60 ' +
           (className ?? '')
         }

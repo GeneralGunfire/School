@@ -7,17 +7,35 @@ let model: Promise<KokoroTTS> | undefined;
 
 function load() {
   model ??= (async () => {
-    const gpu = 'gpu' in navigator;
+    // WebGPU is unreliable across WebViews (not just missing — some report
+    // `navigator.gpu` present but then fail to get an adapter), so prefer
+    // plain WASM unless WebGPU demonstrably works, rather than trusting
+    // feature-detection alone and silently falling back to the system
+    // voice when it doesn't.
+    let useGpu = false;
+    try {
+      const gpu = (navigator as unknown as { gpu?: { requestAdapter: () => Promise<unknown> } }).gpu;
+      if (gpu) useGpu = !!(await gpu.requestAdapter());
+    } catch (err) {
+      console.warn('[tts] WebGPU adapter check failed, using WASM:', err);
+    }
+
     try {
       return await KokoroTTS.from_pretrained('onnx-community/Kokoro-82M-v1.0-ONNX', {
-        dtype: gpu ? 'fp32' : 'q8',
-        device: gpu ? 'webgpu' : 'wasm',
+        dtype: useGpu ? 'fp32' : 'q8',
+        device: useGpu ? 'webgpu' : 'wasm',
         progress_callback: (p: { status: string; progress?: number }) => {
           if (p.status === 'progress') postMessage({ type: 'progress', value: p.progress ?? 0 });
         },
       });
-    } catch {
-      return KokoroTTS.from_pretrained('onnx-community/Kokoro-82M-v1.0-ONNX', { dtype: 'q8', device: 'wasm' });
+    } catch (err) {
+      console.error('[tts] Kokoro load failed on', useGpu ? 'webgpu' : 'wasm', '— retrying on wasm/q8:', err);
+      try {
+        return await KokoroTTS.from_pretrained('onnx-community/Kokoro-82M-v1.0-ONNX', { dtype: 'q8', device: 'wasm' });
+      } catch (err2) {
+        console.error('[tts] Kokoro load failed on wasm fallback too:', err2);
+        throw err2;
+      }
     }
   })();
   return model;

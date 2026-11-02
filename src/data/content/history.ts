@@ -247,10 +247,43 @@ export const HISTORY_BRITAIN_CAPE: Chapter = {
  id: 'bc-f-note', type: 'callout',
  text: 'Did you know? In 1829, the Cape government gave land in the fertile Kat River Valley, that had been occupied by the Xhosa, to Khoikhoi and freed slaves, to form a buffer between white settlers and the Xhosa.',
  },
+ { id: 'bc-f-h3b', type: 'heading', level: 2, text: '3.4 The 1820 Settlers in Detail' },
+ {
+ id: 'bc-f-p4b', type: 'paragraph',
+ text: 'The scheme was organised by the British government under a plan put forward by Colonial Secretary Lord Bathurst. More than 90,000 people applied, but only about 4,000 were selected and shipped out in 21 parties, each led by a "party leader" who received a land grant based on the number of settlers in his group. Most settlers came from England, with smaller numbers of Scots and Irish. They were landed at Algoa Bay (Port Elizabeth) and allocated farms of about 100 acres each in the area that became known as Albany, around the new town of Grahamstown (named after Colonel John Graham).',
+ },
+ {
+ id: 'bc-f-p4c', type: 'paragraph',
+ text: 'The settlement was a disaster for many families in its early years. The land allocated was far too small and dry for the wheat farming most settlers expected — it suited grazing, not crops. Drought, flooding of the Kowie River, army-worm plagues, and rust disease destroyed successive harvests between 1820 and 1823. Many settlers who had been artisans, tradesmen, or clerks in Britain had no farming experience at all. Within a few years, a large proportion of the original settlers had abandoned their farms and moved to the growing towns, where they worked as shopkeepers, printers, lawyers, and traders — permanently changing the character of Eastern Cape towns into English-speaking, trade-based centres rather than purely agricultural ones.',
+ },
+ {
+ id: 'bc-f-src-settler', type: 'callout',
+ text: 'Primary Source — Thomas Pringle, 1820 Settler and poet, writing of his first years in Albany: "We had to contend with drought, with the inroads of wild animals, with the ravages of an unknown insect... and, worst of all, with the incursions of the natives, who, driven by famine, often carried off our cattle by night." (Pringle later became a leading critic of Cape frontier policy and of slavery.)',
+ },
+ { id: 'bc-f-h3c', type: 'heading', level: 2, text: '3.5 Ordinance 50 (1828)' },
+ {
+ id: 'bc-f-p4d', type: 'paragraph',
+ text: 'Ordinance 50, passed by the Cape government in 1828 at the urging of missionaries such as Dr John Philip of the London Missionary Society, removed the pass laws that had restricted the movement of Khoikhoi and other free people of colour, and gave them the right to own land, to choose their own employer, and to take white employers to court for ill-treatment or non-payment of wages. For the first time, Khoikhoi were legally equal to white colonists before the law.',
+ },
+ {
+ id: 'bc-f-p4e', type: 'paragraph',
+ text: 'Many settler farmers — both Dutch-speaking and English-speaking — were furious. They depended on cheap, controlled Khoikhoi labour and feared that Ordinance 50 would cause servants to leave for better-paid work or to search for land of their own. Farmers argued that, without the old controls, labourers would become "idle and insolent." For the trekboers already resentful of British rule, Ordinance 50 became one more sign that the Cape government valued the rights of black and coloured people above the interests of white farmers — a grievance Piet Retief would list directly in his 1837 manifesto.',
+ },
+ {
+ id: 'bc-f-ord50-table', type: 'definitions',
+ rows: [
+ { term: 'Before Ordinance 50', meaning: 'Khoikhoi needed a pass to travel; could be forced into labour contracts; had no legal standing to sue an employer; could not independently own land.' },
+ { term: 'After Ordinance 50 (1828)', meaning: 'Khoikhoi could travel without a pass; could choose their employer and negotiate wages; could sue employers in court; could legally own land.' },
+ ],
+ },
  { id: 'bc-f-h4', type: 'heading', level: 2, text: '4.1 Retief\'s Manifesto — Why the Boers Left the Cape' },
  {
  id: 'bc-f-p6', type: 'paragraph',
  text: 'The Dutch trekboers who had settled in the Eastern Cape area were becoming more and more unhappy about the British administration at the Cape, which in their view was too liberal. The British also favoured the English language over Dutch. The Dutch were very reliant on slave labour and were outraged when the British abolished slavery in 1834. To make matters worse, they were in ongoing conflict with the Xhosa over land, and the arrival of British settlers had put a lot more pressure on limited resources. They saw only one solution — to move out of the Cape Colony and establish new economic, cultural and political systems away from the British.',
+ },
+ {
+ id: 'bc-f-p6b', type: 'paragraph',
+ text: 'Several specific, immediate triggers pushed Boer farmers to leave in 1835–1836 rather than simply grumble. First, the compensation paid for freed slaves (about £1.2 million) was payable only in London, in person or through an agent — most Cape slave owners never received the full amount, and many lost most of its value to agents\' commissions. Second, Ordinance 50 (1828) was seen as having placed servants on an equal legal footing with their masters. Third, the Sixth Frontier War (1834–35) convinced many frontier farmers that the British government would not protect their farms, cattle, or families from Xhosa raids — Governor d\'Urban\'s attempt to annex Queen Adelaide Province as a buffer was overturned by London within a year, which Boers took as proof that the imperial government cared more about distant humanitarian opinion than about settlers on the frontier. Finally, rumours and reports from earlier trekker scouts (such as a group under Louis Trichardt and Hans van Rensburg who had already moved north) encouraged others that good, "empty" land existed beyond the colony\'s borders.',
  },
  {
  id: 'bc-f-retief', type: 'callout',
@@ -264,6 +297,10 @@ export const HISTORY_BRITAIN_CAPE: Chapter = {
  { term: 'Romantic', meaning: 'Thinking that something is better than it actually is.' },
  { term: 'Isolated', meaning: 'Far away from other places.' },
  { term: 'Manifesto', meaning: 'A public declaration of aims.' },
+ { term: 'Ordinance 50', meaning: 'An 1828 Cape law abolishing pass laws for Khoikhoi and giving them the right to own land, choose employers, and sue in court.' },
+ { term: 'Albany', meaning: 'The district around Grahamstown where most of the 1820 Settlers were allocated farms.' },
+ { term: 'Party leader', meaning: 'The head of an 1820 Settler group, who received a land grant based on the number of settlers he brought.' },
+ { term: 'Queen Adelaide Province', meaning: 'Territory annexed by Governor d\'Urban after the Sixth Frontier War (1834–35), but overturned by the British government within a year.' },
  ],
  },
  {
@@ -275,6 +312,9 @@ export const HISTORY_BRITAIN_CAPE: Chapter = {
  { q: 'What was the effect of the abolition of the slave trade in 1807 on slaves in the Cape Colony?', marks: 3, a: 'The 1807 law banned importing new slaves, but existing slaves and their children remained enslaved. Slaves became more expensive because there were fewer available. The Cape government required that all slaves be registered. Some new laws improved conditions for slaves — they could now marry, live with their families, had limited working hours, and punishments were controlled. However, freedom only came in December 1834, and even then they had to work for their former masters for another four years until 1838.' },
  { q: 'List THREE reasons from Retief\'s Manifesto why the Voortrekkers decided to leave the Cape Colony.', marks: 3, a: '(1) They lost money when forced to free their slaves and compensation was inadequate. (2) There was too much conflict and crime in the colony — they did not feel their families were safe. (3) They wanted to govern themselves without British interference and establish their own economic, cultural and political systems away from British control.' },
  { q: 'What was the purpose of sending the 1820 Settlers to the Eastern Cape frontier?', marks: 2, a: 'Lord Somerset\'s plan was that the 1820 Settlers would boost the number of white settlers in the Eastern Cape, and serve as a buffer to defend the eastern frontier against the Xhosa people. He hoped British settlers would strengthen British control of the region.' },
+ { q: 'Why did many 1820 Settlers abandon their original farms within a few years of arriving?', marks: 4, a: 'The land they were allocated in Albany was too small (about 100 acres) and too dry for the wheat farming most settlers had expected to do — it was better suited to grazing. Many settlers had been artisans, clerks, or tradesmen in Britain with no farming experience. Drought, flooding, army-worm plagues, and crop disease destroyed harvests between 1820 and 1823. As a result, many settlers left their farms and moved to towns like Grahamstown, Port Elizabeth, and East London, where they became shopkeepers and traders instead.' },
+ { q: 'Explain the main provisions of Ordinance 50 (1828) and why it angered many Cape farmers.', marks: 4, a: 'Ordinance 50 removed pass laws restricting Khoikhoi movement and gave them the legal right to own land, choose their own employer, and sue employers in court for ill-treatment or unpaid wages. Many Dutch and English farmers were angered because they depended on cheap, controlled Khoikhoi labour, and feared that workers would now leave for better pay or seek land of their own. Trekboers saw it as the British government favouring the rights of black and coloured people over white farmers\' interests — a grievance later listed in Piet Retief\'s manifesto.' },
+ { q: 'Describe TWO immediate triggers (apart from the abolition of slavery) that pushed Boer families to leave the Cape Colony in 1835–1836.', marks: 4, a: 'ANY TWO: (1) Slave compensation (about £1.2 million) was only payable in London, so most Cape slave owners received little or nothing after agents\' commissions. (2) The Sixth Frontier War (1834–35) and the British government\'s reversal of Governor d\'Urban\'s annexation of Queen Adelaide Province convinced Boer farmers that Britain would not protect their land or cattle from Xhosa raids. (3) Reports from early scouting trekkers, such as Louis Trichardt\'s party, suggested good land was available beyond the colony\'s borders.' },
  ],
  },
  ],
@@ -499,16 +539,56 @@ export const HISTORY_HIGHVELD: Chapter = {
  title: 'Overview — Events, Timeline & Key Factors',
  minutes: 30,
  blocks: [
+ { id: 'hv-h0', type: 'heading', level: 2, text: '0.1 The Mfecane/Difaqane: Causes' },
  {
- id: 'hv-audio', type: 'audio',
- caption: '� Listen — Podcast Overview',
- text: 'Two hosts walk you through the entire Highveld topic in a conversational podcast. Great for revision on the go.',
- src: 'audio/hist-highveld-overview.mp3',
+ id: 'hv-p0a', type: 'paragraph',
+ text: 'The Mfecane (Zulu: "the crushing") — also called the Difaqane or Lifaqane in Sesotho — was a period of warfare, forced migration, and state formation across southern Africa roughly between 1815 and 1840. Historians identify several interacting causes. By the late 18th century, Nguni-speaking chiefdoms on the Zululand coastal plain were growing increasingly dense in population, placing growing pressure on limited, fertile, summer-rainfall land suitable for cattle and crops. Some historians also point to a severe regional drought lasting from around 1800 to 1810, known in Zulu oral tradition as the Madlathule famine ("eat what you can and say nothing"), which intensified competition for grazing and water.',
  },
- { id: 'hv-h1', type: 'heading', level: 2, text: 'The Rise of Moshoeshoe and the Basotho Kingdom' },
+ {
+ id: 'hv-p0b', type: 'paragraph',
+ text: 'Another contested cause, proposed by historians such as Julian Cobbing, links the upheaval to the expanding slave and ivory trade through Delagoa Bay (Maputo) in Portuguese-controlled territory, which increased raiding and competition between chiefdoms seeking captives and trade goods. Most historians today see the Mfecane as resulting from a combination of these pressures — population growth, land shortage, drought, and trade competition — rather than any single cause, and caution against simplistic explanations that blame it solely on Shaka\'s personal ambition.',
+ },
+ { id: 'hv-h0b', type: 'heading', level: 2, text: '0.2 Shaka and the Rise of the Zulu Kingdom' },
+ {
+ id: 'hv-p0c', type: 'paragraph',
+ text: 'Shaka kaSenzangakhona (c.1787–1828) became chief of the small Zulu chiefdom in 1816, with the backing of Dingiswayo, chief of the larger Mthethwa confederacy to whom Shaka owed early military service. After Dingiswayo was killed by a rival chief, Zwide of the Ndwandwe, Shaka absorbed the remaining Mthethwa and began a rapid programme of conquest and state-building. He is credited with reorganising Zulu military tactics: replacing the long throwing spear with the short stabbing spear (iklwa), introducing the "horns of the bull" encirclement formation, forming regiments (amabutho) organised by age rather than by clan, and enforcing strict, often brutal, discipline and loyalty to the king rather than to individual chiefs.',
+ },
+ {
+ id: 'hv-p0d', type: 'paragraph',
+ text: 'Through a mixture of conquest and incorporation — defeated groups could be absorbed into the Zulu state and its army rather than simply destroyed — Shaka built the Zulu kingdom into the dominant power in the region by the mid-1820s. Groups fleeing Zulu expansion, or displaced by the wider chain-reaction of raiding it triggered, scattered across southern Africa, in turn displacing other communities. This chain reaction is the heart of the Mfecane: it was not only the Zulu who caused displacement, but the way violence and flight rippled outward from one region to the next.',
+ },
+ {
+ id: 'hv-shaka-table', type: 'definitions',
+ rows: [
+ { term: 'Mthethwa confederacy', meaning: 'Powerful chiefdom under Dingiswayo that trained and supported the young Shaka before its collapse.' },
+ { term: 'Amabutho', meaning: 'Zulu age-based regiments used for military service and public works, replacing clan loyalty with loyalty to the king.' },
+ { term: 'Iklwa', meaning: 'The short stabbing spear introduced by Shaka, used for close combat rather than throwing.' },
+ { term: '"Horns of the bull"', meaning: 'A Zulu military formation that encircled the enemy with "horns" (flanking regiments) while the "chest" (main force) attacked from the front.' },
+ ],
+ },
+ { id: 'hv-h0c', type: 'heading', level: 2, text: '0.3 Key Mfecane Figures and Migrations' },
+ {
+ id: 'hv-mfecane-list', type: 'list',
+ text: [
+ 'MZILIKAZI: A former Zulu military commander who broke away from Shaka around 1823 after a dispute over captured cattle. He led his followers (who became known as the Ndebele/Matabele) north-westward onto the Highveld, raiding and absorbing other groups along the way, before eventually settling near present-day Pretoria and then, after conflict with the Voortrekkers in 1837, moving further north across the Limpopo to found the Ndebele kingdom in what is now Zimbabwe.',
+ 'MANTATISI AND THE TLOKWA: A Sotho-Tswana chieftainess (acting as regent for her young son Sekonyela) who led a large group of refugees, the Tlokwa, across the Highveld in the early 1820s, clashing with other displaced groups including those that would later be absorbed by Moshoeshoe.',
+ 'SOSHANGANE: A Zulu general who fled south-east African conflict to found the Gaza kingdom in present-day Mozambique, incorporating many displaced groups.',
+ 'ZWANGENDABA: Led a Ngoni group on a migration that eventually reached as far north as Lake Tanganyika in East Africa — showing the Mfecane\'s effects rippled thousands of kilometres beyond southern Africa.',
+ 'MOSHOESHOE: As described below, gathered refugees displaced by this upheaval at Thaba Bosiu, forming the Basotho nation.',
+ ],
+ },
+ {
+ id: 'hv-p0e', type: 'paragraph',
+ text: 'Consequences of the Mfecane/Difaqane were immense and long-lasting. Large areas of the interior — particularly parts of the later Orange Free State and Natal — were left sparsely populated or temporarily depopulated as a result of warfare, flight, and famine, which the Voortrekkers would later use to justify claims that the land they were entering was "empty" and available for occupation; historians now regard this claim as a distortion, since the land was not permanently empty, but recovering from a period of severe disruption and in many cases still occupied or claimed by surviving chiefdoms. New, more centralised and militarised states emerged from the chaos — the Zulu kingdom under Shaka and later Dingane, the Ndebele kingdom under Mzilikazi, the Basotho kingdom under Moshoeshoe, and the Gaza kingdom under Soshangane. Millions of people were displaced, and population estimates of the death toll (though historians dispute precise figures) range into the hundreds of thousands to over a million across the whole region and period.',
+ },
+ {
+ id: 'hv-src-zulu', type: 'callout',
+ text: 'Primary Source — Nathaniel Isaacs, British trader who lived at Shaka\'s court, Travels and Adventures in Eastern Africa (1836): "Chaka [Shaka] was now become the most powerful chief... his influence was felt over a vast tract of country, and the different tribes around him were kept in a state of constant alarm, not knowing when the blow might fall upon them." (Isaacs\' account is a key but biased European source — he exaggerated Shaka\'s cruelty to justify British intervention in Natal.)',
+ },
+ { id: 'hv-h1', type: 'heading', level: 2, text: '0.4 The Rise of Moshoeshoe and the Basotho Kingdom' },
  {
  id: 'hv-p1', type: 'callout',
- text: ' SOURCE-BASED QUESTION TOPIC (Section A). You will be given primary sources about Moshoeshoe, the Basotho, the Boer republics, or the boundary disputes and must answer questions using the source AND your own knowledge. Know: Moshoeshoe\'s diplomacy, Thaba Bosiu, missionaries, the Napier/Warden lines, the Basotho Wars, and the inboekelinge system.',
+ text: ' SOURCE-BASED QUESTION TOPIC (Section A). You will be given primary sources about Moshoeshoe, the Basotho, the Boer republics, or the boundary disputes and must answer questions using the source AND your own knowledge. Know: the Mfecane/Difaqane causes and consequences, Shaka, Mzilikazi, Moshoeshoe\'s diplomacy, Thaba Bosiu, missionaries, the Napier/Warden lines, the Basotho Wars, and the inboekelinge system.',
  },
  {
  id: 'hv-p2', type: 'paragraph',
@@ -532,6 +612,45 @@ export const HISTORY_HIGHVELD: Chapter = {
  {
  id: 'hv-p6', type: 'paragraph',
  text: 'From 1836, Voortrekkers began arriving on the Highveld after leaving the Cape Colony during the Great Trek. They settled in areas that Moshoeshoe considered part of his kingdom. Initially there was some co-operation — Moshoeshoe allowed Boers to settle in certain areas in exchange for recognition of his authority. However, conflict was inevitable as both groups claimed the same fertile land.',
+ },
+ {
+ id: 'hv-p6a', type: 'paragraph',
+ text: 'Before reaching areas controlled by Moshoeshoe, the first large Voortrekker parties (led by Andries Potgieter and Sarel Cilliers) clashed directly with Mzilikazi\'s Ndebele kingdom, which by the mid-1830s controlled much of the western and central Highveld around present-day Pretoria and Rustenburg. Ndebele warriors attacked a Voortrekker party at Vegkop in October 1836, killing settlers and capturing most of their cattle, though the Boers (laagered in a wagon circle) survived the attack itself. In retaliation, Potgieter\'s commando, reinforced by Griqua allies, attacked and destroyed Mzilikazi\'s capital at Mosega in January 1837, and a further combined Boer-Griqua-Rolong force drove Mzilikazi\'s people out of the Highveld in November 1837. Mzilikazi led his followers north across the Limpopo River, eventually establishing the Ndebele kingdom in what is now Zimbabwe — removing the main military obstacle to Voortrekker settlement of the central and western Highveld.',
+ },
+ {
+ id: 'hv-p6b', type: 'paragraph',
+ text: 'A separate Voortrekker party under Piet Retief chose a different destination: Natal, where they hoped to negotiate land directly from the Zulu king Dingane kaSenzangakhona, who had succeeded his half-brother Shaka after assassinating him in 1828. In October and November 1837, Retief led his party down the Drakensberg passes into Natal and met Dingane at his royal homestead, Umgungundlovu. Dingane agreed to grant the Boers land south of the Thukela River, on the condition that Retief\'s men first recover cattle stolen from Dingane by a rival chief, Sekonyela of the Tlokwa. Retief successfully retrieved the cattle using a trick (capturing Sekonyela and holding him until the cattle were handed over) and returned to Umgungundlovu on 3 February 1838 to sign the land treaty and collect a formal grant of land.',
+ },
+ {
+ id: 'hv-p6c', type: 'paragraph',
+ text: 'On 6 February 1838, after the treaty had apparently been signed, Dingane ordered his warriors to kill Retief and his entire party of about 70 men — the reasons remain debated, but likely causes include Dingane\'s fear that the growing numbers of armed Boer trekkers posed a long-term threat to Zulu independence, similar to how white settlement had already dispossessed other African societies further south. In the days following, Zulu regiments attacked Voortrekker encampments at Bloukrans and Weenen, killing several hundred Boer men, women, and children, as well as their African servants — an event the Voortrekkers remembered as the "Weenen Massacre" (weenen means "weeping").',
+ },
+ {
+ id: 'hv-src-retief', type: 'callout',
+ text: 'Primary Source — Extract from the land treaty Retief claimed Dingane signed, 4 February 1838 (as recorded by Voortrekker secretary Jan Bantjes; its authenticity is disputed by historians): "I, Dingaan, king of the Zulus, do hereby certify that... I do by these presents transfer and make over unto [Retief] ... the land as follows, namely from the Tugela to the Umzimvubu rivers... to be the property of the said Retief and his countrymen." Many historians doubt the document is fully authentic, or question whether Dingane fully understood the permanent transfer of land implied by Boer-style written ownership.',
+ },
+ {
+ id: 'hv-h4b', type: 'heading', level: 2, text: 'The Battle of Blood River (16 December 1838)' },
+ {
+ id: 'hv-p6d', type: 'paragraph',
+ text: 'Following the killing of Retief and the Weenen attacks, the Voortrekkers chose Andries Pretorius to lead a punitive commando (the "Wenkommando," or winning commando) against Dingane. Before the campaign, on 9 December 1838, the Voortrekkers took a religious vow (the Gelofte) led by lay preacher Sarel Cilliers, promising that if God granted them victory, they and their descendants would observe the day as a day of thanksgiving forever — the origin of the modern Day of Reconciliation holiday (16 December), formerly known as Dingane\'s Day and then the Day of the Covenant.',
+ },
+ {
+ id: 'hv-p6e', type: 'paragraph',
+ text: 'On 16 December 1838, Pretorius\'s force of about 470 Voortrekkers, defended inside a laager (a circle of wagons chained together) on the banks of the Ncome River, was attacked by a Zulu army estimated at 10,000–15,000 warriors. The Boers\' superior firepower — muskets and at least one small cannon fired from within the laager — combined with the defensive advantage of the wagon circle, resulted in a decisive Voortrekker victory. An estimated 3,000 Zulu warriors were killed, while Voortrekker losses were extremely light (reportedly three men wounded, none killed). The Ncome River ran red with blood, giving the battle its English name, the Battle of Blood River.',
+ },
+ {
+ id: 'hv-blood-river-table', type: 'definitions',
+ rows: [
+ { term: 'Laager', meaning: 'A defensive circle formed by chaining ox-wagons together, used by the Voortrekkers for protection against attack.' },
+ { term: 'Gelofte (the Vow)', meaning: 'The religious covenant taken by the Voortrekkers on 9 December 1838, promising annual thanksgiving if God granted them victory over the Zulu.' },
+ { term: 'Wenkommando', meaning: 'The Voortrekker "winning commando" led by Andries Pretorius that defeated Dingane\'s army at Blood River.' },
+ { term: 'Umgungundlovu', meaning: 'Dingane\'s royal homestead in Zululand, where Retief negotiated for land and was later killed on Dingane\'s orders.' },
+ ],
+ },
+ {
+ id: 'hv-p6f', type: 'paragraph',
+ text: 'After Blood River, Pretorius\'s commando pursued the retreating Zulu and burned Umgungundlovu. Dingane fled north and was killed in 1840 by followers of his half-brother Mpande, who then became Zulu king with Boer support in exchange for recognising Voortrekker claims to Natal. The Voortrekkers established the short-lived Republic of Natalia (capital Pietermaritzburg), but Britain — concerned about Boer control of the Natal coastline and port of Durban, and about the treatment of African communities — annexed Natal as a British colony in 1843, forcing many Voortrekkers to trek once again, this time back over the Drakensberg onto the Highveld and towards the Transvaal.',
  },
  { id: 'hv-h5', type: 'heading', level: 2, text: 'British Involvement and Boundary Lines' },
  {
@@ -574,10 +693,16 @@ export const HISTORY_HIGHVELD: Chapter = {
  {
  id: 'hv-timeline', type: 'list',
  text: [
- '1820s — Difaqane/Mfecane; Moshoeshoe gathers refugees at Thaba Bosiu',
- '1833 — French missionaries (Casalis & Arbousset) arrive',
- '1836+ — Voortrekkers arrive on the Highveld',
- '1843 — Napier Treaty and Napier Line drawn',
+ 'c.1816 — Shaka becomes Zulu chief; begins military reorganisation and conquest',
+ '1820s — Difaqane/Mfecane; Mzilikazi breaks from Shaka; Moshoeshoe gathers refugees at Thaba Bosiu',
+ '1828 — Dingane assassinates Shaka and becomes Zulu king',
+ '1833 — French missionaries (Casalis & Arbousset) arrive at Thaba Bosiu',
+ '1836 — Battle of Vegkop (Mzilikazi\'s Ndebele vs Voortrekkers); Voortrekkers arrive on the Highveld',
+ '1837 — Potgieter\'s commando destroys Mosega; Mzilikazi driven across the Limpopo; Retief negotiates with Dingane',
+ '6 Feb 1838 — Dingane orders the killing of Piet Retief and his party at Umgungundlovu; Weenen attacks follow',
+ '16 Dec 1838 — Battle of Blood River: Andries Pretorius defeats Dingane\'s army',
+ '1840 — Dingane killed; Mpande becomes Zulu king with Boer support',
+ '1843 — Britain annexes Natal, ending the Republic of Natalia; Napier Treaty and Napier Line drawn with Moshoeshoe',
  '1848 — Sir Harry Smith annexes Orange River Sovereignty',
  '1849 — Warden Line drawn (unfavourable to Basotho)',
  '1851 — Battle of Viervoet (Basotho victory)',
@@ -587,6 +712,17 @@ export const HISTORY_HIGHVELD: Chapter = {
  '1865–1868 — Second Basotho War; OFS scorched-earth tactics',
  '1868 — Basutoland becomes British protectorate',
  '1870 — Death of Moshoeshoe',
+ ],
+ },
+ { id: 'hv-h11', type: 'heading', level: 2, text: 'Source-Based Questions — Mfecane & Blood River' },
+ {
+ id: 'hv-sbq-extra', type: 'questions',
+ qa: [
+ { q: 'Give TWO possible causes of the Mfecane/Difaqane, other than Shaka\'s personal ambition.', marks: 2, a: 'ANY TWO: (1) Population growth and increasing pressure on limited, fertile, summer-rainfall land for cattle and crops. (2) A severe regional drought and famine (the Madlathule famine, c.1800–1810) that intensified competition for grazing and water. (3) Growing competition for the slave and ivory trade through Delagoa Bay, which some historians (such as Julian Cobbing) argue increased raiding between chiefdoms.' },
+ { q: 'Describe TWO military innovations introduced by Shaka that strengthened the Zulu kingdom.', marks: 2, a: 'ANY TWO: (1) He replaced the long throwing spear with the short stabbing spear (iklwa), forcing close combat. (2) He introduced the "horns of the bull" formation, which encircled enemies with flanking regiments. (3) He organised regiments (amabutho) by age rather than by clan, building loyalty to the king rather than to individual chiefs.' },
+ { q: 'Why did Dingane order the killing of Piet Retief and his party in February 1838?', marks: 3, a: 'Historians debate the exact reasons, but the most likely explanation is that Dingane feared the growing number of armed Voortrekkers settling in Natal posed a long-term threat to Zulu independence, having seen how white settlement had already dispossessed other African societies further south (such as the Xhosa). He may also have doubted that Retief\'s written land treaty meant what the Boers claimed, or seen the taking of Sekonyela\'s cattle as proof of Boer military strength that needed to be neutralised before it grew further.' },
+ { q: 'Explain why the Voortrekkers won the Battle of Blood River despite being heavily outnumbered.', marks: 4, a: 'The roughly 470 Voortrekkers defended themselves inside a laager — a circle of chained ox-wagons — which gave them a strong defensive position against the estimated 10,000–15,000 Zulu warriors. The Boers had muskets and at least one small cannon, giving them a significant firepower advantage over warriors using spears and shields. The Zulu had to attack across open ground to reach the laager, exposing them to sustained gunfire. As a result, an estimated 3,000 Zulu warriors were killed while Voortrekker casualties were extremely light.' },
+ { q: 'What is the historical and religious significance of 16 December in South Africa?', marks: 3, a: 'On 9 December 1838, before the Battle of Blood River, the Voortrekkers took a religious vow (the Gelofte), promising that if God granted them victory over the Zulu, they and their descendants would observe the day of victory as a day of thanksgiving forever. After the battle on 16 December, Afrikaners commemorated the day first as Dingane\'s Day and later as the Day of the Covenant — a central date in Afrikaner nationalist and religious memory. After 1994, the date was renamed the Day of Reconciliation, reinterpreting it as a day for healing the divisions of South Africa\'s past rather than celebrating a single group\'s victory.' },
  ],
  },
  ],
@@ -685,19 +821,17 @@ export const HISTORY_SA_WAR: Chapter = {
  minutes: 40,
  blocks: [
  {
- id: 'saw-audio', type: 'audio',
- caption: '� Listen — Podcast Overview',
- text: 'Two hosts break down the entire South African War — causes, phases, concentration camps, and consequences. Perfect for revision.',
- src: 'audio/hist-sa-war-overview.mp3',
- },
- {
  id: 'saw-intro', type: 'callout',
  text: '✍ ESSAY TOPIC ONLY — NO SOURCE-BASED QUESTIONS. The South African War (also called the Anglo-Boer War or Second Boer War) appears in Section B or C as an essay question. You must know: causes (gold, Uitlanders, Milner, Jameson Raid), two phases of the war, scorched-earth and concentration camps, role of women and black South Africans, Treaty of Vereeniging, and consequences.',
  },
- { id: 'saw-h1', type: 'heading', level: 2, text: 'Background: Gold, Capitalism & Imperialism' },
+ { id: 'saw-h1', type: 'heading', level: 2, text: 'Background: Diamonds, Gold, Capitalism & Imperialism' },
+ {
+ id: 'saw-p0', type: 'paragraph',
+ text: 'The mineral revolution that set the stage for the South African War began earlier than 1886. In 1867, diamonds were discovered near the Orange River, and in 1871 much larger deposits were found at Kimberley, triggering a diamond rush. By the 1880s, Cecil Rhodes had used his profits and shrewd buy-outs of rival claims to consolidate the Kimberley diamond fields into a single company, De Beers Consolidated Mines (1888), which controlled the great majority of world diamond production. The diamond rush established the pattern that would repeat on a far larger scale with gold: British and European capital flowing into South Africa, large-scale company mining replacing small individual diggers, and a growing demand for cheap African migrant labour, including the early use of closed compounds at Kimberley to prevent diamond theft and control workers.',
+ },
  {
  id: 'saw-p1', type: 'paragraph',
- text: 'In 1886, the world\'s largest gold deposits were discovered on the Witwatersrand in the South African Republic (Transvaal). Unlike alluvial gold (found in rivers), Witwatersrand gold was deep underground, embedded in hard rock. Deep-level mining required huge capital investment in machinery, labour, and expertise. Individual prospectors could not mine it — only large mining companies with access to significant finance.',
+ text: 'In 1886, the world\'s largest gold deposits were discovered on the Witwatersrand in the South African Republic (Transvaal), on a farm called Langlaagte. Unlike alluvial gold (found in rivers), Witwatersrand gold was deep underground, embedded in hard rock. Deep-level mining required huge capital investment in machinery, labour, and expertise. Individual prospectors could not mine it — only large mining companies with access to significant finance.',
  },
  {
  id: 'saw-p2', type: 'paragraph',
@@ -749,16 +883,20 @@ export const HISTORY_SA_WAR: Chapter = {
  { id: 'saw-h6', type: 'heading', level: 2, text: 'Phase 1: Conventional War (Oct 1899 – Feb 1900)' },
  {
  id: 'saw-p10', type: 'paragraph',
- text: 'The Boers struck first, invading Natal and the Cape Colony. They besieged three British-held towns: Ladysmith (Natal), Mafeking, and Kimberley (both in the Cape). The Boers won several early victories, and in December 1899 the British suffered "Black Week" — three devastating defeats at Stormberg, Magersfontein, and Colenso within one week.',
+ text: 'The Boers struck first, invading Natal and the Cape Colony, using their advantage in mobility and knowledge of the terrain before British reinforcements could arrive in large numbers. They besieged three British-held towns: Ladysmith (Natal, besieged 2 November 1899 – 28 February 1900), Mafeking (besieged 13 October 1899 – 17 May 1900, defended by Colonel Robert Baden-Powell, who later founded the Boy Scout movement), and Kimberley (besieged 14 October 1899 – 15 February 1900, where Cecil Rhodes himself was trapped inside the town). The Boers won several early victories, and in December 1899 the British suffered "Black Week" — three devastating defeats within one week: at Stormberg (10 December, Cape Colony), Magersfontein (11 December, on the way to relieve Kimberley), and Colenso (15 December, on the way to relieve Ladysmith, where General Buller\'s force failed to cross the Tugela River).',
  },
  {
  id: 'saw-p11', type: 'paragraph',
- text: 'Britain was humiliated and sent massive reinforcements under Lord Roberts (with Kitchener as his chief of staff). By February 1900, the British had relieved Kimberley and defeated the Boer general Piet Cronjé at Paardeberg. Roberts marched into the Orange Free State, captured Bloemfontein (March 1900), then advanced into the Transvaal and took Pretoria (June 1900). Roberts declared the war over and returned to England — but he was wrong.',
+ text: 'Britain was humiliated and sent massive reinforcements under Lord Roberts (with Kitchener as his chief of staff). By February 1900, the British had relieved Kimberley and surrounded and defeated the Boer general Piet Cronjé at the Battle of Paardeberg (18–27 February 1900), forcing the surrender of around 4,000 Boer fighters — the largest single Boer surrender of the war. Mafeking was relieved on 17 May 1900, sparking wild celebrations in Britain ("Mafeking Night"). Roberts marched into the Orange Free State, captured Bloemfontein (March 1900), then advanced into the Transvaal and took Johannesburg and Pretoria (June 1900). Roberts declared the war over and returned to England — but he was wrong.',
  },
  { id: 'saw-h7', type: 'heading', level: 2, text: 'Phase 2: Guerrilla War (Sep 1900 – May 1902)' },
  {
  id: 'saw-p12', type: 'paragraph',
- text: 'Under leaders like Louis Botha, Jan Smuts, Christiaan de Wet, and Koos de la Rey, the Boers switched to guerrilla warfare. Small, mobile commandos (units) attacked British supply lines, railway tracks, and isolated garrisons, then melted back into the countryside. Boer women on farms supplied the commandos with food, clothing, information about British troop movements, and shelter.',
+ text: 'Under leaders like Louis Botha, Jan Smuts, Christiaan de Wet, and Koos de la Rey, the Boers switched to guerrilla warfare. Small, mobile commandos (units) attacked British supply lines, railway tracks, and isolated garrisons, then melted back into the countryside. Boer women on farms supplied the commandos with food, clothing, information about British troop movements, and shelter. Jan Smuts led a particularly daring commando raid deep into the Cape Colony in 1901–1902, hoping to spark an Afrikaner rebellion among Cape Boers; Christiaan de Wet became famous for repeatedly evading capture in the Orange Free State, including several narrow escapes from British encirclement operations known as "de Wet hunts."',
+ },
+ {
+ id: 'saw-p12b', type: 'paragraph',
+ text: 'To counter the guerrillas, Kitchener built an extensive network of roughly 8,000 blockhouses — small fortified posts, usually linked by barbed wire fences — stretching across the Transvaal and Orange Free State along railway lines and at strategic points. These blockhouse lines were designed to restrict Boer commando movement and protect British supply lines, dividing the countryside into smaller sections that could be swept clear of guerrillas one at a time.',
  },
  { id: 'saw-h8', type: 'heading', level: 2, text: 'Scorched-Earth Policy & Concentration Camps' },
  {
@@ -785,6 +923,16 @@ export const HISTORY_SA_WAR: Chapter = {
  'UNDER THE BRITISH: Black people supported the British as scouts, spies, guards, labourers, and suppliers. About 500 armed black troops defended Mafeking. 4,000 enlisted black troops secured the Transkei. Black people generally supported the British, hoping that a British victory would lead to improved rights.',
  'BLACK CONCENTRATION CAMPS: About 70 separate camps held black people displaced by scorched-earth. Conditions were as bad or worse than white camps. Inmates were forced to do hard labour, build their own shelters, and pay for food. An estimated 20,000 black people died. Unlike white camps, reformers like Emily Hobhouse never visited them, and no public outcry followed.',
  'BROKEN PROMISES: After the war, black people\'s hopes for improved rights were betrayed. The Treaty of Vereeniging deferred the question of black voting rights until "after self-government" — effectively ensuring they would never get the vote, since the Boer republics had never allowed blacks to vote.',
+ ],
+ },
+ {
+ id: 'saw-camps-table', type: 'definitions',
+ rows: [
+ { term: 'White (Boer) camps — scale', meaning: 'About 116,000 Boer women and children interned; around 28,000 deaths (roughly 24% mortality), mostly children under 16.' },
+ { term: 'Black camps — scale', meaning: 'About 115,000–140,000 black people interned in roughly 70 camps; around 20,000 deaths recorded, though many historians believe the true figure is higher due to poor record-keeping.' },
+ { term: 'Rations and resources', meaning: 'White camps received free (if inadequate) rations; black camp inmates were often required to pay for food or to work for the British military in exchange for rations.' },
+ { term: 'Public attention', meaning: 'White camps were investigated by Emily Hobhouse and the official Fawcett Commission (1901), leading to reforms. Black camps received almost no visits from reformers and no equivalent commission of inquiry.' },
+ { term: 'Historical memory', meaning: 'White camp deaths became a central symbol of Afrikaner nationalism (the Vrouemonument, 1913). Black camp deaths were largely omitted from South African public memory until recent decades.' },
  ],
  },
  { id: 'saw-h10', type: 'heading', level: 2, text: 'Women in the War' },
@@ -1013,6 +1161,18 @@ export const HISTORY_SA_WAR: Chapter = {
  'HISTORIANS\' CONSENSUS: Most historians today agree that Uitlander rights were a PRETEXT for a war whose real causes were economic (gold, mining profits) and imperial (British dominance of South Africa). Milner deliberately engineered a crisis that would justify war. The Uitlanders themselves were not enthusiastic about dying for a war fought in their name — the Uitlander uprising during the Jameson Raid famously never happened.',
  ],
  },
+ { id: 'saws-h5b', type: 'heading', level: 2, text: 'Practice Source C — Uitlander Petition (1899)' },
+ {
+ id: 'saws-src-c', type: 'callout',
+ text: 'Source C: Extract from a petition by Uitlanders of Johannesburg to Queen Victoria, 1899 (paraphrased from the historical record): "We, the undersigned British subjects, resident in the South African Republic, humbly petition that Your Majesty\'s Government will take such steps as may be deemed advisable to obtain redress for the grievances of which we complain, namely: that we are taxed without being represented; that we are governed by officials over whom we have no control and by regulations we have no voice in making; that trial by jury is denied us in criminal cases; that the education of our children is made subject to religious and language conditions to which we strongly object."',
+ },
+ {
+ id: 'saws-sbq-c', type: 'questions',
+ qa: [
+ { q: 'According to Source C, what were the main grievances of the Uitlanders? (3)', marks: 3, a: 'According to Source C, the Uitlanders complained that they were taxed without having any political representation; that they were governed by officials and laws they had no say in making; that they were denied trial by jury in criminal cases; and that their children\'s education was subject to religious and language conditions they objected to (i.e. Dutch-medium, Dutch Reformed schooling).' },
+ { q: 'Use Source C and your own knowledge to explain why some historians regard the Uitlander grievances as a "pretext" for war rather than its true cause. (5)', marks: 5, a: 'Source C shows that Uitlander grievances were real and specific — lack of representation, limited legal rights, and language/education restrictions. However, from own knowledge: Sir Alfred Milner inflated these grievances in his dispatches to London (the "Helot\'s despatch," 1899) to build a case for British intervention. At the Bloemfontein Conference, Milner rejected Kruger\'s compromise offer of a 7-year residency requirement, insisting on terms Kruger could not accept, suggesting he wanted confrontation rather than resolution. The powerful Randlords (mining capitalists) stood to benefit economically from a change of government in the Transvaal, regardless of the franchise question. The Jameson Raid (1895–96) showed that plans to overthrow Kruger\'s government existed years before the Uitlander franchise crisis peaked, suggesting the underlying British goal was political and economic control of the goldfields, with Uitlander rights used as public justification.' },
+ ],
+ },
  { id: 'saws-h6', type: 'heading', level: 2, text: 'Quick-Reference: Key People' },
  {
  id: 'saws-people', type: 'definitions',
@@ -1020,12 +1180,15 @@ export const HISTORY_SA_WAR: Chapter = {
  { term: 'Paul Kruger', meaning: 'President of the South African Republic (Transvaal). Refused to grant Uitlanders the vote. Issued the ultimatum that started the war. Fled to Europe after Pretoria fell; died in exile 1904.' },
  { term: 'Alfred Milner', meaning: 'British High Commissioner from 1897. Deliberately engineered the crisis to justify war. Governed the Transvaal and ORC as colonies after the war. Implemented anglicisation policy.' },
  { term: 'Cecil Rhodes', meaning: 'Cape Prime Minister, head of De Beers. Secretly planned the Jameson Raid. Resigned after its failure. Died 1902, just before the war ended.' },
+ { term: 'Leander Starr Jameson', meaning: 'British colonial administrator who led the failed raid into the Transvaal in December 1895, hoping to trigger an Uitlander uprising in Johannesburg.' },
  { term: 'Lord Roberts', meaning: 'British commander who replaced Buller. Relieved Kimberley, defeated Boers at Paardeberg, captured Bloemfontein and Pretoria. Declared war over prematurely; returned to England.' },
- { term: 'Lord Kitchener', meaning: 'Roberts\'s chief of staff; took over command. Implemented scorched-earth policy and concentration camps. Negotiated Treaty of Vereeniging.' },
+ { term: 'Lord Kitchener', meaning: 'Roberts\'s chief of staff; took over command. Implemented scorched-earth policy, the blockhouse system, and concentration camps. Negotiated Treaty of Vereeniging.' },
  { term: 'Christiaan de Wet', meaning: 'Orange Free State general. The most successful guerrilla leader — the British never captured him. Insisted on fighting to the end but was outvoted at Vereeniging.' },
+ { term: 'Koos de la Rey', meaning: 'Transvaal guerrilla general, known as "the Lion of the West Transvaal." Argued for peace at Vereeniging alongside Botha, believing continued resistance would destroy the Afrikaner nation.' },
  { term: 'Louis Botha', meaning: 'Transvaal general and guerrilla leader. Argued for peace at Vereeniging. Became first Prime Minister of the Union of South Africa in 1910.' },
  { term: 'Jan Smuts', meaning: 'Transvaal politician and lawyer. Led guerrilla campaign into the Cape Colony. Rewrote the franchise clause at Vereeniging. Later became a major Allied figure in both World Wars.' },
  { term: 'Emily Hobhouse', meaning: 'British reformer who visited concentration camps in 1901. Her report exposed horrific conditions. Faced enormous hostility from the press and government but forced improvements to be made.' },
+ { term: 'Robert Baden-Powell', meaning: 'British colonel who commanded the defence of Mafeking during its 217-day siege. Later founded the Boy Scout movement.' },
  ],
  },
  ],
@@ -1073,6 +1236,16 @@ export const HISTORY_LAND_ACT: Chapter = {
  'Black people could only remain in "white South Africa" if they were legally employed (or already owned land) there.',
  'Most rural black people on white farms were labour tenants, rent tenants, or share-croppers. The law now required they could only stay if they were legally employed labour tenants.',
  'Providing a landless black person with a place to live was forbidden under penalty of £100 or six months\' imprisonment.',
+ 'The Act established the Beaumont Commission (1913–1916) to recommend which specific areas should be set aside as "scheduled" black reserves — but by the time the Commission reported, much of the best remaining land had already been earmarked for white ownership, and its recommendations were only partially implemented.',
+ ],
+ },
+ {
+ id: 'la-split-table', type: 'definitions',
+ rows: [
+ { term: 'Population share (c.1913)', meaning: 'Black South Africans: roughly 67–70% of the total population. White South Africans: roughly 20–21%. The remainder were classified coloured and Indian.' },
+ { term: 'Land allocated by the Act', meaning: 'Black reserves: approximately 7–8% of the total land area of the Union. "White" South Africa: approximately 92–93% of the land.' },
+ { term: 'Quality of land', meaning: 'White-owned land included the most fertile, best-watered farming areas and all major towns and mining districts. Reserves were often overcrowded, eroded, and in drier or less productive regions.' },
+ { term: 'Later adjustment (1936)', meaning: 'The 1936 Native Trust and Land Act raised the reserve allocation slightly, to a maximum of about 13–14% of the land — still only a small fraction for the large majority of the population.' },
  ],
  },
  { id: 'la-h3', type: 'heading', level: 2, text: 'Effects of the Act' },
@@ -1083,16 +1256,28 @@ export const HISTORY_LAND_ACT: Chapter = {
  { id: 'la-h4', type: 'heading', level: 2, text: 'Sol Plaatje and Native Life in South Africa' },
  {
  id: 'la-p3', type: 'paragraph',
- text: 'Solomon (Sol) Plaatje was a Tswana-speaker born in the Orange Free State in 1876. He was a writer, journalist, and politician who was a founder-member of the South African Native National Congress (later the ANC) in 1912. In 1913, he travelled across South Africa to document the suffering caused by the Land Act. His book Native Life in South Africa (1916) opens: "Awaking on Friday morning, June 20, 1913 [the day after the Act was passed], the South African Native found himself, not actually a slave, but a pariah [outcast] in the land of his birth."',
+ text: 'Solomon (Sol) Plaatje was a Tswana-speaker born in the Orange Free State in 1876. He was a writer, journalist, and politician who was a founder-member of the South African Native National Congress (SANNC, later the ANC) in 1912, and served as its first general secretary. In 1913, he travelled across the Orange Free State, Transvaal, and Cape by bicycle and on foot to document the suffering caused by the Land Act. His book Native Life in South Africa (1916) opens: "Awaking on Friday morning, June 20, 1913 [the day after the Act was passed], the South African Native found himself, not actually a slave, but a pariah [outcast] in the land of his birth."',
+ },
+ {
+ id: 'la-p3b', type: 'paragraph',
+ text: 'Plaatje was also part of a SANNC delegation that travelled to Britain in 1914 to petition the British government to disallow the Act, arguing that Britain had a moral obligation to protect black South Africans\' interests after the Treaty of Vereeniging and the Act of Union. The outbreak of the First World War in August 1914 overshadowed the delegation\'s mission, and the British government, unwilling to interfere in what it considered an internal matter for the Union, took no action. Plaatje returned to England again in 1919 with a second SANNC delegation to protest further land and labour laws, again without success. His writing, however, became one of the most important eyewitness records of the Act\'s human cost and remains a key primary source studied by historians today.',
  },
  {
  id: 'la-plaatje-src', type: 'callout',
  text: 'Primary Source — Sol Plaatje, Native Life in South Africa, 1916: "Awaking on Friday morning, June 20, 1913, the South African Native found himself, not actually a slave, but a pariah in the land of his birth." Plaatje documented families wandering in winter with their livestock, refused shelter, unable to stop anywhere because the law made it a crime to allow them to stay. He described a mother giving birth on the roadside in freezing conditions because no farm would take them in.',
  },
+ {
+ id: 'la-plaatje-src2', type: 'callout',
+ text: 'Primary Source — Sol Plaatje, Native Life in South Africa, 1916, describing an encounter on the road: "Travelling as we did... from one Boer farm to another, in the Transvaal and the Orange Free State, we saw numbers of farms with the owners\' notice, \'No Native Allowed Here.\' Among the numerous sights that met our eyes on this tour, the most touching was the sight of women carrying children on their backs, and leading others by the hand... with their household goods and the little flocks and herds that had not been confiscated, looking for a place to rest their heads."',
+ },
  { id: 'la-h5', type: 'heading', level: 2, text: 'The Act as a Forerunner of Apartheid' },
  {
  id: 'la-p4', type: 'paragraph',
- text: 'The Natives\' Land Act showed the direction of government policy towards black people. The Mines and Works Act (1911) had already established a colour bar in industry. The Urban Areas Act (1923) enforced segregation in towns — black people were confined to "locations" (townships), subject to curfews, and required to carry passes. In 1936, another Land Act set aside a maximum of 14% of the land for black reserves and removed qualified black voters from the Cape common roll.',
+ text: 'The Natives\' Land Act showed the direction of government policy towards black people. The Mines and Works Act (1911) had already established a colour bar in industry. The Urban Areas Act (1923) enforced segregation in towns — black people were confined to "locations" (townships), subject to curfews, and required to carry passes. In 1936, another Land Act set aside a maximum of 13–14% of the land for black reserves and removed qualified black voters from the Cape common roll (the Representation of Natives Act, 1936), transferring them instead to a separate and far less powerful roll that elected a small number of white "native representatives" to Parliament.',
+ },
+ {
+ id: 'la-p4b', type: 'paragraph',
+ text: 'The territorial principle established in 1913 — that South Africa should be permanently divided into separate white and black areas — became the foundation of the apartheid government\'s Bantustan ("homeland") policy from the 1950s onward. Under the Bantu Authorities Act (1951) and later legislation, the scattered reserves created by the 1913 and 1936 Land Acts were reorganised into ten "self-governing" and later "independent" Bantustans (such as the Transkei, Bophuthatswana, Venda, and Ciskei), confining black South Africans to the same small, fragmented, and generally poor-quality land first set aside under the Natives\' Land Act, now dressed up as separate "nations." This shows a direct, traceable line from the 1913 Act through to the mature apartheid system of the 1960s–1980s.',
  },
  {
  id: 'la-p5', type: 'paragraph',
@@ -1111,6 +1296,10 @@ export const HISTORY_LAND_ACT: Chapter = {
  { term: 'Pariah', meaning: 'An outcast — a person rejected by society.' },
  { term: 'Sharecropper', meaning: 'A farmer who paid for the right to farm on someone else\'s land by giving the landowner a share of the crop.' },
  { term: 'Labour tenant', meaning: 'A person who was allowed to live on a white farm in exchange for working for the farmer for a set number of days per year.' },
+ { term: 'Beaumont Commission (1913–1916)', meaning: 'A commission set up under the Act to recommend which areas should become "scheduled" black reserves; its recommendations were only partly implemented.' },
+ { term: 'South African Native National Congress (SANNC)', meaning: 'Founded in January 1912 partly in response to the threat of land legislation; renamed the African National Congress (ANC) in 1923.' },
+ { term: 'Bantustan (homeland)', meaning: 'Term for the "self-governing" and later "independent" territories created by the apartheid government from the 1950s–1970s, built on the same reserves first set aside by the 1913 and 1936 Land Acts.' },
+ { term: 'Native Trust and Land Act (1936)', meaning: 'Law that slightly increased the land reserved for black occupation (to about 13–14%) and removed qualified black voters from the Cape common roll.' },
  ],
  },
  { id: 'la-h7', type: 'heading', level: 2, text: 'Source-Based Questions Practice' },
@@ -1121,6 +1310,8 @@ export const HISTORY_LAND_ACT: Chapter = {
  { q: 'Explain how the Natives\' Land Act was linked to the Treaty of Vereeniging (1902) and the Union of South Africa (1910).', marks: 4, a: 'The Treaty of Vereeniging (1902) deferred the question of black voting rights until "after self-government," effectively guaranteeing that black South Africans would be excluded from political power. The Union of South Africa (1910) was a white-dominated state where, outside the Cape, only whites could vote. With no black political voice, parliament was free to pass laws that served only white interests. The Natives\' Land Act (1913) was a direct consequence — a white parliament with no obligation to black voters could legally dispossess the majority of the population.' },
  { q: 'Give THREE effects of the Natives\' Land Act on ordinary black South Africans.', marks: 3, a: '(1) Thousands were expelled from farms where they had lived as sharecroppers or rent tenants, and forced to wander the countryside with their families and livestock seeking somewhere to live. (2) The reserves became severely overcrowded, leading to soil exhaustion, malnutrition, and disease. (3) Men were forced to migrate to cities and mines to find paid work, breaking up families, as women and children remained in the underdeveloped reserves.' },
  { q: 'Why is the Natives\' Land Act described as a "forerunner of apartheid"?', marks: 3, a: 'The Act established the same basic principle that apartheid would later use: dividing South Africa into separate racial territories, with black people confined to a small percentage of the least productive land. It laid the foundation for the system of racial reserves (later called "homelands" or "Bantustans") that apartheid formalised. The Act also established the practice of controlling where black people could live and work — the same principle behind the apartheid pass laws and Group Areas Act.' },
+ { q: 'Describe the role Sol Plaatje played in responding to the Natives\' Land Act.', marks: 4, a: 'Sol Plaatje, a founding member and first general secretary of the SANNC, travelled across the Free State, Transvaal, and Cape in 1913 to document the Act\'s effects, witnessing families evicted from farms and wandering the countryside with their belongings and livestock. He published his findings in Native Life in South Africa (1916). He was also part of SANNC delegations that travelled to Britain in 1914 and 1919 to petition the British government to disallow the Act, arguing Britain had a responsibility to protect black South Africans\' interests. Although these efforts did not reverse the Act, Plaatje\'s writing remains one of the most important firsthand records of its human cost.' },
+ { q: 'Using the figures for population and land allocation under the Act, explain why historians describe the division of land as grossly unequal.', marks: 4, a: 'In 1913, black South Africans made up roughly 67–70% of the population but were confined to only about 7–8% of the land. White South Africans, who were only about 20–21% of the population, were allocated roughly 92–93% of the land — including the most fertile farming areas, towns, and mining districts. This meant the large majority of the population was crowded onto a small fraction of the poorest land, while a small minority controlled almost all the country\'s productive land and resources. Even the later adjustment in 1936 raised the black share to only about 13–14%, still grossly disproportionate to population size.' },
  ],
  },
  ],

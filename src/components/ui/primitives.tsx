@@ -3,58 +3,37 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import { motion } from 'motion/react';
 import * as React from 'react';
 import { cn } from '@/lib/utils';
-import { EASE_OUT_EXPO, ease } from '@/lib/motion';
+import { EASE_OUT_EXPO, ease, spring } from '@/lib/motion';
 
 /* ── Button ───────────────────────────────────────────────────────────────
-   Every variant is a gradient with a lit top edge and a layered shadow, so
-   a button reads as a physical control. The ::after rule adds a highlight
-   sweep across the top — the same treatment the cards get. */
+   Flat and modern: solid fills, no gradients, no layered shadow stack — a
+   single quiet shadow at most. Fully rounded corners read lighter than a
+   boxy 10px radius. Feedback comes from the spring press in the component
+   below, not from a hover shadow that grows on every interaction. */
 
 const buttonVariants = cva(
-  'relative isolate inline-flex select-none items-center justify-center gap-1.5 overflow-hidden ' +
-    'whitespace-nowrap rounded-[10px] text-[13px] font-semibold ' +
-    'transition-[background,border-color,box-shadow,transform,color] duration-110 ' +
-    'active:translate-y-px disabled:pointer-events-none disabled:opacity-40 ' +
-    '[&_svg]:pointer-events-none [&_svg]:shrink-0 ' +
-    // Top highlight sweep.
-    "after:pointer-events-none after:absolute after:inset-x-0 after:top-0 after:h-px after:content-['']",
+  'relative inline-flex select-none items-center justify-center gap-1.5 ' +
+    'whitespace-nowrap rounded-full text-[12.25px] font-semibold ' +
+    'transition-colors duration-100 ' +
+    'disabled:pointer-events-none disabled:opacity-40 ' +
+    '[&_svg]:pointer-events-none [&_svg]:shrink-0',
   {
     variants: {
       variant: {
         /** Solid — the single high-emphasis action on a page. */
-        primary:
-          'text-[var(--btn-solid-fg)] [border:1px_solid_var(--btn-solid-border)] [background:var(--btn-solid)] ' +
-          'shadow-[0_1px_1px_var(--shadow-contact),0_3px_8px_-2px_var(--shadow-mid),0_8px_18px_-8px_var(--shadow-ambient)] ' +
-          'after:[background:linear-gradient(90deg,transparent,var(--btn-solid-inset)_20%,var(--btn-solid-inset)_80%,transparent)] ' +
-          'hover:[background:var(--btn-solid-hover)] ' +
-          'hover:shadow-[0_1px_1px_var(--shadow-contact),0_5px_12px_-2px_var(--shadow-mid),0_14px_26px_-10px_var(--shadow-ambient)]',
-        /** Default — a raised neutral chip. */
-        secondary:
-          'text-ink [border:1px_solid_var(--edge)] [background:var(--surface-raise)] ' +
-          'shadow-[inset_0_1px_0_var(--surface-inset-top),0_1px_1px_var(--shadow-contact),0_2px_5px_-2px_var(--shadow-mid)] ' +
-          'after:[background:linear-gradient(90deg,transparent,var(--surface-inset-top)_22%,var(--surface-inset-top)_78%,transparent)] ' +
-          'hover:[border-color:color-mix(in_srgb,var(--color-ink)_18%,transparent)] ' +
-          'hover:shadow-[inset_0_1px_0_var(--surface-inset-top),0_1px_1px_var(--shadow-contact),0_5px_12px_-3px_var(--shadow-mid)]',
+        primary: 'bg-ink text-paper hover:bg-ink-2',
+        /** Default — a quiet neutral chip. */
+        secondary: 'border border-hairline bg-paper text-ink hover:border-hairline-strong hover:bg-paper-raise',
         /** No chrome until hovered. */
-        ghost: 'border border-transparent text-muted after:hidden hover:bg-paper-raise hover:text-ink',
+        ghost: 'text-muted hover:bg-paper-raise hover:text-ink',
         /** Blue, for navigational emphasis. */
-        accent:
-          'text-accent-foreground [border:1px_solid_var(--color-accent-soft)] ' +
-          '[background:linear-gradient(170deg,color-mix(in_srgb,var(--color-accent)_82%,white)_0%,var(--color-accent)_55%,var(--color-accent-soft)_100%)] ' +
-          'shadow-[0_1px_1px_var(--shadow-contact),0_3px_10px_-2px_var(--color-accent-ring)] ' +
-          "after:[background:linear-gradient(90deg,transparent,rgba(255,255,255,0.4)_22%,rgba(255,255,255,0.4)_78%,transparent)] " +
-          'hover:shadow-[0_1px_1px_var(--shadow-contact),0_6px_16px_-3px_var(--color-accent-ring)]',
-        danger:
-          'text-white [border:1px_solid_var(--color-critical)] ' +
-          '[background:linear-gradient(170deg,color-mix(in_srgb,var(--color-critical)_82%,white)_0%,var(--color-critical)_100%)] ' +
-          'shadow-[0_1px_1px_var(--shadow-contact),0_3px_8px_-2px_var(--shadow-mid)] ' +
-          "after:[background:linear-gradient(90deg,transparent,rgba(255,255,255,0.32)_22%,rgba(255,255,255,0.32)_78%,transparent)] " +
-          'hover:brightness-108',
+        accent: 'bg-accent text-accent-foreground hover:bg-accent-soft',
+        danger: 'bg-critical text-white hover:brightness-105',
       },
       size: {
-        sm: 'h-8 px-3 text-[12.5px] [&_svg]:size-3.5',
-        md: 'h-9.5 px-4 [&_svg]:size-4',
-        lg: 'h-11 px-5 text-[14px] [&_svg]:size-4',
+        sm: 'h-8 px-3.5 text-[11.75px] [&_svg]:size-3.5',
+        md: 'h-9.5 px-4.5 [&_svg]:size-4',
+        lg: 'h-11 px-5.5 text-[13px] [&_svg]:size-4',
         icon: 'size-9.5 [&_svg]:size-4',
         'icon-sm': 'size-8 [&_svg]:size-3.5',
       },
@@ -64,15 +43,32 @@ const buttonVariants = cva(
 );
 
 export interface ButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
+  extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'onDrag' | 'onDragStart' | 'onDragEnd' | 'onAnimationStart'>,
     VariantProps<typeof buttonVariants> {
   asChild?: boolean;
 }
 
+const MotionSlot = motion.create(Slot);
+
+/**
+ * A spring-driven press — scales down on tap and springs back, instead of
+ * the flat `active:translate-y-px` — so a click reads as a real physical
+ * press rather than a one-frame colour swap. `asChild` (used to style a
+ * router Link as a button) keeps working via `motion.create(Slot)`.
+ */
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant, size, asChild = false, ...props }, ref) => {
-    const Comp = asChild ? Slot : 'button';
-    return <Comp ref={ref} className={cn(buttonVariants({ variant, size }), className)} {...props} />;
+    const Comp = asChild ? MotionSlot : motion.button;
+    return (
+      <Comp
+        ref={ref}
+        className={cn(buttonVariants({ variant, size }), className)}
+        whileTap={{ scale: 0.97 }}
+        whileHover={{ scale: 1.012 }}
+        transition={spring}
+        {...props}
+      />
+    );
   },
 );
 Button.displayName = 'Button';
@@ -114,7 +110,7 @@ export function SegmentedControl<T extends string>({
             onClick={() => onChange(o.id)}
             className={cn(
               'relative inline-flex items-center gap-1.5 rounded-[8px] font-semibold transition-colors duration-100',
-              size === 'sm' ? 'px-2.5 py-1.5 text-[12px]' : 'px-3.5 py-2 text-[12.5px]',
+              size === 'sm' ? 'px-2.5 py-1.5 text-[11.5px]' : 'px-3.5 py-2 text-[11.75px]',
               active ? 'text-ink' : 'text-muted hover:text-ink',
               o.disabled && 'cursor-not-allowed opacity-40',
             )}
@@ -166,7 +162,7 @@ export function CardHeader({
       className="surface-header relative flex items-center justify-between gap-3 border-b px-5 py-3"
       style={{ borderColor: 'var(--edge)' }}
     >
-      <p className="flex items-center gap-2 text-[10.5px] font-bold tracking-[0.1em] text-muted uppercase">
+      <p className="flex items-center gap-2 text-[10px] font-bold tracking-[0.1em] text-muted uppercase">
         {Icon ? <Icon className="size-3.5" aria-hidden /> : <span className="label-rule" aria-hidden />}
         {title}
       </p>
@@ -197,7 +193,7 @@ export function Panel({ className, ...props }: React.HTMLAttributes<HTMLDivEleme
 /* ── Badge ────────────────────────────────────────────────────────────── */
 
 const badgeVariants = cva(
-  'inline-flex items-center gap-1 rounded-[7px] border px-2 py-0.5 text-[11px] font-semibold',
+  'inline-flex items-center gap-1 rounded-[7px] border px-2 py-0.5 text-[10.5px] font-semibold',
   {
     variants: {
       tone: {
@@ -337,8 +333,8 @@ export function EmptyState({
       className="flex flex-col items-center justify-center px-6 py-16 text-center"
     >
       <IconTile icon={Icon} size="lg" color="var(--color-muted-2)" />
-      <p className="mt-4 text-[15px] font-semibold text-ink">{title}</p>
-      {body && <p className="text-pretty mt-1.5 max-w-sm text-[13px] leading-relaxed text-muted">{body}</p>}
+      <p className="mt-4 text-[14px] font-semibold text-ink">{title}</p>
+      {body && <p className="text-pretty mt-1.5 max-w-sm text-[12.25px] leading-relaxed text-muted">{body}</p>}
       {action && <div className="mt-5">{action}</div>}
     </motion.div>
   );

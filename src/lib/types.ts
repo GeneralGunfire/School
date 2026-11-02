@@ -78,7 +78,13 @@ export interface LessonBlock {
     /** Worked solution — rows of an explanatory note beside a line of maths. */
     | 'steps'
     /** Geometry / analytical-geometry diagram drawn as SVG from coordinates. */
-    | 'figure';
+    | 'figure'
+    /** Tickable revision checklist — exam-scope overview lists. */
+    | 'checklist'
+    /** Hand-built science diagram (waves, circuits, atoms…) drawn as SVG. */
+    | 'diagram'
+    /** Long copy-and-paste text (an AI tutor scope); `caption` is its title. */
+    | 'prompt';
   /** Primary text. For `list`, each array entry is one item. */
   text?: string | string[];
   /** English translation, mirroring the shape of `text`. Afrikaans only. */
@@ -119,8 +125,32 @@ export interface LessonBlock {
   steps?: SolutionStep[];
   /** `figure` only. */
   figure?: Figure;
+  /** `diagram` only. */
+  diagram?: DiagramSpec;
+  /** `checklist` only. */
+  checklistItems?: ChecklistItem[];
   /** `graph` with type 'multi' — array of curves to overlay */
   curves?: Array<{ graphType: string; equation: string; params?: Record<string, number>; color?: string }>;
+}
+
+/** Which custom science diagram to draw, with optional per-use values (e.g. the charges in a charge-sharing figure). */
+export interface DiagramSpec {
+  kind:
+    | 'wave-anatomy'
+    | 'longitudinal-wave'
+    | 'superposition'
+    | 'pitch-loudness'
+    | 'sound-ranges'
+    | 'em-spectrum'
+    | 'atoms'
+    | 'charge-sharing'
+    | 'circuits'
+    | 'motion-graphs'
+    | 'distance-displacement'
+    | 'vector-addition'
+    | 'pendulum';
+  data?: Record<string, string | number>;
+  caption?: string;
 }
 
 /** One row of a worked solution. `tex` is KaTeX; `note` supports inline `$…$`. */
@@ -257,6 +287,18 @@ export interface PoemLine {
   devices?: string[];
 }
 
+/** One line of a tickable revision checklist. */
+export interface ChecklistItem {
+  /** Stable id, unique within the checklist block — persists the tick in storage. */
+  id: string;
+  /** The scope item itself, e.g. "Micro-environment". */
+  text: string;
+  /** What to study, e.g. "Chapter 1 — full/complete control over the micro-environment." */
+  detail?: string;
+  /** Jump straight to the source chapter: { subjectId, chapterId }. */
+  goTo?: { subjectId: SubjectId; chapterId: string };
+}
+
 /** An exam question with a model answer. */
 export interface QAItem {
   /** Badge text in place of the running number, e.g. "2.1". */
@@ -291,6 +333,66 @@ export interface Chapter {
   lessons: Lesson[];
   /** Which exam paper this chapter is assessed on. Business Studies only, so far. */
   paper?: 1 | 2;
+  /**
+   * The exam-topic group a chapter is revised under (e.g. "Business
+   * Environments", "Business Operations") — distinct from `paper`, since a
+   * paper can span more than one group. Chapters without one render in the
+   * subject's plain chapter list as before; chapters that share a `category`
+   * are shown grouped under that heading, in book order within the group.
+   */
+  category?: string;
+  /**
+   * True for a chapter that should never appear in a subject's normal
+   * chapter list — reachable only by direct id, e.g. the scope-only exam
+   * chapters linked from an "Exam Scope" Overview's checklist buttons.
+   * `getChapter`/`getLesson` still resolve it normally; only `chaptersFor`
+   * excludes it.
+   */
+  hidden?: boolean;
+  /**
+   * True for a full test/past paper authored as a normal Chapter (so it
+   * keeps the lesson-block viewer, PDF export, etc.) but that belongs on the
+   * Practice Exams page rather than in the subject's regular chapter list.
+   * Implies `hidden`. The Practice Exams page lists these per subject
+   * alongside any `PracticeExam`s for that subject.
+   */
+  isPaper?: boolean;
+}
+
+// ── Practice exams ──────────────────────────────────────────────────────────
+
+/**
+ * One question in a practice exam. Short-answer questions test a single
+ * scope fact; `essay` questions give one heading and expect the student to
+ * recall every point under it (Business Studies "list everything you know
+ * about X" essay style) — `answerPoints` holds that full list, word for word
+ * from the notes.
+ */
+export interface ExamQuestion {
+  id: string;
+  /** Which scope topic this question is testing — shown as a small label, and used to group the self-test "revise" list. */
+  topic: string;
+  kind?: 'short' | 'essay';
+  q: string;
+  marks: number;
+  /** `short`: the model answer, word for word from the notes. `essay`: a list of every point expected under this heading. */
+  answer: string | string[];
+}
+
+/** One section of a practice exam — a run of questions under one scope heading. */
+export interface ExamSection {
+  title: string;
+  questions: ExamQuestion[];
+}
+
+export interface PracticeExam {
+  id: string;
+  subjectId: SubjectId;
+  title: string;
+  /** One line of context — what the exam covers, total marks, any exclusions. */
+  description: string;
+  totalMarks: number;
+  sections: ExamSection[];
 }
 
 // ── User state ──────────────────────────────────────────────────────────────

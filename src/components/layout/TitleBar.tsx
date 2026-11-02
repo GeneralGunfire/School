@@ -138,7 +138,7 @@ export function TitleBar() {
 
       <span
         data-tauri-drag-region
-        className="flex flex-1 items-center justify-center gap-1.5 text-[13px] font-semibold text-muted"
+        className="flex flex-1 items-center justify-center gap-1.5 text-[12.25px] font-semibold text-muted"
       >
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="opacity-55">
           <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
