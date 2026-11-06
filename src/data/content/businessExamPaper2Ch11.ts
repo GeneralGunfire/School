@@ -34,11 +34,6 @@ export const BUSINESS_EXAM_P2_CH11: Chapter = {
         'Problems can be solved by a group/team or an individual, using various techniques.',
       ],
     },
-    {
-      id: 'p2x-ps-tip',
-      type: 'callout' as const,
-      text: 'Exam Tip: "Decision-making" and "problem-solving" are often confused. Decision-making is usually ONE person choosing between alternatives, and is a PART of the problem-solving process (step 4: choose the best solution). Problem-solving is the WHOLE process and usually involves a group/team.',
-    },
     { id: 'p2x-ps-dm-h', type: 'heading' as const, level: 3 as const, text: 'Decision-Making vs Problem-Solving' },
     {
       id: 'p2x-ps-dm-table',
@@ -122,16 +117,6 @@ export const BUSINESS_EXAM_P2_CH11: Chapter = {
       type: 'list' as const,
       text: ['Consider the advantages and disadvantages of the whole process, including whether it solved the problem.', 'Use critical evaluation and analytical skills to evaluate the strategy and identify areas for improvement.', 'Get the views of all the people involved in the process.'],
     },
-    {
-      id: 'p2x-ps-qa',
-      type: 'questions' as const,
-      qa: [
-        { q: 'Distinguish between decision-making and problem-solving.', marks: 4, a: ['Decisions are usually made by one person; problem-solving usually involves a group/team.', 'Decision-making is the process of choosing from several alternatives; problem-solving is the process of finding a solution to a problem.', 'Decision-making is part of the problem-solving process; problem-solving involves analysing the problem to identify solutions.'] },
-        { q: 'Name the EIGHT steps of the problem-solving cycle, in order.', marks: 8, a: ['Identify the problem.', 'Define the problem.', 'Develop an action plan.', 'Choose the best solution/strategy.', 'Allocate the resources.', 'Implement the suggested solution/action plan.', 'Monitor the implementation of the solution/action plan.', 'Evaluate the implemented solution/action plan.'] },
-        { q: 'Explain what happens during the "Define the problem" step.', marks: 4, a: ['This step can only happen once the business understands its problem.', 'The business must define the causes of the problem by gathering as much information as possible.', 'A concrete, specific definition is generated to make finding a solution easier.'] },
-        { q: 'What should a business do if, during the "Monitor" step, the strategy is found not to be working?', marks: 2, a: 'It should return to step 3 (Develop an action plan) and come up with an alternative strategy.' },
-      ],
-    },
   ],
 },
 {
@@ -200,15 +185,6 @@ export const BUSINESS_EXAM_P2_CH11: Chapter = {
       id: 'p2x-ct-ent-sustain',
       type: 'paragraph' as const,
       text: 'Creative thinking and problem-solving are necessary components of sustainable business practice. A fundamental part of every manager\'s role is finding ways to solve problems: management can come up with creative solutions and can be creative in managing/motivating employees; employees can come up with creative strategies; new products can be designed to meet changing preferences; existing goods/services can be adapted to meet ever-changing needs; goods and services can be marketed creatively; public relations can design and implement creative strategies.',
-    },
-    {
-      id: 'p2x-ct-qa',
-      type: 'questions' as const,
-      qa: [
-        { q: 'Elaborate on the meaning of creative thinking.', marks: 4, a: ['Creative thinking is the ability to think original, varied and innovative ideas.', 'It focuses on exploring ideas/generating possibilities/looking for many possible solutions.', 'It involves thinking in a way that is unconventional and original — producing new ideas and making them real.'] },
-        { q: 'Outline FOUR advantages/benefits of creative thinking in the workplace.', marks: 4, a: ['New, innovative, and better ideas and solutions are generated.', 'It improves the quality of solutions to business problems.', 'It leads to increased productivity.', 'It improves motivation amongst staff members (any 4).'] },
-        { q: 'Explain how businesses use creative thinking to generate entrepreneurial opportunities.', marks: 6, a: ['Successful entrepreneurs use creative thinking to create new products/services and markets that never existed before.', 'Creative thinking is applied to continuously improve products and stay ahead of competition.', 'Businesses design environments that stimulate creative thinking, e.g. brainstorming sessions, suggestion boxes, and training staff in creative problem-solving techniques.'] },
-      ],
     },
   ],
 },
@@ -318,21 +294,6 @@ export const BUSINESS_EXAM_P2_CH11: Chapter = {
         'When time is up/no more ideas, the sheets are hung around the room; similar ideas are grouped using coloured pens.',
         'The group evaluates and rates the ideas according to how successful each is likely to be.',
         'A plan of action is discussed to put the best ideas into practice.',
-      ],
-    },
-    {
-      id: 'p2x-tc-tip',
-      type: 'callout' as const,
-      text: 'Exam Tip: You may be given a scenario and asked to IDENTIFY which technique is being used. Clues: Force Field Analysis = "forces for/against change, scored 1-5". Delphi = "panel of experts, kept apart, series of questionnaires". Nominal Group = "silent individual writing, one-by-one sharing, anonymous ranking". Brainstorming = "random ideas shouted out, written on a flip chart, grouped by a facilitator".',
-    },
-    {
-      id: 'p2x-tc-qa',
-      type: 'questions' as const,
-      qa: [
-        { q: 'Explain Force Field Analysis and discuss how it is applied.', marks: 9, a: ['It is a technique to determine the forces for and against a decision, aimed at facilitating change — management favours change, employees often resist it.', 'The business describes the current and desired situation, lists driving and resisting forces in columns, and scores each from 1 (weak) to 5 (strong).', 'The positives and negatives are weighed to decide viability; a strategy is developed to reduce resisting forces, with priorities and an action plan.'] },
-        { q: 'Explain why the Delphi technique is useful when there is no previous example of a problem, and outline how it is applied.', marks: 10, a: ['It relies on a panel of experts kept apart so responses are not influenced by each other, making it suited to large, unprecedented problems.', 'A panel is invited and contacted individually; a questionnaire is distributed and responses summarised in a feedback report.', 'A second, then third, questionnaire is sent based on prior feedback, until a final report and consensus on the best solution is reached.'] },
-        { q: 'Identify the technique: "The manager divided the group into teams of six, asked each person to silently write down their own ideas, then had each person share one idea at a time until all ideas were recorded on a chart. Members then anonymously ranked the ideas."', marks: 2, a: 'This is the Nominal Group Technique — identifiable by the silent individual brainstorming, round-by-round sharing of one idea at a time, and anonymous ranking/voting.' },
-        { q: 'Define "brainstorming" and discuss how it is applied, including the role of the facilitator.', marks: 8, a: ['Brainstorming is a group activity to find a solution to a specific problem by gathering a list of ideas spontaneously.', 'The problem is defined clearly; people suggest ideas at random, which are written on a flip chart.', 'The facilitator ensures everyone participates and no one criticises suggestions; similar ideas are later grouped and rated, and a plan of action is discussed.'] },
       ],
     },
   ],

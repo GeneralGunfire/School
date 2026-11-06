@@ -77,11 +77,6 @@ export const BUSINESS_EXAM_P2_CH13: Chapter = {
         'Get someone to look at the report and make suggestions for improvement.',
       ],
     },
-    {
-      id: 'p2x-pr-write-tip',
-      type: 'callout' as const,
-      text: 'Exam Tip: "Outline guidelines for writing an effective business report" is a popular long question — be ready to list at least 5–6 of the above points in order.',
-    },
     { id: 'p2x-pr-graphs-h1', type: 'heading' as const, level: 2 as const, text: 'Graphs, Diagrams & Symbols/Pictures' },
     {
       id: 'p2x-pr-graphs-imp',
@@ -128,11 +123,6 @@ export const BUSINESS_EXAM_P2_CH13: Chapter = {
         'Prepare for the feedback session by anticipating possible questions/comments.',
       ],
     },
-    {
-      id: 'p2x-pr-vp-tip',
-      type: 'callout' as const,
-      text: 'Exam Tip: Group these points mentally into three buckets — PREPARATION (content, structure, visual aids), PRACTICE (venue, timing, rehearsal) and FEEDBACK (anticipating questions) — to recall them more easily.',
-    },
     { id: 'p2x-pr-va-h1', type: 'heading' as const, level: 2 as const, text: 'Types & Definitions of Visual Aids' },
     {
       id: 'p2x-pr-va-types',
@@ -161,11 +151,6 @@ export const BUSINESS_EXAM_P2_CH13: Chapter = {
         'Create an atmosphere (e.g. videos); keep the audience engaged; add power and punch; create excitement.',
       ],
     },
-    {
-      id: 'p2x-pr-va-tip',
-      type: 'callout' as const,
-      text: 'Exam Tip: Scenario questions often describe a visual aid ("a board with paper that flips over" or "needs no electricity") and ask you to identify it (Flip Chart) and explain its purpose — read the definitions table carefully.',
-    },
     { id: 'p2x-pr-design-h1', type: 'heading' as const, level: 2 as const, text: 'Factors to Consider When Designing a Presentation' },
     {
       id: 'p2x-pr-design-list',
@@ -177,22 +162,6 @@ export const BUSINESS_EXAM_P2_CH13: Chapter = {
         'Limit each slide to five or six lines; structure information in a logical sequence; avoid long sentences and fancy decorations.',
         'Create hyperlinks to allow quick access to other files; make sure the grammar is correct; proofread carefully.',
         'End with a closing message that the audience will remember; be colourful, meaningful and appropriate.',
-      ],
-    },
-    {
-      id: 'p2x-pr-design-tip',
-      type: 'callout' as const,
-      text: 'Exam Tip: The golden rule tested most often is "limit each slide to five or six lines" and "avoid long sentences — keep it simple." Expect a question asking you to critique a badly designed slide using these rules.',
-    },
-    {
-      id: 'p2x-pr-qa',
-      type: 'questions' as const,
-      qa: [
-        { q: 'Define "business report" and distinguish between verbal and non-verbal presentation.', marks: 6, a: ['A business report is a written document that communicates information to assist business decision making.', 'Verbal presentation is delivered through speech/orally — what is said, how it is said, and what the audience can see of the presenter.', 'Non-verbal presentation is the transfer of information through reports, handouts, charts and posters, supported by visual aids.'] },
-        { q: 'Outline any FIVE guidelines for writing an effective business report.', marks: 5, a: ['Determine the scope and target audience.', 'Collect the necessary information and decide how it should be presented.', 'Write concisely in simple language with clear sentences.', 'Use accurate and meaningful visual aids such as tables and graphs.', 'Revise, correct errors, and get someone else to review it.'] },
-        { q: 'Outline any FIVE factors to consider when preparing for a verbal presentation.', marks: 5, a: ['Write down the purpose and main points.', 'Be fully conversant with the content.', 'Know the background of the audience to determine appropriate visual aids.', 'Prepare an introduction, body and conclusion.', 'Practise the presentation and anticipate possible questions.'] },
-        { q: 'Identify the visual aid: "It does not need electricity, can be used for a small group, and is used to summarise discussions by recording ideas and feedback given by the group."', marks: 2, a: 'This is a Flip Chart — a board with paper attached at the top that flips over, used to summarise discussions and record ideas/feedback.' },
-        { q: 'Outline any FIVE factors to consider when designing a presentation.', marks: 5, a: ['Use large, clear fonts and a suitable background.', 'Keep images and graphics simple; limit each slide to five or six lines.', 'Structure information logically and avoid long sentences.', 'Proofread carefully and ensure correct grammar.', 'End with a memorable closing message.'] },
       ],
     },
   ],

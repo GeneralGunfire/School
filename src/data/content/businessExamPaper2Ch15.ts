@@ -23,11 +23,6 @@ export const BUSINESS_EXAM_P2_CH15: Chapter = {
   title: 'Relationship and Team Performance (Essay Topic) — Interpersonal Relationships, Teamwork & Successful Teams',
   minutes: 26,
   blocks: [
-    {
-      id: 'p2x-rt-essay-tip',
-      type: 'callout' as const,
-      text: 'HIGHLIGHTED ON SCOPE SHEET: a full essay on relationships and team performance is guaranteed. This lesson covers interpersonal relationships, the benefits of teamwork, factors influencing team relationships, and the criteria for successful team performance — the full essay content.',
-    },
     { id: 'p2x-rt-h1', type: 'heading' as const, level: 2 as const, text: 'Key Definitions' },
     {
       id: 'p2x-rt-def-table',
@@ -112,11 +107,6 @@ export const BUSINESS_EXAM_P2_CH15: Chapter = {
     },
     { id: 'p2x-rt-fac-h1', type: 'heading' as const, level: 2 as const, text: 'Factors That Can Influence Team Relationships' },
     {
-      id: 'p2x-rt-fac-tip',
-      type: 'callout' as const,
-      text: 'Exam Tip: Learn each factor paired with how businesses address it — a common question gives the factor and asks you to recommend the business response.',
-    },
-    {
       id: 'p2x-rt-fac-table',
       type: 'definitions' as const,
       rows: [
@@ -138,11 +128,6 @@ export const BUSINESS_EXAM_P2_CH15: Chapter = {
       ],
     },
     { id: 'p2x-rt-crit-h1', type: 'heading' as const, level: 2 as const, text: 'Criteria for Successful and Collaborative Team Performance' },
-    {
-      id: 'p2x-rt-crit-tip',
-      type: 'callout' as const,
-      text: 'Exam Tip: Remember the SIX criteria — Clear objectives and agreed goals; Interpersonal attitudes and behaviour; Shared values and mutual respect; Communication; Co-operation/Collaboration; Mutual respect, support, trust. You may be asked to assess a given team against these criteria.',
-    },
     { id: 'p2x-rt-crit1-h', type: 'heading' as const, level: 3 as const, text: '1. Clear Objectives and Agreed Goals' },
     {
       id: 'p2x-rt-crit1',
@@ -178,17 +163,6 @@ export const BUSINESS_EXAM_P2_CH15: Chapter = {
       id: 'p2x-rt-crit6',
       type: 'list' as const,
       text: ['Team members must not fear being laughed at or rejected for expressing concern — this encourages participation.', 'Members should consult with all group members and learn from one another.', 'Reliability — doing what you say you will, and taking risks with others — helps build mutual trust.'],
-    },
-    {
-      id: 'p2x-rt-qa',
-      type: 'questions' as const,
-      qa: [
-        { q: 'Discuss any FOUR benefits of teamwork for a business.', marks: 8, a: ['Members learn from each other and the team achieves more than any individual.', 'Teamwork improves effective communication and creates strong relationships.', 'It promotes healthy risk-taking, since members have team support.', 'It promotes a wider sense of ownership, building loyalty and job satisfaction (any 4).'] },
-        { q: 'Explain "interpersonal relationship" in the workplace, and distinguish between peer and authority relationships.', marks: 7, a: ['Interpersonal relationships are a strong association among individuals working together, built on trust, openness, understanding and communication.', 'Peer relationships: between employees on the same level, based on mutual respect.', 'Authority relationships: between a manager and subordinate, also based on mutual respect but across levels.'] },
-        { q: 'Define "prejudice" and "discrimination," explain how they are related, and recommend ONE way to address each.', marks: 6, a: ['Prejudice is a preconceived, usually unfounded opinion/judgement, which can lead to discrimination.', 'Discrimination is unfair treatment based on race, gender, sexuality, religion or disability.', 'Prejudice: addressed through teambuilding activities and cross-cultural awareness.', 'Discrimination: addressed through an HR policy against it and a reporting procedure.'] },
-        { q: 'List the SIX criteria for successful and collaborative team performance.', marks: 6, a: ['Clear objectives and agreed goals', 'Interpersonal attitudes and behaviour', 'Shared values and mutual respect', 'Communication', 'Co-operation/Collaboration', 'Mutual respect, support, trust'] },
-        { q: 'ESSAY: Discuss how team members can work in a team to accomplish business objectives, with reference to interpersonal relationships, the benefits of teamwork, factors influencing team relationships, and the criteria for successful team performance. (150–200 words)', marks: 10, a: 'Teamwork occurs when two or more people come together to reach a common goal, and it benefits a business because members learn from each other, achieve more collectively, communicate more effectively, and take healthy risks knowing they have team support. Strong interpersonal relationships — built on trust, openness and understanding — ensure everyone plays their role in achieving business objectives, whether through peer, group, authority or external relationships. Factors such as prejudice, discrimination, diversity, belief and equity can disrupt these relationships, so businesses must respond with teambuilding activities, clear HR policies against discrimination, equal-opportunity appointment policies, and awareness of moral values. Finally, successful and collaborative team performance depends on six criteria: clear objectives and agreed goals, positive interpersonal attitudes, shared values and mutual respect, effective communication, co-operation and collaboration, and mutual respect, support and trust between members. When all of these are present, teams can work together, correct mistakes through continuous review, and ultimately achieve the business’s objectives.' },
-      ],
     },
   ],
 }

@@ -64,12 +64,6 @@ const CH10_PART1 = {
         'Tax is calculated according to a progressive income system, up to a maximum of 40%.',
       ],
     },
-    {
-      id: 'p2x-fo-sole-tip',
-      type: 'callout' as const,
-      text: 'Key Point: The sole trader is easy to identify in a scenario — ONE owner, who makes ALL the decisions, takes ALL the profit, and has UNLIMITED liability.',
-    },
-
     { id: 'p2x-fo-part-h1', type: 'heading' as const, level: 2 as const, text: 'Partnership' },
     {
       id: 'p2x-fo-part-def',
@@ -125,14 +119,6 @@ const CH10_PART1 = {
         { term: 'Partnership — decisions', meaning: 'Discussion between partners can slow decisions, and they may disagree.' },
         { term: 'Sole trader — profit', meaning: 'The profit goes to the owner.' },
         { term: 'Partnership — profit', meaning: 'Shared amongst partners according to the partnership agreement.' },
-      ],
-    },
-    {
-      id: 'p2x-fo-qa-part1',
-      type: 'questions' as const,
-      qa: [
-        { q: 'Define the term "sole trader" and name TWO characteristics.', marks: 4, a: ['A sole trader is a business owned and managed by one person who handles all activities, processes and decisions.', 'The owner has unlimited liability; the business has no continuity and dissolves when the owner dies.'] },
-        { q: 'Discuss TWO advantages and TWO disadvantages of a partnership.', marks: 8, a: ['Advantage: Partners bring different knowledge, skills and contacts, improving the chance of success.', 'Advantage: Raising capital is easier since more than one person can contribute.', 'Disadvantage: Partners have unlimited liability and risk losing personal possessions.', 'Disadvantage: Partnership lacks continuity if a partner dies, retires, or resigns.'] },
       ],
     },
   ],
@@ -204,8 +190,8 @@ const CH10_PART2 = {
     },
     {
       id: 'p2x-fo-plc-note',
-      type: 'callout' as const,
-      text: 'NOTE: Other characteristics of a personal liability company are the same as a private company except for the two above. Its advantages are the same as a private company; its disadvantages are also the same, except that directors have UNLIMITED liability (not limited).',
+      type: 'paragraph' as const,
+      text: 'Other characteristics of a personal liability company are the same as a private company except for the two above. Its advantages are the same as a private company; its disadvantages are also the same, except that directors have unlimited liability (not limited).',
     },
     {
       id: 'p2x-fo-pc-plc-table',
@@ -327,21 +313,6 @@ const CH10_PART2 = {
         'Decisions are often difficult to reach and time-consuming.',
         'Difficult to get a loan because the main objective is not always to make a profit.',
         'Success depends on the support of the members; all members have one vote regardless of shares held.',
-      ],
-    },
-    {
-      id: 'p2x-fo-coop-tip',
-      type: 'callout' as const,
-      text: 'Exam Tip: The co-operative is the only form of ownership where every member gets exactly ONE vote, no matter how many shares they own — a favourite exam fact.',
-    },
-
-    {
-      id: 'p2x-fo-qa-part2',
-      type: 'questions' as const,
-      qa: [
-        { q: 'Distinguish between a private company and a personal liability company with regard to liability and name.', marks: 4, a: ['Private company: name ends in "(Pty) Ltd"; directors are NOT personally liable for business debts.', 'Personal liability company: name ends in "INC"; directors ARE personally liable for business debts.'] },
-        { q: 'Discuss TWO advantages and TWO disadvantages of a public company.', marks: 8, a: ['Advantage: Can raise large amounts of funds by selling shares to the public.', 'Advantage: Shareholders have limited liability.', 'Disadvantage: Expensive to establish due to many legal requirements.', 'Disadvantage: Must disclose all financial information, which competitors can use.'] },
-        { q: 'Name any THREE characteristics of a co-operative, and explain the "one member, one vote" rule.', marks: 5, a: ['A minimum of five members is required to start a co-operative.', 'The name must end in "Co-operative Limited".', 'Members are motivated by service, not profit.', 'Every member gets exactly one vote regardless of how many shares they hold — this makes decision-making democratic.'] },
       ],
     },
   ],

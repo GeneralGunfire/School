@@ -23,11 +23,6 @@ export const BUSINESS_EXAM_P2_CH12: Chapter = {
   title: 'Compiling a SWOT Analysis to Assess a Business Opportunity',
   minutes: 16,
   blocks: [
-    {
-      id: 'p2x-sw-tip',
-      type: 'callout' as const,
-      text: 'Exam Tip: SWOT questions often give a scenario and ask you to classify a statement as a Strength, Weakness, Opportunity or Threat. Strengths & Weaknesses = INTERNAL (micro-environment, business controls them). Opportunities & Threats = EXTERNAL (market/macro-environment, business has little or no control).',
-    },
     { id: 'p2x-sw-h1', type: 'heading' as const, level: 2 as const, text: 'The Meaning of a SWOT Analysis' },
     {
       id: 'p2x-sw-meaning',
@@ -89,16 +84,6 @@ export const BUSINESS_EXAM_P2_CH12: Chapter = {
         'Can generate too many ideas but not help you choose which one is best.',
         'Can produce a lot of information, but not all of it is useful.',
         'May cause businesses to overlook certain aspects of the business.',
-      ],
-    },
-    {
-      id: 'p2x-sw-qa',
-      type: 'questions' as const,
-      qa: [
-        { q: 'Define the term "SWOT analysis" and explain what each letter stands for.', marks: 5, a: ['A SWOT analysis is a strategic tool used to evaluate a situation from different angles in order to make strategic decisions.', 'S = Strengths, W = Weaknesses, O = Opportunities, T = Threats.'] },
-        { q: 'Explain why Strengths and Weaknesses are internal factors, while Opportunities and Threats are external factors.', marks: 4, a: ['Strengths and Weaknesses relate to internal factors under the control of the business (micro-environment).', 'Opportunities and Threats relate to external factors over which the business has little (market environment) or no control (macro-environment).'] },
-        { context: 'A learner wants to sell cakes at the school market day. Cakes are cheap to make but perishable; there is a possibility of obtaining tenders, but high competition from other sellers.', q: 'Classify each into the correct SWOT category: (a) cheap to make (b) perishable (c) possibility of obtaining tenders (d) high competition.', marks: 4, a: ['(a) Cheap to make — Strength.', '(b) Perishable — Weakness.', '(c) Possibility of obtaining tenders — Opportunity.', '(d) High competition — Threat.'] },
-        { q: 'Discuss any THREE benefits and THREE limitations of a SWOT analysis.', marks: 6, a: ['Benefit: Inexpensive and quick to perform.', 'Benefit: Gives a big picture of a business opportunity.', 'Benefit: Useful to find challenges in all three business environments.', 'Limitation: Does not prioritise issues or provide solutions.', 'Limitation: Can generate too many ideas without helping decide which is best.', 'Limitation: May cause businesses to overlook certain aspects.'] },
       ],
     },
   ],

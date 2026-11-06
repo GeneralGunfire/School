@@ -130,22 +130,6 @@ export const BUSINESS_EXAM_P2_CH9: Chapter = {
         'Ensuring production techniques are socially responsible; initiating community projects.',
       ],
     },
-    {
-      id: 'p2x-csr-tip',
-      type: 'callout' as const,
-      text: 'Exam Tip: Interview-and-evaluate questions (a common Paper 2 task) ask you to interview local businesses on initiatives taken, and then evaluate how well those initiatives addressed the socio-economic issue — e.g. fewer complaints, more jobs created, reduced crime statistics, improved health outcomes.',
-    },
-    {
-      id: 'p2x-csr-qa',
-      type: 'questions' as const,
-      qa: [
-        { q: 'Define "social responsibility" and "Corporate Social Responsibility," and distinguish between them.', marks: 6, a: ['Social responsibility: any person/group/organisation has a responsibility to act in a way that benefits society as a whole.', 'CSR: the term specifically used when a BUSINESS takes responsibility for its impact on society and the environment, as an ethical way of doing business.'] },
-        { q: 'Recommend TWO initiatives businesses can take to address poverty and inequality.', marks: 4, a: ['Provide bursaries or learnerships/apprenticeships for scarce skills.', 'Donate money/food parcels to local NGOs (any 2).'] },
-        { q: 'Suggest TWO initiatives a business can take to address the impact of HIV/Aids on its employees.', marks: 4, a: ['Develop/train counselling programs for infected/affected employees.', 'Roll out ARV treatment programs for infected employees (any 2).'] },
-        { q: 'Recommend TWO initiatives businesses can take to address unemployment, and TWO to address crime.', marks: 8, a: ['Unemployment: provide skills development programs through learnerships; create jobs for community members.', 'Crime: encourage employees to join community policing forums; adopt a school by providing most of its needs.'] },
-        { q: 'How can businesses help employees who struggle with gambling addiction?', marks: 2, a: 'Offer financial literacy education, and use organisations such as Gamblers Anonymous and the National Council on Problem Gambling.' },
-      ],
-    },
   ],
 }
   ],

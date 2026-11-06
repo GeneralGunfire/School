@@ -23,11 +23,6 @@ export const BUSINESS_EXAM_P2_CH14: Chapter = {
   title: 'The Business Plan (Essay Topic) — Importance, Components, Executive Summary, VMGO & Legal Requirements',
   minutes: 24,
   blocks: [
-    {
-      id: 'p2x-bp-essay-tip',
-      type: 'callout' as const,
-      text: 'HIGHLIGHTED ON SCOPE SHEET: a full essay on the business plan is guaranteed. This lesson and the next cover every component in depth — study both as one unit.',
-    },
     { id: 'p2x-bp-h1', type: 'heading' as const, level: 2 as const, text: 'Key Definitions' },
     {
       id: 'p2x-bp-def-table',
@@ -80,11 +75,6 @@ export const BUSINESS_EXAM_P2_CH14: Chapter = {
         { term: 'Management plan', meaning: 'Short and long-term strategies; who will oversee running the business; skills of the entrepreneur and others; hierarchy and roles of employees.' },
         { term: 'Competitor analysis', meaning: "Description of competitors and their products, and details of competitors' marketing strategy and its effect on the proposed business." },
       ],
-    },
-    {
-      id: 'p2x-bp-comp-tip',
-      type: 'callout' as const,
-      text: "Exam Tip: The Executive Summary is written LAST (after the full plan is done) but placed FIRST (at the front of the document) — this order is a popular trick question.",
     },
     { id: 'p2x-bp-exec-h1', type: 'heading' as const, level: 2 as const, text: 'The Executive Summary' },
     {
@@ -163,22 +153,6 @@ export const BUSINESS_EXAM_P2_CH14: Chapter = {
         'The National Credit Act (NCA) (No. 34 of 2005).',
         'The Environmental Conservation Act (No. 73 of 1989).',
         'Patents and copyrights.',
-      ],
-    },
-    {
-      id: 'p2x-bp-legal-tip',
-      type: 'callout' as const,
-      text: 'Exam Tip: Learn each Act with its FULL NAME, ABBREVIATION and NUMBER (e.g. "The Basic Conditions of Employment Act (BCEA) (No. 75 of 1997)") — exams often ask you to match the abbreviation to the full name.',
-    },
-    {
-      id: 'p2x-bp1-qa',
-      type: 'questions' as const,
-      qa: [
-        { q: 'Define the term "business plan" and state any FOUR reasons why it is important to an entrepreneur.', marks: 6, a: ["A business plan is a document that outlines all the important facts, processes and procedures of the business.", 'It helps entrepreneurs set goals/objectives.', 'It can be used to attract investors and employees.', 'It guides the entrepreneur on the viability of the business idea.', 'It is essential when applying for financial assistance from investors or lenders.'] },
-        { q: 'Name any FIVE components of a business plan.', marks: 5, a: ['Cover page', 'Executive summary', 'Description of the business', 'SWOT analysis', 'Marketing plan', 'Financial plan (any 5)'] },
-        { q: 'Explain the purpose of the executive summary, and state when it is written versus where it appears.', marks: 5, a: ['It satisfies those without time to read the full plan, and most lenders/investors read it first.', 'It gives readers an idea of what is in the business plan.', 'It is written LAST (after the full plan is done) but placed FIRST in the document.'] },
-        { q: 'Distinguish between the vision statement and the mission statement.', marks: 4, a: ['The vision statement is the long-term goal of how entrepreneurs see their business in future.', 'The mission statement describes the purpose of the business and explains why it exists, addressing how the vision will be achieved.'] },
-        { q: 'Name any FOUR legal requirements a business must comply with, with their abbreviations.', marks: 4, a: ['The Basic Conditions of Employment Act (BCEA)', 'The Labour Relations Act (LRA)', 'The National Credit Act (NCA)', 'The Environmental Conservation Act / trading licences and permits / patents and copyrights (any 4)'] },
       ],
     },
   ],
@@ -276,11 +250,6 @@ export const BUSINESS_EXAM_P2_CH14: Chapter = {
       type: 'list' as const,
       text: ['The environment where goods/services are sold/rendered — appearance of the building and uniforms of employees.', 'Must be appropriate and make the customer feel comfortable; clean, functional facilities attract and retain customers.'],
     },
-    {
-      id: 'p2x-bp2-7p-tip',
-      type: 'callout' as const,
-      text: 'Exam Tip: Learn the 7Ps in order — Product, Price, Place, Promotion, People, Process, Physical environment. The first 4Ps are the "main elements"; People, Process and Physical environment are the three "additional elements" added for the service industry.',
-    },
     { id: 'p2x-bp2-comp10-h1', type: 'heading' as const, level: 2 as const, text: 'Strategies to Overcome Competition in the Market' },
     {
       id: 'p2x-bp2-comp10-list',
@@ -314,22 +283,6 @@ export const BUSINESS_EXAM_P2_CH14: Chapter = {
         { term: 'Income statement', meaning: 'A monthly account of sales and expenses, showing actual profits and/or losses.' },
         { term: 'Break-even point', meaning: 'The point at which profits equal expenses — neither profit nor loss. Shows how much must be sold to cover all expenses before making a profit.' },
         { term: 'Balance sheet', meaning: "Assets on one side, liabilities on the other — a list of all business assets, liabilities, and owners' equity at a specific point in time." },
-      ],
-    },
-    {
-      id: 'p2x-bp2-fin-tip',
-      type: 'callout' as const,
-      text: 'Exam Tip: Know the difference between a Budget (a plan/estimate for the future), an Income Statement (a record of actual sales and expenses), and a Balance Sheet (a snapshot of assets, liabilities and equity at one point in time) — these three are often confused.',
-    },
-    {
-      id: 'p2x-bp2-qa',
-      type: 'questions' as const,
-      qa: [
-        { q: 'Name the 7Ps of the marketing mix, and explain why the 4Ps were extended to 7Ps.', marks: 9, a: ['Product, Price, Place, Promotion, People, Process, Physical environment.', 'The 4Ps were extended to the 7Ps because of the growth of the service industry — People, Process and Physical environment were added as relevant to services.'] },
-        { context: 'A new coffee shop plans to use an attractive shopfront with clean tables, friendly uniformed staff, and a loyalty card promotion advertised on social media.', q: 'Identify the elements of the marketing mix illustrated in the scenario.', marks: 6, a: ['Physical environment — the attractive shopfront and clean tables.', 'People — the friendly uniformed staff.', 'Promotion — the loyalty card promotion and social media advertising.'] },
-        { q: 'Discuss any FIVE strategies a business can use to overcome competition.', marks: 10, a: ['Sell quality products/services and offer after-sales services.', 'Charge reasonable prices and conduct intensive marketing campaigns.', 'Make the product unique and provide attractive displays.', 'Provide more personalised, responsive customer service.', 'Offer low-cost extras such as improved credit terms or loyalty schemes.'] },
-        { q: 'Name the elements of a financial plan, and define a "break-even point."', marks: 7, a: ['Budget, Cash flow statements, Income statement, Break-even point, Balance sheet.', 'A break-even point is where profits equal expenses — the business neither makes a profit nor a loss.'] },
-        { q: 'ESSAY: Discuss the components of a business plan and explain why it is important to an entrepreneur, with reference to the marketing plan and financial plan. (150–200 words)', marks: 10, a: "A business plan is a document setting out a business's future objectives and strategies for achieving them. It is important because it helps entrepreneurs set goals, attract investors and employees, guides them on the viability of their idea, and is essential when applying for finance. Its components include the cover page, executive summary (written last but placed first), description of the business, SWOT analysis, legal requirements, marketing plan, operational plan, financial plan, management plan and competitor analysis. The marketing plan is the most important component — it describes the target market and competition and explains the marketing mix (the 7Ps: Product, Price, Place, Promotion, People, Process, Physical environment) used to satisfy customer needs. The financial plan records how much capital is needed and how it will be raised, and includes a budget, cash flow statements, an income statement, the break-even point, and a balance sheet, allowing the entrepreneur to project the profitability and viability of the business before it even starts operating." },
       ],
     },
   ],
