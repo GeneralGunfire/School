@@ -861,7 +861,13 @@ export default function Library() {
   // per-lesson picker. A lessonId in the URL (an old link, or Previous/Next
   // from elsewhere) still resolves: it just scrolls to that section instead
   // of being a separate page. Math is untouched: lesson picker as before.
-  const combinedChapter = !!chapter && !isMathSubject;
+  //
+  // Hidden (scope-only) chapters are the exception: they exist specifically
+  // so a single checklist item can open ONE isolated subtopic lesson, not
+  // the whole bundle scrolled-to-section. Combining them would mean "Sole
+  // Trader" and "Co-operatives" both show the entire Forms of Ownership
+  // chapter — so hidden chapters always use the per-lesson reader/picker.
+  const combinedChapter = !!chapter && !isMathSubject && !chapter.hidden;
 
   useBreadcrumbs(
     React.useMemo(() => {
