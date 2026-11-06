@@ -869,14 +869,29 @@ export default function Library() {
   // chapter — so hidden chapters always use the per-lesson reader/picker.
   const combinedChapter = !!chapter && !isMathSubject && !chapter.hidden;
 
+  // A hidden (scope-only) chapter belongs to an Overview chapter — Business
+  // Studies' "business-exam-p1" / "business-exam-p2" — not to the subject's
+  // full chapter list. Breadcrumbs and back-navigation for a hidden chapter
+  // or lesson should route back to that Overview, never to the full subject
+  // page, since that's not where a scope link ever takes you from.
+  const overviewChapterId =
+    chapter?.hidden && chapter.paper && subject?.id === 'business' ? `business-exam-p${chapter.paper}` : undefined;
+  const overviewChapter = overviewChapterId ? getChapter(overviewChapterId) : undefined;
+
   useBreadcrumbs(
     React.useMemo(() => {
       const out: { label: string; to?: string }[] = [];
-      if (subject) out.push({ label: subject.shortName, to: `/library/${subject.id}` });
-      if (chapter) out.push({ label: chapter.title, to: `/library/${subject?.id}/${chapter.id}` });
-      if (lesson && !combinedChapter) out.push({ label: lesson.title });
+      if (overviewChapter && subject) {
+        out.push({ label: subject.shortName, to: `/library/${subject.id}` });
+        out.push({ label: overviewChapter.title, to: `/library/${subject.id}/${overviewChapter.id}` });
+      } else if (subject) {
+        out.push({ label: subject.shortName, to: `/library/${subject.id}` });
+      }
+      if (chapter && !overviewChapter) out.push({ label: chapter.title, to: `/library/${subject?.id}/${chapter.id}` });
+      if (chapter && overviewChapter) out.push({ label: chapter.title });
+      if (lesson && !combinedChapter && !overviewChapter) out.push({ label: lesson.title });
       return out;
-    }, [subject, chapter, lesson, combinedChapter]),
+    }, [subject, chapter, lesson, combinedChapter, overviewChapter]),
   );
 
   const header: {
@@ -900,9 +915,13 @@ export default function Library() {
           };
 
   const back = lesson && !combinedChapter
-    ? () => navigate(`/library/${subject?.id}/${chapter?.id}`)
+    ? overviewChapter
+      ? () => navigate(`/library/${subject?.id}/${overviewChapter.id}`)
+      : () => navigate(`/library/${subject?.id}/${chapter?.id}`)
     : chapter
-      ? () => navigate(`/library/${subject?.id}`)
+      ? overviewChapter
+        ? () => navigate(`/library/${subject?.id}/${overviewChapter.id}`)
+        : () => navigate(`/library/${subject?.id}`)
       : subject
         ? () => navigate('/library')
         : undefined;
