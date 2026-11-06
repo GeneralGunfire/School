@@ -295,8 +295,8 @@ export interface ChecklistItem {
   text: string;
   /** What to study, e.g. "Chapter 1 — full/complete control over the micro-environment." */
   detail?: string;
-  /** Jump straight to the source chapter: { subjectId, chapterId }. */
-  goTo?: { subjectId: SubjectId; chapterId: string };
+  /** Jump straight to the source chapter, optionally a specific lesson within it. */
+  goTo?: { subjectId: SubjectId; chapterId: string; lessonId?: string };
 }
 
 /** An exam question with a model answer. */

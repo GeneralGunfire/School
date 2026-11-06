@@ -277,7 +277,10 @@ function ChecklistBlock({ blockId, items }: { blockId: string; items: ChecklistI
             {item.goTo && (
               <button
                 type="button"
-                onClick={() => navigate(`/library/${item.goTo!.subjectId}/${item.goTo!.chapterId}`)}
+                onClick={() => {
+                  const { subjectId, chapterId, lessonId } = item.goTo!;
+                  navigate(lessonId ? `/library/${subjectId}/${chapterId}/${lessonId}` : `/library/${subjectId}/${chapterId}`);
+                }}
                 className="flex shrink-0 items-center gap-1 self-center rounded-full border border-hairline-strong px-2.5 py-1 text-[11px] font-semibold text-ink-2 transition-colors hover:border-accent hover:text-accent"
               >
                 Chapter

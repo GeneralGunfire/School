@@ -3,25 +3,22 @@ import type { Chapter } from '@/lib/types';
 /**
  * Scope: Forms of Ownership — scope-only chapter for Paper 2.
  *
- * Contains ONLY the content on the student's Paper 2 exam-scope sheet for this
- * source chapter, extracted from the full chapter. Linked from the "Exam Scope:
- * Paper 2" Overview checklist so a student lands here, not in the full chapter.
+ * One chapter, grouped exactly as the student's scope sheet groups it:
+ * - Chapter 10, Part 1 → Sole Trader + Partnerships (scope sheet: "sole trader —
+ *   ch10-1", "partnerships — ch10-1").
+ * - Chapter 10, Part 2 → Co-operatives + Private vs Personal Liability + Public
+ *   Company (scope sheet: "co-operatives — ch10-2", "pvt vs personal liability —
+ *   ch10-2", "public company — ch10-2").
+ * Content in each lesson is word-for-word identical to the source chapter — only
+ * the grouping/subtopic selection changed, nothing reworded or summarised.
  */
 
-export const BUSINESS_EXAM_P2_CH10: Chapter = {
-  id: 'business-exam-p2-ch10',
-  subjectId: 'business',
-  title: 'Scope: Forms of Ownership',
-  summary: 'Only the content on your Paper 2 exam scope — nothing else.',
-  paper: 2,
-  hidden: true,
-  lessons: [
-{
-  id: 'bs-p2x-forms',
+const CH10_PART1 = {
+  id: 'bs-p2x-forms-part1',
   chapterId: 'business-exam-p2-ch10',
   subjectId: 'business' as const,
-  title: 'Forms of Ownership: Co-ops, Sole Trader, Partnerships, Private/Personal Liability & Public Companies',
-  minutes: 22,
+  title: 'Chapter 10, Part 1 — Sole Trader & Partnerships',
+  minutes: 14,
   blocks: [
     { id: 'p2x-fo-h1', type: 'heading' as const, level: 2 as const, text: 'Sole Trader / Sole Proprietor' },
     {
@@ -130,7 +127,24 @@ export const BUSINESS_EXAM_P2_CH10: Chapter = {
         { term: 'Partnership — profit', meaning: 'Shared amongst partners according to the partnership agreement.' },
       ],
     },
+    {
+      id: 'p2x-fo-qa-part1',
+      type: 'questions' as const,
+      qa: [
+        { q: 'Define the term "sole trader" and name TWO characteristics.', marks: 4, a: ['A sole trader is a business owned and managed by one person who handles all activities, processes and decisions.', 'The owner has unlimited liability; the business has no continuity and dissolves when the owner dies.'] },
+        { q: 'Discuss TWO advantages and TWO disadvantages of a partnership.', marks: 8, a: ['Advantage: Partners bring different knowledge, skills and contacts, improving the chance of success.', 'Advantage: Raising capital is easier since more than one person can contribute.', 'Disadvantage: Partners have unlimited liability and risk losing personal possessions.', 'Disadvantage: Partnership lacks continuity if a partner dies, retires, or resigns.'] },
+      ],
+    },
+  ],
+};
 
+const CH10_PART2 = {
+  id: 'bs-p2x-forms-part2',
+  chapterId: 'business-exam-p2-ch10',
+  subjectId: 'business' as const,
+  title: 'Chapter 10, Part 2 — Co-operatives, Private vs Personal Liability & Public Company',
+  minutes: 20,
+  blocks: [
     { id: 'p2x-fo-pc-h1', type: 'heading' as const, level: 2 as const, text: 'Private Company (Pty Ltd)' },
     {
       id: 'p2x-fo-pc-def',
@@ -320,18 +334,25 @@ export const BUSINESS_EXAM_P2_CH10: Chapter = {
       type: 'callout' as const,
       text: 'Exam Tip: The co-operative is the only form of ownership where every member gets exactly ONE vote, no matter how many shares they own — a favourite exam fact.',
     },
+
     {
-      id: 'p2x-fo-qa',
+      id: 'p2x-fo-qa-part2',
       type: 'questions' as const,
       qa: [
-        { q: 'Define the term "sole trader" and name TWO characteristics.', marks: 4, a: ['A sole trader is a business owned and managed by one person who handles all activities, processes and decisions.', 'The owner has unlimited liability; the business has no continuity and dissolves when the owner dies.'] },
         { q: 'Distinguish between a private company and a personal liability company with regard to liability and name.', marks: 4, a: ['Private company: name ends in "(Pty) Ltd"; directors are NOT personally liable for business debts.', 'Personal liability company: name ends in "INC"; directors ARE personally liable for business debts.'] },
         { q: 'Discuss TWO advantages and TWO disadvantages of a public company.', marks: 8, a: ['Advantage: Can raise large amounts of funds by selling shares to the public.', 'Advantage: Shareholders have limited liability.', 'Disadvantage: Expensive to establish due to many legal requirements.', 'Disadvantage: Must disclose all financial information, which competitors can use.'] },
         { q: 'Name any THREE characteristics of a co-operative, and explain the "one member, one vote" rule.', marks: 5, a: ['A minimum of five members is required to start a co-operative.', 'The name must end in "Co-operative Limited".', 'Members are motivated by service, not profit.', 'Every member gets exactly one vote regardless of how many shares they hold — this makes decision-making democratic.'] },
-        { q: 'Discuss TWO advantages and TWO disadvantages of a partnership.', marks: 8, a: ['Advantage: Partners bring different knowledge, skills and contacts, improving the chance of success.', 'Advantage: Raising capital is easier since more than one person can contribute.', 'Disadvantage: Partners have unlimited liability and risk losing personal possessions.', 'Disadvantage: Partnership lacks continuity if a partner dies, retires, or resigns.'] },
       ],
     },
   ],
-}
-  ],
+};
+
+export const BUSINESS_EXAM_P2_CH10: Chapter = {
+  id: 'business-exam-p2-ch10',
+  subjectId: 'business',
+  title: 'Scope: Forms of Ownership',
+  summary: 'Only the content on your Paper 2 exam scope, grouped exactly as the scope sheet groups it — Part 1 (Sole Trader & Partnerships) and Part 2 (Co-operatives, Private vs Personal Liability & Public Company).',
+  paper: 2,
+  hidden: true,
+  lessons: [CH10_PART1, CH10_PART2],
 };
