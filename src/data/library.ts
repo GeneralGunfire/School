@@ -86,6 +86,12 @@ import {
 } from './content/mathAlgebra';
 import { PHYSICAL_SCIENCES_PAPER1 } from './content/physicalSciencesPaper1';
 import { CHEMISTRY_PAPER1 } from './content/chemistryPaper1';
+import { CHEMISTRY_PAPER2_JUNE2026 } from './content/chemistryPaper2June2026';
+import { CHEMISTRY_FULL } from './content/chemistryFull';
+import { CHEMISTRY_CONDENSED } from './content/chemistryCondensed';
+import { CHEMISTRY_KEY_POINTS } from './content/chemistryKeyPoints';
+import { CHEMISTRY_SCOPE } from './content/chemistryScope';
+import { CHEMISTRY_PAST_PAPER_SCOPE } from './content/chemistryPastPaperScope';
 import { PHYSICS_FULL } from './content/physicsFull';
 import { PHYSICS_CONDENSED } from './content/physicsCondensed';
 import { PHYSICS_KEY_POINTS } from './content/physicsKeyPoints';
@@ -196,6 +202,12 @@ export const CHAPTERS: Chapter[] = [
   PHYSICS_KEY_POINTS,
   PHYSICS_SCOPE,
   CHEMISTRY_PAPER1,
+  CHEMISTRY_PAPER2_JUNE2026,
+  CHEMISTRY_FULL,
+  CHEMISTRY_CONDENSED,
+  CHEMISTRY_KEY_POINTS,
+  CHEMISTRY_SCOPE,
+  CHEMISTRY_PAST_PAPER_SCOPE,
 ];
 
 /** Subjects whose chapters follow the textbook's unit order rather than A–Z. */
