@@ -1,5 +1,5 @@
 import * as React from 'react';
-import type { DiagramSpec } from '@/lib/types';
+import type { DiagramSpec, VennSpec } from '@/lib/types';
 
 /**
  * Hand-built Physical Sciences diagrams. Every figure is a fixed viewBox that
@@ -683,6 +683,75 @@ function pendulum(): Built {
   };
 }
 
+/* ── Venn diagrams (Maths: sets and probability) ────────────────────────── */
+
+function venn(spec: VennSpec): Built {
+  const { sets, regions, outsideLabel, universe } = spec;
+  const w = 640;
+  const h = sets.length === 3 ? 440 : 360;
+  const val = (key: string) => regions[key] ?? '';
+
+  if (sets.length === 2) {
+    const r = 130;
+    const cxA = w / 2 - 70;
+    const cxB = w / 2 + 70;
+    const cy = h / 2 + 10;
+    return {
+      w, h,
+      alt: `A two-set Venn diagram for ${sets[0]} and ${sets[1]}.`,
+      body: (
+        <>
+          <rect x={30} y={30} width={w - 60} height={h - 60} fill="none" stroke={INK} strokeWidth={1.6} rx={10} />
+          {universe && <T x={46} y={54} lines={universe} anchor="start" bold size={14} />}
+          <circle cx={cxA} cy={cy} r={r} fill={BLUE} fillOpacity={0.12} stroke={BLUE} strokeWidth={2} />
+          <circle cx={cxB} cy={cy} r={r} fill={RED} fillOpacity={0.12} stroke={RED} strokeWidth={2} />
+          <T x={cxA - r + 10} y={cy - r + 26} lines={sets[0]} anchor="start" bold size={15} fill={BLUE} />
+          <T x={cxB + r - 10} y={cy - r + 26} lines={sets[1]} anchor="end" bold size={15} fill={RED} />
+          <T x={cxA - 55} y={cy} lines={String(val('A'))} bold size={20} />
+          <T x={(cxA + cxB) / 2} y={cy} lines={String(val('AB'))} bold size={20} />
+          <T x={cxB + 55} y={cy} lines={String(val('B'))} bold size={20} />
+          <T x={w / 2} y={h - 44} lines={[String(val('outside')), outsideLabel ?? 'neither'].filter(Boolean)} size={13} fill={MUTED} />
+        </>
+      ),
+    };
+  }
+
+  // Three sets: classic three-circle symmetric layout.
+  const r = 118;
+  const cx = w / 2;
+  const cyTop = 170;
+  const cyBL = 170 + r * 0.95;
+  const dx = r * 0.78;
+  const A = { x: cx, y: cyTop, color: BLUE };
+  const B = { x: cx - dx, y: cyBL, color: RED };
+  const C = { x: cx + dx, y: cyBL, color: GREEN };
+  return {
+    w, h,
+    alt: `A three-set Venn diagram for ${sets[0]}, ${sets[1]} and ${sets[2]}.`,
+    body: (
+      <>
+        <rect x={30} y={30} width={w - 60} height={h - 70} fill="none" stroke={INK} strokeWidth={1.6} rx={10} />
+        {universe && <T x={46} y={54} lines={universe} anchor="start" bold size={14} />}
+        <circle cx={A.x} cy={A.y} r={r} fill={A.color} fillOpacity={0.12} stroke={A.color} strokeWidth={2} />
+        <circle cx={B.x} cy={B.y} r={r} fill={B.color} fillOpacity={0.12} stroke={B.color} strokeWidth={2} />
+        <circle cx={C.x} cy={C.y} r={r} fill={C.color} fillOpacity={0.12} stroke={C.color} strokeWidth={2} />
+        <T x={A.x} y={A.y - r - 12} lines={sets[0]} anchor="middle" bold size={15} fill={A.color} />
+        <T x={B.x - r + 6} y={B.y + r + 4} lines={sets[1]} anchor="start" bold size={15} fill={B.color} />
+        <T x={C.x + r - 6} y={C.y + r + 4} lines={sets[2]} anchor="end" bold size={15} fill={C.color} />
+        {/* region values, hand-placed for the symmetric 3-circle layout */}
+        <T x={A.x} y={A.y - 46} lines={String(val('A'))} bold size={17} />
+        <T x={B.x - 46} y={B.y + 30} lines={String(val('B'))} bold size={17} />
+        <T x={C.x + 46} y={C.y + 30} lines={String(val('C'))} bold size={17} />
+        <T x={(A.x + B.x) / 2 - 8} y={(A.y + B.y) / 2 - 6} lines={String(val('AB'))} bold size={16} />
+        <T x={(A.x + C.x) / 2 + 8} y={(A.y + C.y) / 2 - 6} lines={String(val('AC'))} bold size={16} />
+        <T x={cx} y={B.y + 18} lines={String(val('BC'))} bold size={16} />
+        <T x={cx} y={(A.y + B.y + C.y) / 3 + 2} lines={String(val('ABC'))} bold size={16} />
+        <T x={w / 2} y={h - 36} lines={[String(val('outside')), outsideLabel ?? 'none of these'].filter(Boolean)} size={13} fill={MUTED} />
+      </>
+    ),
+  };
+}
+
 /* ── Renderer ────────────────────────────────────────────────────────────── */
 
 function build(spec: DiagramSpec): Built {
@@ -701,6 +770,7 @@ function build(spec: DiagramSpec): Built {
     case 'distance-displacement': return distanceDisplacement();
     case 'vector-addition': return vectorAddition();
     case 'pendulum': return pendulum();
+    case 'venn': return venn(spec.venn ?? { sets: ['A', 'B'], regions: {} });
   }
 }
 

@@ -1,5 +1,5 @@
 import type { Lesson } from '../../lib/types';
-import { r, h2, h3, p, ul, qs, lesson as make, ALG_ANSWERS_NOTE } from './algKit';
+import { r, h2, h3, p, ul, qs, venn, lesson as make, ALG_ANSWERS_NOTE } from './algKit';
 
 /**
  * Finance Task 9 (end) and Unit 8 Probability: A. Sets and Venn diagrams (start). Book pp. 184-185; photo 72.
@@ -35,6 +35,15 @@ export const SETS_INTRO = prob('alg-u8-a-sets', 'A. Sets and Venn Diagrams', 25,
   p(r`Ten best friends: $\{\text{Alex, Blair, Casey, Drew, Erin, Francis, Glen, Hunter, Ira, Jade}\}$. Alex, Casey, Drew and Hunter play soccer, and Casey, Drew and Jade play tennis:`),
   { type: 'math', label: 'Two sets', text: r`\text{Soccer}=\{\text{Alex, Casey, Drew, Hunter}\}\qquad\text{Tennis}=\{\text{Casey, Drew, Jade}\}` },
   p(r`You could put each set’s names in its own circle (the book first draws two separate circles). Casey and Drew belong to both sets, so in a proper Venn diagram the circles overlap and Casey and Drew sit in the overlap.`),
+  venn(
+    {
+      sets: ['Soccer', 'Tennis'],
+      regions: { A: 'Alex, Hunter', AB: 'Casey, Drew', B: 'Jade', outside: 'Blair, Erin, Francis, Glen, Ira' },
+      outsideLabel: 'play neither',
+      universe: 'S = 10 best friends',
+    },
+    'Alex and Hunter play only soccer, Jade plays only tennis, Casey and Drew play both (they sit in the overlap), and the rest play neither.',
+  ),
 ]);
 
 export const ALG_PROB_1_LESSONS: Lesson[] = [SETS_INTRO];

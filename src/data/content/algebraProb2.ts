@@ -1,5 +1,5 @@
 import type { Lesson } from '../../lib/types';
-import { r, h2, p, ul, solution, lesson as make } from './algKit';
+import { r, h2, p, ul, solution, venn, lesson as make } from './algKit';
 
 /**
  * Unit 8 Probability: A. Union, intersection, complement, Venn problem, three sets. Book pp. 186-187; photo 73.
@@ -12,6 +12,15 @@ export const SETS_OPERATIONS = prob('alg-u8-a-set-operations', 'A. Union, Inters
   h2('2. Union'),
   p(r`The **union** of two sets $A$ and $B$ is the set of all elements of $A$ **or** $B$, denoted $A\cup B$.`),
   p(r`Friends who play soccer OR tennis: $S\cup T=\{\text{Alex, Casey, Drew, Hunter, Jade}\}$. Not everyone is in that set, only the friends who play soccer or tennis. In the Venn diagram, Alex and Hunter are only in Soccer, Jade is only in Tennis, **Casey and Drew are in BOTH sets**, and Erin, Glen, Ira, Francis and Blair are outside both circles.`),
+  venn(
+    {
+      sets: ['Soccer', 'Tennis'],
+      regions: { A: 'Alex, Hunter', AB: 'Casey, Drew', B: 'Jade', outside: 'Blair, Erin, Francis, Glen, Ira' },
+      outsideLabel: 'play neither',
+      universe: 'S = 10 best friends',
+    },
+    'The same friends Venn diagram from Topic A. $S\\cup T$ is everyone inside either circle; $S\\cap T$ is just the overlap (Casey, Drew).',
+  ),
   h2('3. Intersection'),
   p(r`The **intersection** of two sets $A$ and $B$ is the set of all elements of $A$ **and** $B$ together, denoted $A\cap B$. “Intersection” is when you are in BOTH sets. In our case that means they play both soccer AND tennis:`),
   { type: 'math', label: 'Intersection', text: r`S\cap T=\{\text{Casey, Drew}\}` },
@@ -36,6 +45,10 @@ export const SETS_VENN_PROBLEM = prob('alg-u8-a-venn-problems', 'A. Venn Diagram
     r`54-x=40\;\Rightarrow\;x=14`,
   ]),
   p(r`So 14 learners play both chess and rugby (11 chess only, 8 rugby only).`),
+  venn(
+    { sets: ['Chess', 'Rugby'], regions: { A: '11', AB: '14', B: '8', outside: '7' }, outsideLabel: 'play neither', universe: 'S = 40 learners' },
+    'Check: 11 + 14 + 8 + 7 = 40, matching the total number of learners.',
+  ),
   h2('5. Three sets'),
   p(r`The following strategies are useful:`),
   ul([

@@ -133,6 +133,19 @@ export interface LessonBlock {
   curves?: Array<{ graphType: string; equation: string; params?: Record<string, number>; color?: string }>;
 }
 
+/** A two- or three-set Venn diagram: labelled circles and the value shown in each region. */
+export interface VennSpec {
+  /** 2 or 3 set labels, e.g. ['A', 'B'] or ['Maths', 'Geography', 'History']. */
+  sets: string[];
+  /** Region key → the text/number to display there, e.g. { A: '16', AB: '8', B: '20', outside: '16' }.
+   *  Two-set keys: A, B, AB, outside. Three-set keys: A, B, C, AB, AC, BC, ABC, outside. */
+  regions: Record<string, string | number>;
+  /** Optional label shown for the "outside both/all" region, e.g. "neither". */
+  outsideLabel?: string;
+  /** Optional label for the universal set box, e.g. "S" or "ξ = 60". */
+  universe?: string;
+}
+
 /** Which custom science diagram to draw, with optional per-use values (e.g. the charges in a charge-sharing figure). */
 export interface DiagramSpec {
   kind:
@@ -148,8 +161,11 @@ export interface DiagramSpec {
     | 'motion-graphs'
     | 'distance-displacement'
     | 'vector-addition'
-    | 'pendulum';
+    | 'pendulum'
+    | 'venn';
   data?: Record<string, string | number>;
+  /** `venn` only. */
+  venn?: VennSpec;
   caption?: string;
 }
 
