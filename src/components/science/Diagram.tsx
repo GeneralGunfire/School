@@ -1,5 +1,5 @@
 import * as React from 'react';
-import type { DiagramSpec, VennSpec } from '@/lib/types';
+import type { DiagramSpec, TreeNode, TreeSpec, VennSpec } from '@/lib/types';
 
 /**
  * Hand-built Physical Sciences diagrams. Every figure is a fixed viewBox that
@@ -752,6 +752,81 @@ function venn(spec: VennSpec): Built {
   };
 }
 
+/* ── Probability tree diagrams ───────────────────────────────────────────── */
+
+/** Counts the leaves under a node (1 for a leaf itself), used to allocate vertical space. */
+function leafCount(n: TreeNode): number {
+  if (!n.children || n.children.length === 0) return 1;
+  return n.children.reduce((s, c) => s + leafCount(c), 0);
+}
+
+function tree(spec: TreeSpec): Built {
+  const { root, branches } = spec;
+  const rowH = 46;
+  const colW = 150;
+  const totalLeaves = branches.reduce((s, b) => s + leafCount(b), 0);
+  const h = Math.max(220, totalLeaves * rowH + 60);
+  const depth = (ns: TreeNode[]): number => 1 + Math.max(0, ...ns.map((n) => (n.children ? depth(n.children) : 0)));
+  const maxDepth = depth(branches);
+  const w = 90 + (maxDepth + 1) * colW + 170;
+  const rootX = 70;
+
+  const nodes: React.ReactNode[] = [];
+  const edges: React.ReactNode[] = [];
+  let leafCursor = 30;
+
+  function place(ns: TreeNode[], x: number, parentY: number) {
+    for (const n of ns) {
+      const bandStart = leafCursor;
+      let cy: number;
+      if (!n.children || n.children.length === 0) {
+        cy = leafCursor * rowH - rowH / 2 + 30;
+        leafCursor += 1;
+      } else {
+        const before = leafCursor;
+        place(n.children, x + colW, parentY);
+        const after = leafCursor;
+        cy = ((before + after - 1) / 2) * rowH - rowH / 2 + 30;
+      }
+      edges.push(
+        <g key={`e-${x}-${bandStart}`}>
+          <Arrow x1={x} y1={parentY} x2={x + colW - 14} y2={cy} color={MUTED} width={1.4} />
+          <T x={x + (colW - 14) * 0.42} y={(parentY + cy) / 2 - 8} lines={n.p ? [n.label, n.p] : [n.label]} size={11.5} bg anchor="middle" />
+        </g>,
+      );
+      nodes.push(<circle key={`n-${x}-${bandStart}`} cx={x + colW - 14} cy={cy} r={4} fill={BLUE} />);
+      if (!n.children && (n.outcome || n.outcomeP)) {
+        nodes.push(
+          <T
+            key={`o-${x}-${bandStart}`}
+            x={x + colW + 4}
+            y={cy + 4}
+            lines={[n.outcome, n.outcomeP].filter(Boolean) as string[]}
+            anchor="start"
+            size={12}
+          />,
+        );
+      }
+    }
+  }
+
+  leafCursor = 0;
+  place(branches, rootX, h / 2);
+
+  return {
+    w, h,
+    alt: `A probability tree diagram${root ? ` for ${root}` : ''}.`,
+    body: (
+      <>
+        <circle cx={rootX} cy={h / 2} r={4} fill={INK} />
+        {root && <T x={rootX - 10} y={h / 2 + 4} lines={root} anchor="end" bold size={13} />}
+        {edges}
+        {nodes}
+      </>
+    ),
+  };
+}
+
 /* ── Renderer ────────────────────────────────────────────────────────────── */
 
 function build(spec: DiagramSpec): Built {
@@ -771,6 +846,7 @@ function build(spec: DiagramSpec): Built {
     case 'vector-addition': return vectorAddition();
     case 'pendulum': return pendulum();
     case 'venn': return venn(spec.venn ?? { sets: ['A', 'B'], regions: {} });
+    case 'tree': return tree(spec.tree ?? { branches: [] });
   }
 }
 

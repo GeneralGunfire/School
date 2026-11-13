@@ -1,5 +1,5 @@
 import type { Lesson } from '../../lib/types';
-import { r, h2, p, ul, note, qs, lesson as make, ALG_ANSWERS_NOTE } from './algKit';
+import { r, h2, p, ul, note, qs, tree, lesson as make, ALG_ANSWERS_NOTE } from './algKit';
 
 /**
  * Unit 8 Probability: E. Tree diagrams, goalkeeper example and Task 6. Book pp. 200-201; photo 80.
@@ -18,11 +18,55 @@ export const TREE_EXAMPLE = prob('alg-u8-e-tree-example', 'E. Tree Diagrams: Goa
   ]),
   { type: 'math', label: 'Add the “yes” outcomes', text: r`0{,}30+0{,}12=0{,}42` },
   p(r`Check: $0{,}30+0{,}30+0{,}12+0{,}28=1$.`),
+  tree(
+    {
+      root: 'Next match',
+      branches: [
+        {
+          label: 'Sam coaches', p: '0,6',
+          children: [
+            { label: 'Goalkeeper', p: '0,5', outcome: 'Sam, keeper', outcomeP: '0,30' },
+            { label: 'Not keeper', p: '0,5', outcome: 'Sam, not keeper', outcomeP: '0,30' },
+          ],
+        },
+        {
+          label: 'Alex coaches', p: '0,4',
+          children: [
+            { label: 'Goalkeeper', p: '0,3', outcome: 'Alex, keeper', outcomeP: '0,12' },
+            { label: 'Not keeper', p: '0,7', outcome: 'Alex, not keeper', outcomeP: '0,28' },
+          ],
+        },
+      ],
+    },
+    'Multiply along the branches for each outcome, then add the two "keeper" branches: 0,30 + 0,12 = 0,42.',
+  ),
   note(r`Conclusion: when in doubt, draw a tree diagram, **multiply along the branches** and **add the columns**. Make sure all probabilities add to 1: one of these outcomes will definitely happen.`),
 ]);
 
 export const PROB_TASK_6 = prob('alg-u8-task-6', 'E. Tree Diagrams: Task 6', 30, [
   ALG_ANSWERS_NOTE,
+  tree(
+    {
+      root: 'Die + coin',
+      branches: [
+        {
+          label: 'Even (2,4,6)', p: '1/2',
+          children: [
+            { label: 'Heads', p: '1/2', outcome: 'even, H', outcomeP: '1/4' },
+            { label: 'Tails', p: '1/2', outcome: 'even, T', outcomeP: '1/4' },
+          ],
+        },
+        {
+          label: 'Odd (1,3,5)', p: '1/2',
+          children: [
+            { label: 'Heads', p: '1/2', outcome: 'odd, H', outcomeP: '1/4' },
+            { label: 'Tails', p: '1/2', outcome: 'odd, T', outcomeP: '1/4' },
+          ],
+        },
+      ],
+    },
+    'One die and one coin thrown together — P(even) = P(odd) = 1/2, and each coin side is 1/2, giving four equally likely outcomes of 1/4 each.',
+  ),
   qs([
     { n: '1.1', context: r`One die and a coin are thrown together. Use a tree diagram to find:`, q: r`the probability that the number is even and heads.`, a: r`$P(\text{even})=\dfrac36=\dfrac12$, $P(H)=\dfrac12$: $\dfrac12\times\dfrac12=\dfrac14$.` },
     { n: '1.2', q: r`the probability that the number is less than five and tails.`, a: r`$P(<5)=\dfrac46=\dfrac23$: $\dfrac23\times\dfrac12=\dfrac13$.` },

@@ -1,4 +1,4 @@
-import type { Lesson, VennSpec } from '../../lib/types';
+import type { Lesson, TreeSpec, VennSpec } from '../../lib/types';
 import { lesson as geomLesson, type B } from './geomKit';
 
 /**
@@ -9,6 +9,9 @@ export { r, h2, h3, p, ul, note, formula, eq, fig, qs, solution, worked, type B 
 
 /** A real, rendered 2- or 3-set Venn diagram (not a text description of one). */
 export const venn = (spec: VennSpec, caption?: string): B => ({ type: 'diagram', diagram: { kind: 'venn', venn: spec, caption } });
+
+/** A real, rendered probability tree diagram (not a text description of one). */
+export const tree = (spec: TreeSpec, caption?: string): B => ({ type: 'diagram', diagram: { kind: 'tree', tree: spec, caption } });
 
 export const ALG_ANSWERS_NOTE = {
   type: 'callout' as const,

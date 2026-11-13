@@ -146,6 +146,27 @@ export interface VennSpec {
   universe?: string;
 }
 
+/** One node of a probability tree: a branch label (and optional probability) leading to this point, with children for the next set of branches. A leaf (no children) may carry the combined outcome/probability text. */
+export interface TreeNode {
+  /** The label on the branch leading TO this node, e.g. "Head" or "Defective". */
+  label: string;
+  /** The probability on that branch, e.g. "0,5" or "2/3". Omit for an unlabelled/example branch. */
+  p?: string;
+  /** Child branches from this node (the next event). Omit for a leaf. */
+  children?: TreeNode[];
+  /** Leaf only: the combined outcome name, e.g. "HH" or "A and B". */
+  outcome?: string;
+  /** Leaf only: the combined probability, e.g. "0,25". */
+  outcomeP?: string;
+}
+
+/** A probability tree diagram: one root with 2–3 levels of branches. */
+export interface TreeSpec {
+  /** Root label, e.g. "Start" or the experiment name. Optional. */
+  root?: string;
+  branches: TreeNode[];
+}
+
 /** Which custom science diagram to draw, with optional per-use values (e.g. the charges in a charge-sharing figure). */
 export interface DiagramSpec {
   kind:
@@ -162,10 +183,13 @@ export interface DiagramSpec {
     | 'distance-displacement'
     | 'vector-addition'
     | 'pendulum'
-    | 'venn';
+    | 'venn'
+    | 'tree';
   data?: Record<string, string | number>;
   /** `venn` only. */
   venn?: VennSpec;
+  /** `tree` only. */
+  tree?: TreeSpec;
   caption?: string;
 }
 

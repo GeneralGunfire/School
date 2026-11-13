@@ -2,7 +2,7 @@ import type { Lesson } from '../../lib/types';
 import { r, h2, qs, lesson as make, ALG_ANSWERS_NOTE } from './algKit';
 
 /**
- * Revision and Exemplars: Revision 3 and Revision 4. Book pp. 220-222; photo 86.
+ * Revision and Exemplars: Revision 3 and Revision 4. Book pp. 220-222; photo 87.
  */
 
 const lesson = (id: string, title: string, minutes: number, blocks: Parameters<typeof make>[4]) =>

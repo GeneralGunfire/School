@@ -1,5 +1,5 @@
 import type { Lesson } from '../../lib/types';
-import { r, h2, p, ul, note, qs, lesson as make, ALG_ANSWERS_NOTE } from './algKit';
+import { r, h2, p, ul, note, qs, tree, lesson as make, ALG_ANSWERS_NOTE } from './algKit';
 
 /**
  * Unit 8 Probability: Task 5 and E. Tree diagrams (start). Book pp. 198-199; photo 79.
@@ -34,6 +34,28 @@ export const TREE_INTRO = prob('alg-u8-e-tree', 'E. Tree Diagrams', 30, [
     r`**Multiply** probabilities along the branches to get the probability of that specific final outcome: $0{,}5\times0{,}5=0{,}25$ for each.`,
     r`If there are a few possible outcomes, **add** their probabilities downwards. All final probabilities add up to 1: $0{,}25\times4=1{,}00$.`,
   ]),
+  tree(
+    {
+      root: 'Start',
+      branches: [
+        {
+          label: 'Head', p: '0,5',
+          children: [
+            { label: 'Head', p: '0,5', outcome: 'HH', outcomeP: '0,25' },
+            { label: 'Tail', p: '0,5', outcome: 'HT', outcomeP: '0,25' },
+          ],
+        },
+        {
+          label: 'Tail', p: '0,5',
+          children: [
+            { label: 'Head', p: '0,5', outcome: 'TH', outcomeP: '0,25' },
+            { label: 'Tail', p: '0,5', outcome: 'TT', outcomeP: '0,25' },
+          ],
+        },
+      ],
+    },
+    'Multiply along each branch for that outcome\'s probability (0,5 × 0,5 = 0,25 for each); the four outcomes add up to 1.',
+  ),
 ]);
 
 export const ALG_PROB_8_LESSONS: Lesson[] = [PROB_TASK_5, TREE_INTRO];

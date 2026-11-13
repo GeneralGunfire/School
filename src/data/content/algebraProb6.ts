@@ -1,5 +1,5 @@
 import type { Lesson } from '../../lib/types';
-import { r, h2, p, ul, note, lesson as make } from './algKit';
+import { r, h2, p, ul, note, venn, lesson as make } from './algKit';
 
 /**
  * Unit 8 Probability: C. Complement of an event and D. Independent events. Book pp. 194-195; photo 77.
@@ -18,6 +18,13 @@ export const PROB_COMPLEMENT = prob('alg-u8-c-complement', 'C. Complement of an 
   { type: 'math', label: 'Event plus complement', text: r`P(A)+P(A')=1` },
   h2('Example: rolling a 5 or 6'),
   p(r`$A=\{5,6\}$: $P(A)=\dfrac26=\dfrac13$. The complement $A'=\{1,2,3,4\}$: $P(A')=\dfrac46=\dfrac23$. Check: $\dfrac13+\dfrac23=1$.`),
+  venn(
+    {
+      sets: ['A', "A' (complement)"],
+      regions: { A: '5, 6', AB: '', B: '1, 2, 3, 4', outside: '' },
+    },
+    "Event A and its complement A' between them cover the whole sample space, with nothing in common (no overlap) and nothing outside either circle.",
+  ),
   h2('Why is the complement useful?'),
   p(r`It is sometimes easier to work out the complement first. Throw two dice: what is the probability that the two scores are different? Listing the different pairs $(1,2),(1,3),(1,4),\ldots$ is a long list. The complement (the two scores are the same) has only 6 outcomes: $(1,1),(2,2),(3,3),(4,4),(5,5),(6,6)$.`),
   { type: 'math', label: 'Answer', text: r`P(A')=\dfrac6{36}=\dfrac16\;\Rightarrow\;P(A)=1-\dfrac16=\dfrac56` },
